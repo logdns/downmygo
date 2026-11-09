@@ -267,8 +267,8 @@
   "optionsDebrid": "Debrid",
   "optionsDebridProvider": "服務",
   "optionsDebridToken": "API 權杖",
-  "optionsYtDlp": "影片用 yt-dlp 下載（需已安裝）",
-  "optionsGalleryDL": "圖庫用 gallery-dl 下載（需已安裝）",
+  "optionsYtDlp": "影片用 yt-dlp 下載（自動安裝）",
+  "optionsGalleryDL": "圖庫用 gallery-dl 下載（自動安裝）",
   "optionsCheckUpdates": "檢查更新",
   "optionsThemeFile": "主題檔案",
   "optionsGrabTypes": "連結擷取保留的檔案類型",
@@ -276,5 +276,9 @@
   "optionsDeleteArchive": "解壓後刪除壓縮檔",
   "themeBuiltin": "內建",
   "kindGallery": "圖庫",
-  "optionsDebridNone": "不啟用"
+  "optionsDebridNone": "不啟用",
+  "toastTorrentFailed": "無法啟動種子：{error}",
+  "detailPeers": "節點",
+  "toolInstalling": "正在準備 {tool}…",
+  "toolDownloading": "正在下載 {tool}：{done}"
 }

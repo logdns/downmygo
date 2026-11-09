@@ -167,10 +167,10 @@ downmygo https://example.com/file.zip
 
 ### 外部下载器与解压
 
-- yt-dlp：视频站点交给它，进度显示在列表里
-- gallery-dl：图库站点交给它，按目录差集认领文件
+- yt-dlp：视频站点交给它；没装时自动下载官方二进制，进度显示在列表里
+- gallery-dl：图库站点交给它；没装时自动安装（Windows 用官方 exe，其他平台用 PyPI wheel + 系统 python3）
 - 解压：zip / tar / tar.gz / tar.bz2，完成后自动解压（可选删除压缩包），拒绝路径穿越
-- 种子 / magnet：交给系统种子客户端（不含内置引擎）
+- 种子 / magnet：内置 BitTorrent 客户端（DHT、tracker、peer），`magnet:`、`.torrent` 文件与链接都能直接下载，可暂停/继续/删除文件
 
 ### 网络与生态
 

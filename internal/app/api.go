@@ -13,6 +13,7 @@ import (
 	"github.com/egoist/mygo"
 
 	"github.com/downmygo/downmygo/internal/model"
+	"github.com/downmygo/downmygo/internal/torrent"
 	"github.com/downmygo/downmygo/internal/version"
 	"github.com/downmygo/downmygo/locales"
 )
@@ -189,12 +190,21 @@ func (s *apiServer) add(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "bad JSON", http.StatusBadRequest)
 		return
 	}
-	if !looksLikeURL(strings.TrimSpace(body.URL)) {
+	if !looksLikeURL(strings.TrimSpace(body.URL)) && !torrent.IsTorrent(body.URL) {
 		http.Error(w, "not an http(s) link", http.StatusBadRequest)
 		return
 	}
 	var d *model.Download
 	var reason string
+	if torrent.IsTorrent(body.URL) {
+		s.app.onMain(func() { d = s.app.addLink(body.URL) })
+		if d == nil {
+			http.Error(w, "could not add the torrent", http.StatusBadRequest)
+			return
+		}
+		writeJSON(w, map[string]any{"id": d.ID, "name": d.FileName})
+		return
+	}
 	s.app.onMain(func() {
 		s.app.add = AddForm{
 			URL: body.URL, Dir: body.Dir, FileName: body.Name,

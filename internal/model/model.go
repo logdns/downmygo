@@ -129,6 +129,9 @@ type Download struct {
 	Checksum    string `json:"checksum,omitempty"` // "sha256:<hex>"
 	Connections int    `json:"connections,omitempty"`
 
+	// Peers is how many peers a torrent has.
+	Peers int `json:"peers,omitempty"`
+
 	// Runtime, not saved as truth.
 	Speed    float64   `json:"-"`
 	Segments []Segment `json:"-"`
@@ -310,6 +313,8 @@ func Defaults(downloadDir string) Settings {
 		LimitBytes:       200 << 20,
 		RemotePort:       8463,
 		CheckUpdates:     true,
+		UseYtDlp:         true,
+		UseGalleryDL:     true,
 		SidebarWidth:     236,
 		DetailHeight:     208,
 	}

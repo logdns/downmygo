@@ -3756,13 +3756,13 @@ func (msgs Messages) OptionsDebridToken() string {
 	return Catalog.Format(msgs.locale, "optionsDebridToken", nil)
 }
 
-// OptionsYtDlp says "Use yt-dlp for videos (it must be installed)"
+// OptionsYtDlp says "Use yt-dlp for videos (downloaded automatically)"
 // in the language the app shows.
 //
 // A setting.
 func OptionsYtDlp() string { return In(i18n.Locale()).OptionsYtDlp() }
 
-// OptionsYtDlp says "Use yt-dlp for videos (it must be installed)"
+// OptionsYtDlp says "Use yt-dlp for videos (downloaded automatically)"
 // in the language of msgs.
 //
 // A setting.
@@ -3770,13 +3770,13 @@ func (msgs Messages) OptionsYtDlp() string {
 	return Catalog.Format(msgs.locale, "optionsYtDlp", nil)
 }
 
-// OptionsGalleryDL says "Use gallery-dl for galleries (it must be installed)"
+// OptionsGalleryDL says "Use gallery-dl for galleries (downloaded automatically)"
 // in the language the app shows.
 //
 // A setting.
 func OptionsGalleryDL() string { return In(i18n.Locale()).OptionsGalleryDL() }
 
-// OptionsGalleryDL says "Use gallery-dl for galleries (it must be installed)"
+// OptionsGalleryDL says "Use gallery-dl for galleries (downloaded automatically)"
 // in the language of msgs.
 //
 // A setting.
@@ -3894,4 +3894,62 @@ func OptionsDebridNone() string { return In(i18n.Locale()).OptionsDebridNone() }
 // No debrid service.
 func (msgs Messages) OptionsDebridNone() string {
 	return Catalog.Format(msgs.locale, "optionsDebridNone", nil)
+}
+
+// ToastTorrentFailed says "Could not start the torrent: {error}"
+// in the language the app shows.
+//
+// A torrent could not start.
+func ToastTorrentFailed(error string) string { return In(i18n.Locale()).ToastTorrentFailed(error) }
+
+// ToastTorrentFailed says "Could not start the torrent: {error}"
+// in the language of msgs.
+//
+// A torrent could not start.
+func (msgs Messages) ToastTorrentFailed(error string) string {
+	return Catalog.Format(msgs.locale, "toastTorrentFailed", map[string]any{"error": error})
+}
+
+// DetailPeers says "Peers"
+// in the language the app shows.
+//
+// The card's label of the peers of a torrent.
+func DetailPeers() string { return In(i18n.Locale()).DetailPeers() }
+
+// DetailPeers says "Peers"
+// in the language of msgs.
+//
+// The card's label of the peers of a torrent.
+func (msgs Messages) DetailPeers() string {
+	return Catalog.Format(msgs.locale, "detailPeers", nil)
+}
+
+// ToolInstalling says "Getting {tool}…"
+// in the language the app shows.
+//
+// The line of a download while its program is fetched.
+func ToolInstalling(tool string) string { return In(i18n.Locale()).ToolInstalling(tool) }
+
+// ToolInstalling says "Getting {tool}…"
+// in the language of msgs.
+//
+// The line of a download while its program is fetched.
+func (msgs Messages) ToolInstalling(tool string) string {
+	return Catalog.Format(msgs.locale, "toolInstalling", map[string]any{"tool": tool})
+}
+
+// ToolDownloading says "Downloading {tool}: {done}"
+// in the language the app shows.
+//
+// A toast while a program is fetched.
+func ToolDownloading(tool string, done string) string {
+	return In(i18n.Locale()).ToolDownloading(tool, done)
+}
+
+// ToolDownloading says "Downloading {tool}: {done}"
+// in the language of msgs.
+//
+// A toast while a program is fetched.
+func (msgs Messages) ToolDownloading(tool string, done string) string {
+	return Catalog.Format(msgs.locale, "toolDownloading", map[string]any{"tool": tool, "done": done})
 }

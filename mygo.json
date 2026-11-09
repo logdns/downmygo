@@ -2,14 +2,15 @@
   "name": "downmygo",
   "slug": "downmygo",
   "identifier": "app.downmygo.desktop",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "copyright": "© 2026 downmygo",
   "publisher": "downmygo",
   "license": "MIT",
   "icon": "resources/icon.png",
   "out": "build",
   "urlSchemes": [
-    "downmygo"
+    "downmygo",
+    "magnet"
   ],
   "macos": {
     "infoPlist": {

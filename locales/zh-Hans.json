@@ -267,8 +267,8 @@
   "optionsDebrid": "Debrid",
   "optionsDebridProvider": "服务",
   "optionsDebridToken": "API 令牌",
-  "optionsYtDlp": "视频用 yt-dlp 下载（需已安装）",
-  "optionsGalleryDL": "图库用 gallery-dl 下载（需已安装）",
+  "optionsYtDlp": "视频用 yt-dlp 下载（自动安装）",
+  "optionsGalleryDL": "图库用 gallery-dl 下载（自动安装）",
   "optionsCheckUpdates": "检查更新",
   "optionsThemeFile": "主题文件",
   "optionsGrabTypes": "链接抓取保留的文件类型",
@@ -276,5 +276,9 @@
   "optionsDeleteArchive": "解压后删除压缩包",
   "themeBuiltin": "内置",
   "kindGallery": "图库",
-  "optionsDebridNone": "不启用"
+  "optionsDebridNone": "不启用",
+  "toastTorrentFailed": "无法启动种子：{error}",
+  "detailPeers": "节点",
+  "toolInstalling": "正在准备 {tool}…",
+  "toolDownloading": "正在下载 {tool}：{done}"
 }

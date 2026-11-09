@@ -36,11 +36,11 @@
 | 项 | 状态 | 位置 | 说明 |
 |---|---|---|---|
 | RSS / Atom 订阅 | ✅ | `internal/rss`、订阅对话框 | 定时检查、按扩展名或 enclosure 取件、记住已取过的条目 |
-| yt-dlp 视频 | ✅ | `internal/tools` | 外部程序，进度模板解析，作为一条下载显示 |
-| gallery-dl 图库 | ✅ | `internal/tools` | 外部程序，按目录差集认领文件 |
+| yt-dlp 视频 | ✅ | `internal/tools` | 未安装时自动从 GitHub 下载（macOS/Linux/Windows 各自的原生二进制），进度显示在列表里 |
+| gallery-dl 图库 | ✅ | `internal/tools` | 未安装时自动安装：Windows 用官方 exe，其他平台从 PyPI 取 wheel 解包，用系统 python3 运行 |
 | 解压 | ✅ | `internal/extract` | zip / tar / tar.gz / tar.bz2；拒绝路径穿越与符号链接；xz 需外部工具 |
 | 链接抓取 | ✅ | `internal/grab`、抓取对话框 | 解析页面 href/src，按扩展名过滤，勾选后加入 |
-| 种子 / magnet | ◐ | `addLink` | 交给系统种子客户端（`magnet:` 与 `.torrent`）；**不含内置 BitTorrent 引擎** |
+| 种子 / magnet | ✅ | `internal/torrent` | 内置 BitTorrent 客户端（anacrolix/torrent）：DHT、tracker、peer、暂停/继续、删除文件；`magnet:`、`.torrent` 文件与 `.torrent` 链接都能直接下载 |
 | 视频站内嵌字幕/播放列表 | ○ | — | 交给 yt-dlp 的参数，未做界面 |
 
 ## 4. 网络、工具与生态
@@ -61,7 +61,7 @@
 
 | 项 | 原因 |
 |---|---|
-| 内置 BitTorrent 引擎 | 需要完整的 DHT / BEP 协议栈与磁盘调度，是一个独立项目；现在交给系统客户端 |
+| 做种与限速 | 客户端默认不做种；上传限速与做种比例还没接到界面 |
 | 解压 RAR / 7z / xz | 需要外部程序或非标准库依赖；zip/tar/gz/bz2 已覆盖大多数下载 |
 | 静默自动更新（下载并替换自身） | 需要签名与回滚；现在只提示并打开发布页 |
 | 扩展商店上架 | 需要开发者账号与审核；现在加载已解压的扩展 |
@@ -75,6 +75,7 @@ go run ./tools/makeicon       # 图标
 downmygo grab https://example.com/page
 downmygo import links.txt
 downmygo mcp                  # 接 MCP 客户端
+downmygo magnet:?xt=urn:btih:…   # 直接下载种子
 downmygo native-host          # 由浏览器启动
 downmygo install-host <扩展ID>
 ```

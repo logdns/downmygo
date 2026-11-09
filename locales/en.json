@@ -1228,11 +1228,11 @@
   "@optionsDebridToken": {
     "description": "The label of the debrid token."
   },
-  "optionsYtDlp": "Use yt-dlp for videos (it must be installed)",
+  "optionsYtDlp": "Use yt-dlp for videos (downloaded automatically)",
   "@optionsYtDlp": {
     "description": "A setting."
   },
-  "optionsGalleryDL": "Use gallery-dl for galleries (it must be installed)",
+  "optionsGalleryDL": "Use gallery-dl for galleries (downloaded automatically)",
   "@optionsGalleryDL": {
     "description": "A setting."
   },
@@ -1267,5 +1267,43 @@
   "optionsDebridNone": "None",
   "@optionsDebridNone": {
     "description": "No debrid service."
+  },
+  "toastTorrentFailed": "Could not start the torrent: {error}",
+  "@toastTorrentFailed": {
+    "description": "A torrent could not start.",
+    "placeholders": {
+      "error": {
+        "type": "String",
+        "example": "no network"
+      }
+    }
+  },
+  "detailPeers": "Peers",
+  "@detailPeers": {
+    "description": "The card's label of the peers of a torrent."
+  },
+  "toolInstalling": "Getting {tool}…",
+  "@toolInstalling": {
+    "description": "The line of a download while its program is fetched.",
+    "placeholders": {
+      "tool": {
+        "type": "String",
+        "example": "yt-dlp"
+      }
+    }
+  },
+  "toolDownloading": "Downloading {tool}: {done}",
+  "@toolDownloading": {
+    "description": "A toast while a program is fetched.",
+    "placeholders": {
+      "tool": {
+        "type": "String",
+        "example": "yt-dlp"
+      },
+      "done": {
+        "type": "String",
+        "example": "3.4 MB"
+      }
+    }
   }
 }

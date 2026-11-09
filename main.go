@@ -264,7 +264,8 @@ func linkFromDeepLink(raw string) string {
 		}
 		return ""
 	}
-	if strings.HasPrefix(rest, "http://") || strings.HasPrefix(rest, "https://") {
+	if strings.HasPrefix(rest, "http://") || strings.HasPrefix(rest, "https://") ||
+		strings.HasPrefix(strings.ToLower(rest), "magnet:") {
 		return rest
 	}
 	return ""

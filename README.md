@@ -54,7 +54,8 @@ The full feature list, the program's logic and what makes it different: **[docs/
 - **Adaptive layout** — the sidebar folds into a filter menu, columns drop out and buttons become icons as the window narrows.
 - **Browser** — an extension that sends links with their cookies, a native messaging host, site logins, capture rules and an importer.
 - **Feeds and grabbing** — RSS/Atom subscriptions, link grabbing from a page, and a list importer.
-- **External downloaders** — yt-dlp for videos and gallery-dl for galleries, shown in the list with their progress.
+- **External downloaders** — yt-dlp for videos and gallery-dl for galleries, installed by the app itself when they are missing, shown in the list with their progress.
+- **Torrents** — a built-in BitTorrent client for magnets and `.torrent` files, with DHT and trackers, pause and resume.
 - **Unpacking** — zip, tar, tar.gz and tar.bz2 after a download, refusing entries that leave the folder.
 - **Network** — encrypted DNS (DoH and DoT), a bind address for a VPN kill switch, and debrid (Real-Debrid, AllDebrid).
 - **Agents** — an MCP server on stdio with seven tools over the app's own API.
@@ -193,7 +194,8 @@ go run ./tools/makeicon
 |---|---|
 | 1.0 | Core downloads, queues, scheduling, limits, CLI, API, remote page, three languages |
 | 1.1 | Browser extension, site logins, capture rules, import, feeds, yt-dlp, gallery-dl, extraction, link grabbing, encrypted DNS, VPN binding, debrid, MCP, theme files, update check |
-| 1.2 | An embedded BitTorrent engine, rar and 7z, silent updates |
+| 1.2 | Built-in BitTorrent, self-installing tools |
+| 1.3 | rar and 7z, seeding and upload limits, silent updates |
 
 ## An independent implementation
 

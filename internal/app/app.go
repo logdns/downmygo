@@ -21,6 +21,7 @@ import (
 	"github.com/downmygo/downmygo/internal/limiter"
 	"github.com/downmygo/downmygo/internal/model"
 	"github.com/downmygo/downmygo/internal/store"
+	"github.com/downmygo/downmygo/internal/torrent"
 	"github.com/downmygo/downmygo/internal/update"
 	"github.com/downmygo/downmygo/locales"
 )
@@ -42,23 +43,25 @@ type App struct {
 	events chan engine.Event
 
 	// View state. Main thread only.
-	filter      string // "all", "unfinished", "finished", "cat:<id>", "queue:<id>"
-	query       string
-	selected    int
-	sortCol     int
-	sortDesc    bool
-	listState   ui.ListState
-	sidebarSel  string
-	addOpen     bool
-	add         AddForm
-	optionsOpen bool
-	optionsTab  int
-	aboutOpen   bool
-	confirm     *Confirm
-	toast       string
-	lastClip    string
-	clipWatch   atomic.Bool
-	toolCancels map[string]context.CancelFunc
+	filter         string // "all", "unfinished", "finished", "cat:<id>", "queue:<id>"
+	query          string
+	selected       int
+	sortCol        int
+	sortDesc       bool
+	listState      ui.ListState
+	sidebarSel     string
+	addOpen        bool
+	add            AddForm
+	optionsOpen    bool
+	optionsTab     int
+	aboutOpen      bool
+	confirm        *Confirm
+	toast          string
+	lastClip       string
+	clipWatch      atomic.Bool
+	toolCancels    map[string]context.CancelFunc
+	torrents       *torrent.Engine
+	torrentCancels map[string]context.CancelFunc
 
 	// The link grabber, the subscriptions and the update check.
 	grabOpen    bool
@@ -585,6 +588,10 @@ func (a *App) Pause(id string) {
 	if d == nil || d.Status == model.StatusComplete || d.Status == model.StatusError {
 		return
 	}
+	if d.Kind == model.KindTorrent {
+		a.pauseTorrent(d)
+		return
+	}
 	a.eng.Pause(id)
 	d.Status = model.StatusPaused
 	d.Speed = 0
@@ -599,6 +606,10 @@ func (a *App) Resume(id string) {
 	}
 	if d.Status == model.StatusComplete {
 		a.OpenFile(d)
+		return
+	}
+	if d.Kind == model.KindTorrent {
+		a.resumeTorrent(d)
 		return
 	}
 	if a.eng.Running(d.ID) {
@@ -650,9 +661,13 @@ func (a *App) Remove(id string, deleteFile bool) {
 	if d == nil {
 		return
 	}
-	a.eng.Remove(id)
-	if deleteFile {
-		a.removeFiles(d)
+	if d.Kind == model.KindTorrent {
+		a.removeTorrent(d, deleteFile)
+	} else {
+		a.eng.Remove(id)
+		if deleteFile {
+			a.removeFiles(d)
+		}
 	}
 	a.removeAt(indexOf(a.st.Downloads, id))
 	a.markDirty()
@@ -694,6 +709,13 @@ func indexOf(list []*model.Download, id string) int {
 func (a *App) OpenFile(d *model.Download) {
 	if d.Status != model.StatusComplete {
 		return
+	}
+	// A torrent of several files is a folder, and opens as one.
+	if d.Kind == model.KindTorrent {
+		if info, err := os.Stat(d.Path()); err == nil && info.IsDir() {
+			_ = mygo.Shell.OpenPath(d.Path())
+			return
+		}
 	}
 	if err := mygo.Shell.OpenPath(d.Path()); err != nil {
 		a.toast = locales.ToastOpenFailed(err.Error())
@@ -1116,6 +1138,7 @@ func (a *App) Quit() {
 // Shutdown is called when the window closes.
 func (a *App) Shutdown() {
 	a.eng.StopAll()
+	a.closeTorrents()
 	if a.api != nil {
 		a.api.Close()
 		a.api = nil
@@ -1307,6 +1330,10 @@ func (a *App) RevealWindow() {
 func (a *App) AddFromArgs(args []string) {
 	for _, arg := range args {
 		arg = strings.TrimSpace(arg)
+		if torr := torrent.IsTorrent(arg); torr {
+			a.addLink(arg)
+			return
+		}
 		if looksLikeURL(arg) {
 			a.OpenAdd(arg)
 			return

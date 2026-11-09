@@ -636,7 +636,11 @@ func (a *App) detail(c *ui.Context, t *ui.Theme, d *model.Download) {
 				a.stat(c, t, locales.DetailDownloaded(), engine.FormatBytes(d.Done))
 				a.stat(c, t, locales.DetailSpeed(), engine.FormatSpeed(d.Speed))
 				a.stat(c, t, locales.DetailTimeLeft(), etaText(d.ETA()))
-				a.stat(c, t, locales.DetailConnections(), fmt.Sprint(max(d.Connections, 1)))
+				if d.Kind == model.KindTorrent {
+					a.stat(c, t, locales.DetailPeers(), fmt.Sprint(d.Peers))
+				} else {
+					a.stat(c, t, locales.DetailConnections(), fmt.Sprint(max(d.Connections, 1)))
+				}
 				a.stat(c, t, locales.DetailStatus(), statusText(d))
 			})
 

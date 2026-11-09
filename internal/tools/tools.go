@@ -36,6 +36,8 @@ type Options struct {
 	Cookies   string // a cookies.txt file
 	UserAgent string
 	Extra     []string
+	// Program is the program to run; empty finds one.
+	Program string
 }
 
 // Progress is what a program says while it works.
@@ -79,9 +81,13 @@ func Available(kind Kind) bool {
 // Run downloads url with kind, calling onProgress as it goes, and returns
 // the files it wrote.
 func Run(ctx context.Context, kind Kind, url string, opts Options, onProgress func(Progress)) ([]string, error) {
-	path, err := Find(kind)
-	if err != nil {
-		return nil, err
+	path := opts.Program
+	if path == "" {
+		found, err := Find(kind)
+		if err != nil {
+			return nil, err
+		}
+		path = found
 	}
 	if opts.Dir == "" {
 		opts.Dir = "."

@@ -12,6 +12,7 @@ import (
 	"github.com/egoist/mygo"
 
 	"github.com/downmygo/downmygo/internal/debrid"
+	"github.com/downmygo/downmygo/internal/engine"
 	"github.com/downmygo/downmygo/internal/extract"
 	"github.com/downmygo/downmygo/internal/grab"
 	"github.com/downmygo/downmygo/internal/model"
@@ -20,6 +21,7 @@ import (
 	"github.com/downmygo/downmygo/internal/store"
 	"github.com/downmygo/downmygo/internal/themes"
 	"github.com/downmygo/downmygo/internal/tools"
+	"github.com/downmygo/downmygo/internal/torrent"
 	"github.com/downmygo/downmygo/internal/update"
 	"github.com/downmygo/downmygo/locales"
 )
@@ -41,10 +43,8 @@ func (a *App) addLink(raw string) *model.Download {
 	if raw == "" {
 		return nil
 	}
-	lower := strings.ToLower(raw)
-	if strings.HasPrefix(lower, "magnet:") || strings.HasSuffix(lower, ".torrent") {
-		a.handOff(raw)
-		return nil
+	if torrent.IsTorrent(raw) {
+		return a.addTorrent(raw)
 	}
 	if u, err := url.Parse(raw); err == nil {
 		host := strings.ToLower(u.Hostname())
@@ -52,10 +52,10 @@ func (a *App) addLink(raw string) *model.Download {
 			a.resolveDebrid(raw)
 			return nil
 		}
-		if a.st.Settings.UseYtDlp && tools.Available(tools.YtDlp) && videoSite(host) {
+		if a.st.Settings.UseYtDlp && videoSite(host) {
 			return a.startTool(tools.YtDlp, raw)
 		}
-		if a.st.Settings.UseGalleryDL && tools.Available(tools.GalleryDL) && gallerySite(host) {
+		if a.st.Settings.UseGalleryDL && gallerySite(host) {
 			return a.startTool(tools.GalleryDL, raw)
 		}
 	}
@@ -97,21 +97,6 @@ func gallerySite(host string) bool {
 		}
 	}
 	return false
-}
-
-// handOff gives a magnet or a torrent file to the system's torrent client.
-func (a *App) handOff(raw string) {
-	var err error
-	if strings.HasPrefix(strings.ToLower(raw), "magnet:") {
-		err = mygo.Shell.OpenExternal(raw)
-	} else {
-		err = mygo.Shell.OpenPath(raw)
-	}
-	if err != nil {
-		a.toast = locales.ToastNoTorrentClient()
-		return
-	}
-	a.toast = locales.ToastHandedOff()
 }
 
 // resolveDebrid turns a hosted link into a direct one, then adds it.
@@ -183,6 +168,32 @@ func (a *App) startTool(kind tools.Kind, raw string) *model.Download {
 		}
 	}
 	go func() {
+		// The program may not be here yet: the manager downloads it, so a
+		// video needs nothing installed by hand.
+		win := a.win
+		if win != nil {
+			win.Update(func() {
+				d.Error = locales.ToolInstalling(string(kind))
+			})
+		}
+		path, err := a.toolManager().Ensure(ctx, kind)
+		if err != nil {
+			win = a.win
+			if win == nil {
+				return
+			}
+			win.Update(func() {
+				delete(a.toolCancels, d.ID)
+				d.Status = model.StatusError
+				d.Error = err.Error()
+				a.markDirty()
+			})
+			return
+		}
+		opts.Program = path
+		if win != nil {
+			win.Update(func() { d.Error = "" })
+		}
 		files, err := tools.Run(ctx, kind, raw, opts, func(p tools.Progress) {
 			win := a.win
 			if win == nil {
@@ -201,7 +212,7 @@ func (a *App) startTool(kind tools.Kind, raw string) *model.Download {
 				}
 			})
 		})
-		win := a.win
+		win = a.win
 		if win == nil {
 			return
 		}
@@ -230,6 +241,22 @@ func (a *App) startTool(kind tools.Kind, raw string) *model.Download {
 		})
 	}()
 	return d
+}
+
+// toolManager keeps the external downloaders in the app's folder.
+func (a *App) toolManager() *tools.Manager {
+	return &tools.Manager{
+		Dir: filepath.Join(a.dataDir(), "tools"),
+		Progress: func(kind tools.Kind, done, total int64) {
+			win := a.win
+			if win == nil {
+				return
+			}
+			win.Update(func() {
+				a.toast = locales.ToolDownloading(string(kind), engine.FormatBytes(done))
+			})
+		},
+	}
 }
 
 // extractDone unpacks an archive a download finished with, when the
