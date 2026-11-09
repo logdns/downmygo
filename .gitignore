@@ -1,0 +1,21 @@
+# Builds
+/build/
+/dist/
+/.mygo/
+/downmygo
+/downmygo.exe
+*.app
+
+# Go
+*.test
+*.out
+
+# Downloads in progress
+*.dmpart
+*.dmpart.json
+
+# Editors and systems
+.DS_Store
+.idea/
+.vscode/
+*.swp

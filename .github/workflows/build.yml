@@ -1,0 +1,70 @@
+name: Build
+
+# Builds the installers of every platform and uploads them to the release
+# of the tag, as a draft to publish. Run it by hand to get the artifacts
+# of a branch without a release.
+on:
+  push:
+    tags: ["v*"]
+  workflow_dispatch:
+
+permissions:
+  contents: write # the draft release, and the uploads to it
+
+jobs:
+  build:
+    name: ${{ matrix.name }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          # The macOS app is built on macOS: the .app bundle, the ad hoc
+          # signature and the disk image need it. Set macos.signingIdentity
+          # and macos.notarize in mygo.json to ship it outside the Mac App
+          # Store.
+          - { name: macOS, os: macos-14, platform: "darwin/universal" }
+          # MyGo needs no cgo, so Ubuntu builds the Windows and the Linux
+          # apps as well as their own runners would.
+          - { name: Windows, os: ubuntu-latest, platform: "windows/amd64,windows/arm64" }
+          - { name: Linux, os: ubuntu-latest, platform: "linux/amd64,linux/arm64" }
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with:
+          go-version-file: go.mod
+          cache: true
+      - name: Install NSIS, for the Windows installers
+        if: matrix.name == 'Windows'
+        run: sudo apt-get update && sudo apt-get install -y nsis
+      - name: Build
+        run: go tool mygo build -platform "${{ matrix.platform }}"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: downmygo-${{ matrix.name }}
+          path: build/
+          if-no-files-found: error
+
+  release:
+    name: Draft release
+    needs: build
+    if: startsWith(github.ref, 'refs/tags/v')
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          path: artifacts
+          merge-multiple: true
+      - name: Upload the installers to the draft release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          tag="$GITHUB_REF_NAME"
+          if ! gh release view "$tag" --repo "$GITHUB_REPOSITORY" > /dev/null 2>&1; then
+            gh release create "$tag" --repo "$GITHUB_REPOSITORY" \
+              --draft --verify-tag --title "$tag" --generate-notes
+          fi
+          find artifacts -type f \
+            \( -name '*.dmg' -o -name '*.exe' -o -name '*.deb' -o -name '*.tar.gz' \
+               -o -name '*.AppImage' -o -name 'PKGBUILD' -o -name 'install.sh' \) \
+            -print0 | xargs -0 gh release upload "$tag" --repo "$GITHUB_REPOSITORY" --clobber

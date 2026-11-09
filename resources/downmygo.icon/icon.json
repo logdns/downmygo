@@ -1,0 +1,26 @@
+{
+  "fill": {
+    "linear-gradient": [
+      "extended-srgb:0.29020,0.47059,1.00000,1.00000",
+      "extended-srgb:0.05882,0.65490,0.60392,1.00000"
+    ]
+  },
+  "groups": [
+    {
+      "layers": [
+        {
+          "name": "Mark",
+          "image-name": "glyph.png",
+          "fill": {
+            "solid": "extended-srgb:1.00000,1.00000,1.00000,1.00000"
+          }
+        }
+      ]
+    }
+  ],
+  "supported-platforms": {
+    "squares": [
+      "macOS"
+    ]
+  }
+}

@@ -1,0 +1,977 @@
+{
+  "@@locale": "en",
+  "mygo.appName": "downmygo",
+  "@mygo.appName": {
+    "description": "The app's name, as launchers show it."
+  },
+  "mygo.appDescription": "Downloads, on the go.",
+  "@mygo.appDescription": {
+    "description": "The app's description, as launchers show it."
+  },
+  "appTagline": "Downloads, on the go.",
+  "@appTagline": {
+    "description": "The line under the name in About."
+  },
+  "addURL": "Add URL",
+  "@addURL": {
+    "description": "The toolbar's main button."
+  },
+  "resume": "Resume",
+  "@resume": {
+    "description": "A button that starts a paused download."
+  },
+  "pause": "Pause",
+  "@pause": {
+    "description": "A button that stops a running download, keeping its parts."
+  },
+  "remove": "Remove",
+  "@remove": {
+    "description": "A button that takes a download out of the list."
+  },
+  "openFolder": "Open folder",
+  "@openFolder": {
+    "description": "A button that opens the download's folder."
+  },
+  "tasks": "Tasks",
+  "@tasks": {
+    "description": "The toolbar's menu of bulk actions."
+  },
+  "tasksPaste": "Paste links from the clipboard",
+  "@tasksPaste": {
+    "description": "A menu item that adds every link on the clipboard."
+  },
+  "tasksPauseAll": "Pause all",
+  "@tasksPauseAll": {
+    "description": "A menu item that pauses every download."
+  },
+  "tasksResumeAll": "Resume all",
+  "@tasksResumeAll": {
+    "description": "A menu item that resumes every paused download."
+  },
+  "tasksSoon": "Torrents and video downloads",
+  "@tasksSoon": {
+    "description": "A disabled menu item that says what a later version adds."
+  },
+  "searchDownloads": "Search downloads",
+  "@searchDownloads": {
+    "description": "The placeholder of the search field."
+  },
+  "options": "Options",
+  "@options": {
+    "description": "The settings dialog, and the button that opens it."
+  },
+  "sidebarDownloads": "Downloads",
+  "@sidebarDownloads": {
+    "description": "The sidebar's first section."
+  },
+  "sidebarAll": "All Downloads",
+  "@sidebarAll": {
+    "description": "The filter that shows every download."
+  },
+  "sidebarUnfinished": "Unfinished",
+  "@sidebarUnfinished": {
+    "description": "The filter that shows downloads that are not complete."
+  },
+  "sidebarFinished": "Finished",
+  "@sidebarFinished": {
+    "description": "The filter that shows complete downloads."
+  },
+  "sidebarCategories": "Categories",
+  "@sidebarCategories": {
+    "description": "The sidebar's section of file categories."
+  },
+  "sidebarQueues": "Queues",
+  "@sidebarQueues": {
+    "description": "The sidebar's section of queues."
+  },
+  "filterDownloads": "Downloads",
+  "@filterDownloads": {
+    "description": "The list's title when a filter has no name of its own."
+  },
+  "sort": "Sort",
+  "@sort": {
+    "description": "The button that opens the sort menu."
+  },
+  "sortName": "Name",
+  "@sortName": {
+    "description": "A column, and a way to sort."
+  },
+  "sortSize": "Size",
+  "@sortSize": {
+    "description": "A column, and a way to sort."
+  },
+  "sortProgress": "Progress",
+  "@sortProgress": {
+    "description": "A column, and a way to sort."
+  },
+  "sortSpeed": "Speed",
+  "@sortSpeed": {
+    "description": "A column, and a way to sort."
+  },
+  "sortStatus": "Status",
+  "@sortStatus": {
+    "description": "A column, and a way to sort."
+  },
+  "sortAdded": "Added",
+  "@sortAdded": {
+    "description": "A column, and a way to sort."
+  },
+  "sortDescending": "Descending",
+  "@sortDescending": {
+    "description": "A menu item that reverses the order."
+  },
+  "sortBy": "Sort by {column}",
+  "@sortBy": {
+    "description": "A column header's menu item.",
+    "placeholders": {
+      "column": {
+        "type": "String",
+        "example": "Size"
+      }
+    }
+  },
+  "details": "Details",
+  "@details": {
+    "description": "The switch that shows the selected download's card."
+  },
+  "emptyTitle": "No downloads here yet",
+  "@emptyTitle": {
+    "description": "The empty list's title."
+  },
+  "emptyBody": "Paste a link to start a download.",
+  "@emptyBody": {
+    "description": "The empty list's line."
+  },
+  "emptyAdd": "Add a download",
+  "@emptyAdd": {
+    "description": "The empty list's button."
+  },
+  "emptyTip": "Tip: copy a link anywhere and it appears here.",
+  "@emptyTip": {
+    "description": "The empty list's tip."
+  },
+  "statusQueued": "Queued",
+  "@statusQueued": {
+    "description": "A download waiting for its turn."
+  },
+  "statusConnecting": "Connecting",
+  "@statusConnecting": {
+    "description": "A download asking the server."
+  },
+  "statusDownloading": "Downloading",
+  "@statusDownloading": {
+    "description": "A download moving bytes."
+  },
+  "statusPaused": "Paused",
+  "@statusPaused": {
+    "description": "A download the user stopped."
+  },
+  "statusComplete": "Complete",
+  "@statusComplete": {
+    "description": "A download that finished."
+  },
+  "statusError": "Error",
+  "@statusError": {
+    "description": "A download that failed."
+  },
+  "statusWaiting": "Waiting",
+  "@statusWaiting": {
+    "description": "A download held by a queue or a limit."
+  },
+  "detailSize": "Size",
+  "@detailSize": {
+    "description": "The card's label of the file's size."
+  },
+  "detailDownloaded": "Downloaded",
+  "@detailDownloaded": {
+    "description": "The card's label of the bytes so far."
+  },
+  "detailSpeed": "Speed",
+  "@detailSpeed": {
+    "description": "The card's label of the current speed."
+  },
+  "detailTimeLeft": "Time left",
+  "@detailTimeLeft": {
+    "description": "The card's label of the time to finish."
+  },
+  "detailConnections": "Connections",
+  "@detailConnections": {
+    "description": "The card's label of the number of connections."
+  },
+  "detailStatus": "Status",
+  "@detailStatus": {
+    "description": "The card's label of the state."
+  },
+  "detailCopyLink": "Copy link",
+  "@detailCopyLink": {
+    "description": "A button that copies the download's address."
+  },
+  "detailShowInFolder": "Show in folder",
+  "@detailShowInFolder": {
+    "description": "A button that shows the file in the file manager."
+  },
+  "detailOpen": "Open",
+  "@detailOpen": {
+    "description": "A button that opens a finished file."
+  },
+  "statusActive": "{count, plural, =0 {Nothing running} one {# active} other {# active}}",
+  "@statusActive": {
+    "description": "The status bar's count of running downloads.",
+    "placeholders": {
+      "count": {
+        "type": "int",
+        "example": "2"
+      }
+    }
+  },
+  "statusLimit": "Limit {size} / {hours}h",
+  "@statusLimit": {
+    "description": "The status bar's traffic limit.",
+    "placeholders": {
+      "size": {
+        "type": "String",
+        "example": "200 MB"
+      },
+      "hours": {
+        "type": "int",
+        "example": "5"
+      }
+    }
+  },
+  "etaHoursMinutes": "{hours}h {minutes}m",
+  "@etaHoursMinutes": {
+    "description": "The time a download has left, hours and minutes.",
+    "placeholders": {
+      "hours": {
+        "type": "int",
+        "example": "2"
+      },
+      "minutes": {
+        "type": "int",
+        "example": "51"
+      }
+    }
+  },
+  "etaMinutesSeconds": "{minutes}m {seconds}s",
+  "@etaMinutesSeconds": {
+    "description": "The time a download has left, minutes and seconds.",
+    "placeholders": {
+      "minutes": {
+        "type": "int",
+        "example": "2"
+      },
+      "seconds": {
+        "type": "int",
+        "example": "51"
+      }
+    }
+  },
+  "etaSeconds": "{seconds}s",
+  "@etaSeconds": {
+    "description": "The time a download has left, seconds.",
+    "placeholders": {
+      "seconds": {
+        "type": "int",
+        "example": "40"
+      }
+    }
+  },
+  "statusRemote": "Remote :{port}",
+  "@statusRemote": {
+    "description": "The status bar's remote control port.",
+    "placeholders": {
+      "port": {
+        "type": "String",
+        "example": "8463"
+      }
+    }
+  },
+  "statusVersion": "v{version}",
+  "@statusVersion": {
+    "description": "The status bar's version.",
+    "placeholders": {
+      "version": {
+        "type": "String",
+        "example": "1.0.0"
+      }
+    }
+  },
+  "addTitle": "Add a download",
+  "@addTitle": {
+    "description": "The Add dialog's title."
+  },
+  "addLink": "Link",
+  "@addLink": {
+    "description": "The Add dialog's label of the URL field."
+  },
+  "addPaste": "Paste",
+  "@addPaste": {
+    "description": "A button that fills the URL field from the clipboard."
+  },
+  "addLookUp": "Look up",
+  "@addLookUp": {
+    "description": "A button that asks the server about the link."
+  },
+  "addProbing": "Asking the server…",
+  "@addProbing": {
+    "description": "The Add dialog's line while it probes."
+  },
+  "addAlreadyInList": "already in the list",
+  "@addAlreadyInList": {
+    "description": "The Add dialog's warning of a duplicate."
+  },
+  "addSaveAs": "Save as",
+  "@addSaveAs": {
+    "description": "The Add dialog's label of the file name."
+  },
+  "addFileName": "file name",
+  "@addFileName": {
+    "description": "The Add dialog's placeholder of the file name."
+  },
+  "addCategory": "Category",
+  "@addCategory": {
+    "description": "The Add dialog's label of the category."
+  },
+  "addSaveTo": "Save to",
+  "@addSaveTo": {
+    "description": "The Add dialog's label of the folder."
+  },
+  "addBrowse": "Browse…",
+  "@addBrowse": {
+    "description": "A button that opens the folder picker."
+  },
+  "addConnections": "Connections",
+  "@addConnections": {
+    "description": "The Add dialog's label of the number of connections."
+  },
+  "addConnectionsHint": "more connections help a slow server, not every server",
+  "@addConnectionsHint": {
+    "description": "The Add dialog's advice under the connections."
+  },
+  "addAdvanced": "Advanced",
+  "@addAdvanced": {
+    "description": "The Add dialog's section of less used fields."
+  },
+  "addReferer": "Referer",
+  "@addReferer": {
+    "description": "The Add dialog's label of the Referer header."
+  },
+  "addRefererHint": "Referer (optional)",
+  "@addRefererHint": {
+    "description": "The Add dialog's placeholder of the Referer header."
+  },
+  "addCookies": "Cookies",
+  "@addCookies": {
+    "description": "The Add dialog's label of the Cookie header."
+  },
+  "addCookiesHint": "Cookie header (optional)",
+  "@addCookiesHint": {
+    "description": "The Add dialog's placeholder of the Cookie header."
+  },
+  "addUserAgent": "User agent",
+  "@addUserAgent": {
+    "description": "The Add dialog's label of the User-Agent header."
+  },
+  "addChecksum": "Checksum",
+  "@addChecksum": {
+    "description": "The Add dialog's label of the checksum."
+  },
+  "addChecksumHint": "sha256:<hex> (optional)",
+  "@addChecksumHint": {
+    "description": "The Add dialog's placeholder of the checksum."
+  },
+  "addDescription": "Description",
+  "@addDescription": {
+    "description": "The Add dialog's label of the note."
+  },
+  "addDescriptionHint": "A note for yourself",
+  "@addDescriptionHint": {
+    "description": "The Add dialog's placeholder of the note."
+  },
+  "addCancel": "Cancel",
+  "@addCancel": {
+    "description": "A button that closes a dialog without doing anything."
+  },
+  "addLater": "Download later",
+  "@addLater": {
+    "description": "A button that adds a download without starting it."
+  },
+  "addStart": "Start download",
+  "@addStart": {
+    "description": "The Add dialog's main button."
+  },
+  "addResumable": "resumable",
+  "@addResumable": {
+    "description": "Says the server supports ranges."
+  },
+  "addOneStream": "one stream",
+  "@addOneStream": {
+    "description": "Says the server does not support ranges."
+  },
+  "optionsTitle": "Options",
+  "@optionsTitle": {
+    "description": "The Options dialog's title."
+  },
+  "tabGeneral": "General",
+  "@tabGeneral": {
+    "description": "The Options dialog's first tab."
+  },
+  "tabConnection": "Connection",
+  "@tabConnection": {
+    "description": "The Options dialog's tab of network settings."
+  },
+  "tabCategories": "Categories",
+  "@tabCategories": {
+    "description": "The Options dialog's tab of categories."
+  },
+  "tabQueues": "Queues",
+  "@tabQueues": {
+    "description": "The Options dialog's tab of queues."
+  },
+  "tabAdvanced": "Advanced",
+  "@tabAdvanced": {
+    "description": "The Options dialog's last tab."
+  },
+  "optionsDownloadFolder": "Download folder",
+  "@optionsDownloadFolder": {
+    "description": "The label of the default folder."
+  },
+  "optionsAppearance": "Appearance",
+  "@optionsAppearance": {
+    "description": "The label of the theme."
+  },
+  "themeSystem": "Follow the system",
+  "@themeSystem": {
+    "description": "The theme that follows the system's."
+  },
+  "themeLight": "Light",
+  "@themeLight": {
+    "description": "The light theme."
+  },
+  "themeDark": "Dark",
+  "@themeDark": {
+    "description": "The dark theme."
+  },
+  "optionsAccent": "Accent",
+  "@optionsAccent": {
+    "description": "The label of the accent color."
+  },
+  "optionsLanguage": "Language",
+  "@optionsLanguage": {
+    "description": "The label of the app's language."
+  },
+  "languageSystem": "Follow the system",
+  "@languageSystem": {
+    "description": "The language that follows the system's."
+  },
+  "optionsStartDownloads": "Start downloads as soon as they are added",
+  "@optionsStartDownloads": {
+    "description": "A setting."
+  },
+  "optionsShowAddDialog": "Show the Add dialog for new links",
+  "@optionsShowAddDialog": {
+    "description": "A setting."
+  },
+  "optionsClipboardWatch": "Offer to download links copied to the clipboard",
+  "@optionsClipboardWatch": {
+    "description": "A setting."
+  },
+  "optionsMinimizeToTray": "Minimize to the tray",
+  "@optionsMinimizeToTray": {
+    "description": "A setting."
+  },
+  "optionsCloseToTray": "Close to the tray, keep downloading",
+  "@optionsCloseToTray": {
+    "description": "A setting."
+  },
+  "optionsConfirmDelete": "Confirm before removing downloads",
+  "@optionsConfirmDelete": {
+    "description": "A setting."
+  },
+  "optionsNotifyComplete": "Notify when a download completes",
+  "@optionsNotifyComplete": {
+    "description": "A setting."
+  },
+  "optionsNotifyError": "Notify when a download fails",
+  "@optionsNotifyError": {
+    "description": "A setting."
+  },
+  "optionsFileDate": "Give finished files the server's date",
+  "@optionsFileDate": {
+    "description": "A setting."
+  },
+  "optionsConnectionsPerDownload": "Connections per download",
+  "@optionsConnectionsPerDownload": {
+    "description": "A setting."
+  },
+  "optionsLimitEach": "Limit each download (KB/s, 0 is none)",
+  "@optionsLimitEach": {
+    "description": "A setting."
+  },
+  "optionsLimitAll": "Limit all downloads (KB/s, 0 is none)",
+  "@optionsLimitAll": {
+    "description": "A setting."
+  },
+  "optionsRetries": "Tries per connection",
+  "@optionsRetries": {
+    "description": "A setting."
+  },
+  "optionsProxy": "Proxy",
+  "@optionsProxy": {
+    "description": "The label of the proxy."
+  },
+  "optionsProxyHint": "system, or socks5://host:port, or http://host:port",
+  "@optionsProxyHint": {
+    "description": "The placeholder of the proxy."
+  },
+  "optionsBind": "Bind every connection to this address (VPN kill switch)",
+  "@optionsBind": {
+    "description": "The label of the source address."
+  },
+  "optionsBindHint": "e.g. 10.8.0.2",
+  "@optionsBindHint": {
+    "description": "The placeholder of the source address."
+  },
+  "optionsLimitEnabled": "Limit how much is downloaded in a period",
+  "@optionsLimitEnabled": {
+    "description": "A setting."
+  },
+  "optionsNoMoreThan": "No more than",
+  "@optionsNoMoreThan": {
+    "description": "The start of the traffic limit's sentence."
+  },
+  "optionsMB": "MB every",
+  "@optionsMB": {
+    "description": "The middle of the traffic limit's sentence."
+  },
+  "optionsHours": "hours",
+  "@optionsHours": {
+    "description": "The end of the traffic limit's sentence."
+  },
+  "optionsCategoriesHint": "Each file type goes to its category's folder.",
+  "@optionsCategoriesHint": {
+    "description": "The Categories tab's line."
+  },
+  "optionsDeleteCategory": "Delete category",
+  "@optionsDeleteCategory": {
+    "description": "A button that removes a category."
+  },
+  "optionsNewCategory": "New category",
+  "@optionsNewCategory": {
+    "description": "The label of a new category's name."
+  },
+  "optionsName": "Name",
+  "@optionsName": {
+    "description": "The placeholder of a new category's or queue's name."
+  },
+  "optionsFileTypes": "File types",
+  "@optionsFileTypes": {
+    "description": "The label of a new category's file types."
+  },
+  "optionsTypesHint": "epub mobi",
+  "@optionsTypesHint": {
+    "description": "The placeholder of a new category's file types."
+  },
+  "optionsFolder": "Folder",
+  "@optionsFolder": {
+    "description": "The label of a new category's folder."
+  },
+  "optionsFolderHint": "empty: under Downloads",
+  "@optionsFolderHint": {
+    "description": "The placeholder of a new category's folder."
+  },
+  "optionsAdd": "Add",
+  "@optionsAdd": {
+    "description": "A button that adds a category or a queue."
+  },
+  "optionsStart": "Start",
+  "@optionsStart": {
+    "description": "A button that starts a queue."
+  },
+  "optionsStop": "Stop",
+  "@optionsStop": {
+    "description": "A button that stops a queue."
+  },
+  "optionsQueueDownload": "Download",
+  "@optionsQueueDownload": {
+    "description": "The start of a queue's parallelism sentence."
+  },
+  "optionsQueueAtOnce": "files at the same time",
+  "@optionsQueueAtOnce": {
+    "description": "The end of a queue's parallelism sentence."
+  },
+  "optionsStartAt": "Start at",
+  "@optionsStartAt": {
+    "description": "The label of a queue's start time."
+  },
+  "optionsStopAt": "Stop at",
+  "@optionsStopAt": {
+    "description": "The label of a queue's stop time."
+  },
+  "optionsOnce": "Once",
+  "@optionsOnce": {
+    "description": "The label of a queue's one-time date."
+  },
+  "optionsOnStartup": "Start when downmygo starts",
+  "@optionsOnStartup": {
+    "description": "A setting of a queue."
+  },
+  "optionsWake": "Wake the computer for this queue",
+  "@optionsWake": {
+    "description": "A setting of a queue."
+  },
+  "optionsWhenDone": "When done",
+  "@optionsWhenDone": {
+    "description": "The label of what a queue does when it finishes."
+  },
+  "optionsPowerNever": "Do nothing",
+  "@optionsPowerNever": {
+    "description": "A queue leaves the computer on."
+  },
+  "optionsPowerSleep": "Sleep",
+  "@optionsPowerSleep": {
+    "description": "A queue puts the computer to sleep."
+  },
+  "optionsPowerShutdown": "Shut down",
+  "@optionsPowerShutdown": {
+    "description": "A queue shuts the computer down."
+  },
+  "optionsPowerHibernate": "Hibernate",
+  "@optionsPowerHibernate": {
+    "description": "A queue hibernates the computer."
+  },
+  "optionsQuit": "Quit downmygo",
+  "@optionsQuit": {
+    "description": "A setting of a queue."
+  },
+  "optionsNewQueue": "New queue",
+  "@optionsNewQueue": {
+    "description": "The label of a new queue's name."
+  },
+  "optionsDeleteQueue": "Delete queue",
+  "@optionsDeleteQueue": {
+    "description": "A button that removes a queue."
+  },
+  "optionsUserAgent": "User-Agent",
+  "@optionsUserAgent": {
+    "description": "The label of the User-Agent header."
+  },
+  "optionsRemote": "Let phones on the local network control downmygo",
+  "@optionsRemote": {
+    "description": "A setting."
+  },
+  "optionsPort": "Port",
+  "@optionsPort": {
+    "description": "The label of the remote control port."
+  },
+  "optionsToken": "API token",
+  "@optionsToken": {
+    "description": "The label of the API's token."
+  },
+  "optionsCopy": "Copy",
+  "@optionsCopy": {
+    "description": "A button that copies the token."
+  },
+  "optionsDataFolder": "Data folder",
+  "@optionsDataFolder": {
+    "description": "The label of the folder the app keeps its data in."
+  },
+  "optionsDone": "Done",
+  "@optionsDone": {
+    "description": "The Options dialog's button that closes it."
+  },
+  "confirmRemoveTitle": "Remove from the list?",
+  "@confirmRemoveTitle": {
+    "description": "The confirmation of a removal."
+  },
+  "confirmDeleteTitle": "Delete the file?",
+  "@confirmDeleteTitle": {
+    "description": "The confirmation of a deletion."
+  },
+  "confirmRemoveBody": "The download stays on disk unless you delete it.",
+  "@confirmRemoveBody": {
+    "description": "The confirmation's line."
+  },
+  "confirmDeleteFile": "Delete file",
+  "@confirmDeleteFile": {
+    "description": "A button that deletes the file and removes the download."
+  },
+  "confirmCancel": "Cancel",
+  "@confirmCancel": {
+    "description": "A button that closes the confirmation."
+  },
+  "aboutVersion": "Version {version}",
+  "@aboutVersion": {
+    "description": "The About dialog's version.",
+    "placeholders": {
+      "version": {
+        "type": "String",
+        "example": "1.0.0"
+      }
+    }
+  },
+  "aboutClose": "Close",
+  "@aboutClose": {
+    "description": "The About dialog's button."
+  },
+  "menuOpen": "Open",
+  "@menuOpen": {
+    "description": "A row's menu item that opens the file."
+  },
+  "menuShowInFolder": "Show in folder",
+  "@menuShowInFolder": {
+    "description": "A row's menu item."
+  },
+  "menuCopyLink": "Copy link",
+  "@menuCopyLink": {
+    "description": "A row's menu item."
+  },
+  "menuAddToQueue": "Add to queue",
+  "@menuAddToQueue": {
+    "description": "A row's submenu of queues."
+  },
+  "menuNoQueue": "No queue",
+  "@menuNoQueue": {
+    "description": "A row's submenu item that takes the download out of its queue."
+  },
+  "menuRemoveFromList": "Remove from list",
+  "@menuRemoveFromList": {
+    "description": "A row's menu item."
+  },
+  "menuDeleteFile": "Delete file and remove",
+  "@menuDeleteFile": {
+    "description": "A row's menu item."
+  },
+  "toastSaveFailed": "Could not save: {error}",
+  "@toastSaveFailed": {
+    "description": "A toast shown when the state cannot be written.",
+    "placeholders": {
+      "error": {
+        "type": "String",
+        "example": "permission denied"
+      }
+    }
+  },
+  "toastAlreadyDownloaded": "That file is already downloaded.",
+  "@toastAlreadyDownloaded": {
+    "description": "A toast shown when a link is added twice."
+  },
+  "toastLinkCopied": "Link copied.",
+  "@toastLinkCopied": {
+    "description": "A toast shown after copying a link."
+  },
+  "toastOpenFailed": "Could not open the file: {error}",
+  "@toastOpenFailed": {
+    "description": "A toast shown when a file cannot be opened.",
+    "placeholders": {
+      "error": {
+        "type": "String",
+        "example": "no application"
+      }
+    }
+  },
+  "toastTokenCopied": "Token copied.",
+  "@toastTokenCopied": {
+    "description": "A toast shown after copying the API token."
+  },
+  "errPasteLink": "Paste a link first.",
+  "@errPasteLink": {
+    "description": "The Add dialog's error when the URL is empty."
+  },
+  "errOnlyHTTP": "Only http:// and https:// links work for now.",
+  "@errOnlyHTTP": {
+    "description": "The Add dialog's error for another scheme."
+  },
+  "errDuplicate": "This link is already in the list. Add it again?",
+  "@errDuplicate": {
+    "description": "The Add dialog's error for a duplicate."
+  },
+  "errLimitReached": "Waiting: the download limit is reached",
+  "@errLimitReached": {
+    "description": "A download's state while the traffic limit holds it."
+  },
+  "notifyCompleteTitle": "Download complete",
+  "@notifyCompleteTitle": {
+    "description": "A notification's title."
+  },
+  "notifyFailedTitle": "Download failed",
+  "@notifyFailedTitle": {
+    "description": "A notification's title."
+  },
+  "timeJustNow": "just now",
+  "@timeJustNow": {
+    "description": "A download added less than a minute ago."
+  },
+  "timeMinutesAgo": "{count}m ago",
+  "@timeMinutesAgo": {
+    "description": "A download added minutes ago.",
+    "placeholders": {
+      "count": {
+        "type": "int",
+        "example": "5"
+      }
+    }
+  },
+  "menuAbout": "About downmygo",
+  "@menuAbout": {
+    "description": "The app menu's item."
+  },
+  "menuOptions": "Options…",
+  "@menuOptions": {
+    "description": "The app menu's item."
+  },
+  "menuQuit": "Quit downmygo",
+  "@menuQuit": {
+    "description": "The app menu's item."
+  },
+  "menuFile": "File",
+  "@menuFile": {
+    "description": "The menu bar's File menu."
+  },
+  "menuAddURL": "Add URL…",
+  "@menuAddURL": {
+    "description": "The File menu's item."
+  },
+  "menuAddTorrent": "Add Torrent…",
+  "@menuAddTorrent": {
+    "description": "The File menu's item, disabled for now."
+  },
+  "menuPasteLinks": "Paste links",
+  "@menuPasteLinks": {
+    "description": "The File menu's item."
+  },
+  "menuCloseWindow": "Close Window",
+  "@menuCloseWindow": {
+    "description": "The File menu's item."
+  },
+  "menuDownloads": "Downloads",
+  "@menuDownloads": {
+    "description": "The menu bar's Downloads menu."
+  },
+  "menuPauseAll": "Pause all",
+  "@menuPauseAll": {
+    "description": "The Downloads menu's item."
+  },
+  "menuResumeAll": "Resume all",
+  "@menuResumeAll": {
+    "description": "The Downloads menu's item."
+  },
+  "menuStartMain": "Start main queue",
+  "@menuStartMain": {
+    "description": "The Downloads menu's item."
+  },
+  "menuStopMain": "Stop main queue",
+  "@menuStopMain": {
+    "description": "The Downloads menu's item."
+  },
+  "menuView": "View",
+  "@menuView": {
+    "description": "The menu bar's View menu."
+  },
+  "menuLight": "Light",
+  "@menuLight": {
+    "description": "The View menu's item."
+  },
+  "menuDark": "Dark",
+  "@menuDark": {
+    "description": "The View menu's item."
+  },
+  "menuSystem": "Follow the system",
+  "@menuSystem": {
+    "description": "The View menu's item."
+  },
+  "menuHelp": "Help",
+  "@menuHelp": {
+    "description": "The menu bar's Help menu."
+  },
+  "menuWebsite": "downmygo on the web",
+  "@menuWebsite": {
+    "description": "The Help menu's item."
+  },
+  "menuShortcuts": "Keyboard shortcuts",
+  "@menuShortcuts": {
+    "description": "The Help menu's item."
+  },
+  "trayShow": "Show downmygo",
+  "@trayShow": {
+    "description": "The tray menu's item."
+  },
+  "trayQuit": "Quit",
+  "@trayQuit": {
+    "description": "The tray menu's item."
+  },
+  "catGeneral": "General",
+  "@catGeneral": {
+    "description": "The category of files of no other kind."
+  },
+  "catCompressed": "Compressed",
+  "@catCompressed": {
+    "description": "The category of archives."
+  },
+  "catDocuments": "Documents",
+  "@catDocuments": {
+    "description": "The category of documents."
+  },
+  "catMusic": "Music",
+  "@catMusic": {
+    "description": "The category of music."
+  },
+  "catVideo": "Video",
+  "@catVideo": {
+    "description": "The category of videos."
+  },
+  "catPrograms": "Programs",
+  "@catPrograms": {
+    "description": "The category of programs."
+  },
+  "catTorrents": "Torrents",
+  "@catTorrents": {
+    "description": "The category of torrent files."
+  },
+  "queueMain": "Main download queue",
+  "@queueMain": {
+    "description": "The queue every download joins by default."
+  },
+  "queueSync": "Synchronization queue",
+  "@queueSync": {
+    "description": "The queue of files kept in step."
+  },
+  "browseFolderTitle": "Choose a folder",
+  "@browseFolderTitle": {
+    "description": "The folder picker's title."
+  },
+  "remoteTitle": "downmygo",
+  "@remoteTitle": {
+    "description": "The remote control page's title."
+  },
+  "remotePlaceholder": "Paste a link",
+  "@remotePlaceholder": {
+    "description": "The remote control page's field."
+  },
+  "remoteAdd": "Add",
+  "@remoteAdd": {
+    "description": "The remote control page's button."
+  },
+  "remoteLoading": "Loading…",
+  "@remoteLoading": {
+    "description": "The remote control page's first line."
+  },
+  "remoteEmpty": "No downloads yet",
+  "@remoteEmpty": {
+    "description": "The remote control page's empty list."
+  },
+  "remoteOf": "{done} of {size}",
+  "@remoteOf": {
+    "description": "The remote control page's line of a download's progress.",
+    "placeholders": {
+      "done": {
+        "type": "String",
+        "example": "1.2 MB"
+      },
+      "size": {
+        "type": "String",
+        "example": "4.0 MB"
+      }
+    }
+  }
+}

@@ -1,0 +1,37 @@
+{
+  "name": "downmygo",
+  "slug": "downmygo",
+  "identifier": "app.downmygo.desktop",
+  "version": "1.0.0",
+  "copyright": "© 2026 downmygo",
+  "publisher": "downmygo",
+  "license": "MIT",
+  "icon": "resources/icon.png",
+  "out": "build",
+  "urlSchemes": [
+    "downmygo"
+  ],
+  "macos": {
+    "infoPlist": {
+      "LSApplicationCategoryType": "public.app-category.utilities",
+      "NSHumanReadableCopyright": "© 2026 downmygo"
+    }
+  },
+  "linux": {
+    "maintainer": "downmygo <hello@downmygo.app>",
+    "comment": "Downloads, on the go.",
+    "categories": [
+      "Network",
+      "FileTransfer"
+    ],
+    "webview": false,
+    "command": "downmygo"
+  },
+  "i18n": {
+    "dir": "locales",
+    "source": "en"
+  },
+  "resourcesExclude": [
+    "downmygo.icon/**"
+  ]
+}
