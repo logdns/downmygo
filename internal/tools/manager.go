@@ -13,6 +13,7 @@ import (
 	"path/filepath"
 	"runtime"
 	"strings"
+	"sync"
 	"time"
 )
 
@@ -26,6 +27,9 @@ type Manager struct {
 	Client *http.Client
 	// Progress hears how a download goes, for the window.
 	Progress func(kind Kind, done, total int64)
+
+	// mu keeps two downloads from installing the same program at once.
+	mu sync.Mutex
 }
 
 func (m *Manager) client() *http.Client {
@@ -74,6 +78,12 @@ func (m *Manager) managedPath(kind Kind) string {
 // Ensure makes a program runnable, downloading it when it is neither on
 // PATH nor in the app's folder.
 func (m *Manager) Ensure(ctx context.Context, kind Kind) (string, error) {
+	if p, ok := m.Path(kind); ok {
+		return p, nil
+	}
+	m.mu.Lock()
+	defer m.mu.Unlock()
+	// Another download may have installed it while this one waited.
 	if p, ok := m.Path(kind); ok {
 		return p, nil
 	}

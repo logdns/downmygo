@@ -237,9 +237,16 @@ func (e *Engine) watch(ctx context.Context, id string, j *job, onProgress func(P
 	case <-ctx.Done():
 		return
 	case <-time.After(2 * time.Minute):
+		// No metadata came: say so, and forget the job.
 		if onProgress != nil {
 			onProgress(Progress{Name: j.torrent.InfoHash().String()})
 		}
+		e.mu.Lock()
+		if e.jobs[id] == j {
+			delete(e.jobs, id)
+		}
+		e.mu.Unlock()
+		j.torrent.Drop()
 		return
 	}
 

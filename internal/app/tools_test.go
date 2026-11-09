@@ -4,9 +4,11 @@ import (
 	"os"
 	"path/filepath"
 	"runtime"
+	"strings"
 	"testing"
 	"time"
 
+	"github.com/downmygo/downmygo/internal/engine"
 	"github.com/downmygo/downmygo/internal/model"
 	"github.com/downmygo/downmygo/internal/store"
 	"github.com/downmygo/downmygo/internal/tools"
@@ -115,5 +117,19 @@ func TestToolManagerLivesInTheDataFolder(t *testing.T) {
 	}
 	if _, ok := m.Path(tools.YtDlp); ok {
 		t.Fatal("a tool was found in an empty folder")
+	}
+}
+
+func TestTorrentNamesAreCleaned(t *testing.T) {
+	// A magnet's display name is a file name, and it must not be able to
+	// name a path.
+	for _, raw := range []string{
+		"magnet:?xt=urn:btih:abc&dn=../../etc/passwd",
+		"magnet:?xt=urn:btih:abc&dn=a/b",
+	} {
+		got := engine.SanitizeName(torrentName(raw))
+		if strings.ContainsAny(got, `/\`) || got == ".." {
+			t.Errorf("%q became %q", raw, got)
+		}
 	}
 }

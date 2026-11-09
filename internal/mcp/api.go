@@ -103,7 +103,7 @@ func (b *APIBackend) Call(ctx context.Context, tool string, args map[string]any)
 		if err := b.post(ctx, "/api/"+action+"?id="+url.QueryEscape(id), nil, nil); err != nil {
 			return "", err
 		}
-		return fmt.Sprintf("%s: %s.", strings.Title(action), id), nil
+		return fmt.Sprintf("%s: %s.", capital(action), id), nil
 	case "download_remove":
 		id, _ := args["id"].(string)
 		if id == "" {
@@ -195,6 +195,14 @@ func (b *APIBackend) do(ctx context.Context, method, path string, body, dst any)
 		return nil
 	}
 	return json.Unmarshal(payload, dst)
+}
+
+// capital writes a word with its first letter up, as "Paused: a1b2".
+func capital(s string) string {
+	if s == "" {
+		return s
+	}
+	return strings.ToUpper(s[:1]) + s[1:]
 }
 
 func humanBytes(n int64) string {

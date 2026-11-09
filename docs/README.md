@@ -2,12 +2,12 @@
 
 | 文档 | 内容 |
 |---|---|
-| [01 · MDM 完整分析](01-mdm-analysis.md) | 对 Mister Download Manager 的架构、引擎、功能、UI、i18n、安全、测试与局限的完整拆解 |
-| [02 · 产品定义](02-downmygo-product.md) | 品牌、定位、设计系统、功能范围、用户流程、非功能需求、路线图 |
-| [03 · 技术架构](03-architecture.md) | Go/MyGo 架构、引擎算法、线程模型、持久化、UI、API、CLI、构建、扩展点 |
-| [04 · 功能对照](04-feature-parity.md) | MDM 功能 → downmygo 状态（已实现/部分/计划/不做） |
-| [05 · 功能、逻辑与特点](05-features.md) | 启动与下载流程、状态机、队列调度、限速、API、多语言、打包发布 |
-| [06 · 路线图状态](06-roadmap-status.md) | 浏览器、订阅、外部下载器、DNS、debrid、MCP、主题、更新的逐项状态 |
+| [01 · 架构](01-architecture.md) | 目录、线程、HTTP 引擎、种子、持久化、界面、API、外部程序、更新、构建 |
+| [02 · 功能与状态](02-features.md) | 每项功能的状态与做法、程序逻辑、状态机、语言、明确不做的 |
+| [03 · 设计](03-design.md) | 品牌与标志、颜色、字体间距、布局与自适应、组件、语言、动效 |
+| [04 · 参考：MDM](04-mdm.md) | 立项时对 Mister Download Manager 的拆解与功能对照 |
+
+英文：根目录的 [README.en.md](../README.en.md)。
 
 ## 截图
 

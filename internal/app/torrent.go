@@ -7,6 +7,7 @@ import (
 	"strings"
 	"time"
 
+	"github.com/downmygo/downmygo/internal/engine"
 	"github.com/downmygo/downmygo/internal/model"
 	"github.com/downmygo/downmygo/internal/torrent"
 	"github.com/downmygo/downmygo/locales"
@@ -41,7 +42,9 @@ func (a *App) addTorrent(raw string) *model.Download {
 		a.toast = locales.ToastTorrentFailed(err.Error())
 		return nil
 	}
-	name := torrentName(raw)
+	// A torrent's name comes from the link, and a magnet can say
+	// anything: it names a file, so it is cleaned like one.
+	name := engine.SanitizeName(torrentName(raw))
 	// The client writes into one folder, so a torrent stays in the
 	// download folder even though its category is Torrents.
 	d := &model.Download{
@@ -172,9 +175,12 @@ func (a *App) removeTorrent(d *model.Download, deleteFile bool) {
 		delete(a.torrentCancels, d.ID)
 	}
 	if deleteFile {
-		// A torrent writes a file or a folder named after it.
+		// A torrent writes a file or a folder named after it; it must be
+		// inside the download folder, whatever the name says.
 		path := filepath.Join(d.Dir, d.FileName)
-		_ = os.RemoveAll(path)
+		if rel, err := filepath.Rel(d.Dir, path); err == nil && rel != ".." && !strings.HasPrefix(rel, ".."+string(filepath.Separator)) {
+			_ = os.RemoveAll(path)
+		}
 	}
 }
 
