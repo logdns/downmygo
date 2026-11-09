@@ -169,8 +169,9 @@ downmygo https://example.com/file.zip
 
 - yt-dlp：视频站点交给它；没装时自动下载官方二进制，进度显示在列表里
 - gallery-dl：图库站点交给它；没装时自动安装（Windows 用官方 exe，其他平台用 PyPI wheel + 系统 python3）
-- 解压：zip / tar / tar.gz / tar.bz2，完成后自动解压（可选删除压缩包），拒绝路径穿越
+- 解压：zip / 7z / rar / tar / tar.gz / tar.bz2 / tar.xz，完成后自动解压（可选删除压缩包），拒绝路径穿越
 - 种子 / magnet：内置 BitTorrent 客户端（DHT、tracker、peer），`magnet:`、`.torrent` 文件与链接都能直接下载，可暂停/继续/删除文件
+- 做种：完成后继续分享，按分享率或时长停止；上传限速；界面显示「做种中」、已上传与分享率
 
 ### 网络与生态
 
@@ -179,7 +180,7 @@ downmygo https://example.com/file.zip
 - debrid：Real-Debrid / AllDebrid 换直链，失败回退原链接
 - MCP：`downmygo mcp`，7 个工具
 - 主题文件：JSON 覆盖 19 个颜色角色与圆角/间距
-- 自动更新：查 GitHub 最新 Release，比较版本，打开发布页
+- 自动更新：查 GitHub 最新 Release、校验 SHA-256、下载并替换自身（macOS 换 .app、Windows 跑静默安装包、Linux 解包覆盖），可设为静默安装
 
 ### 外观
 

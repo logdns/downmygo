@@ -17,6 +17,7 @@ import (
 	"github.com/anacrolix/torrent"
 	"github.com/anacrolix/torrent/metainfo"
 	"github.com/anacrolix/torrent/storage"
+	"golang.org/x/time/rate"
 )
 
 // Config is how the client behaves.
@@ -29,6 +30,14 @@ type Config struct {
 	ListenPort int
 	// Seed keeps sharing after the download is done.
 	Seed bool
+	// SeedRatio stops seeding at this share ratio (uploaded / size); 0
+	// keeps seeding until SeedTime.
+	SeedRatio float64
+	// SeedTime stops seeding after this long; 0 keeps seeding.
+	SeedTime time.Duration
+	// UploadLimit is the most this client uploads, in bytes per second; 0
+	// is no limit.
+	UploadLimit int64
 	// DisableDHT turns the distributed hash table off, for a private
 	// tracker or a test.
 	DisableDHT bool
@@ -45,8 +54,15 @@ type Progress struct {
 	Peers   int
 	Percent float64
 	Files   int
+	// Uploaded is how much this torrent has shared, and Ratio is that
+	// over its size.
+	Uploaded    int64
+	UploadSpeed float64
+	Ratio       float64
 	// Complete says every byte is on disk.
 	Complete bool
+	// Seeding says the download is done and the torrent is still sharing.
+	Seeding bool
 }
 
 // Engine runs the torrents of one app.
@@ -66,6 +82,7 @@ type job struct {
 	speed    float64
 	paused   bool
 	done     bool
+	doneAt   time.Time
 }
 
 // New starts a client.
@@ -89,6 +106,14 @@ func New(cfg Config) (*Engine, error) {
 	cc.Seed = cfg.Seed
 	cc.NoDHT = cfg.DisableDHT
 	cc.DisableTrackers = cfg.DisableTrackers
+	if cfg.UploadLimit > 0 {
+		// A burst of a quarter second keeps small pieces moving.
+		burst := int(cfg.UploadLimit / 4)
+		if burst < 16<<10 {
+			burst = 16 << 10
+		}
+		cc.UploadRateLimiter = rate.NewLimiter(rate.Limit(cfg.UploadLimit), burst)
+	}
 	cc.DisableIPv6 = true
 	cc.DisableTCP = false
 	cc.DisableUTP = false
@@ -234,22 +259,51 @@ func (e *Engine) watch(ctx context.Context, id string, j *job, onProgress func(P
 		case <-ticker.C:
 		}
 		p := e.progress(j)
+		if p.Complete && !j.done {
+			e.mu.Lock()
+			j.done = true
+			j.doneAt = time.Now()
+			e.mu.Unlock()
+		}
+		if p.Complete && e.cfg.Seed && !e.seedOver(j) {
+			p.Seeding = true
+		}
 		if onProgress != nil {
 			onProgress(p)
 		}
-		if p.Complete {
-			e.mu.Lock()
-			j.done = true
-			e.mu.Unlock()
+		if p.Complete && (!e.cfg.Seed || e.seedOver(j)) {
+			// Sharing stops here; the files stay.
+			j.torrent.DisallowDataUpload()
 			return
 		}
 	}
 }
 
+// seedOver says whether a finished torrent has shared enough.
+func (e *Engine) seedOver(j *job) bool {
+	if e.cfg.SeedTime > 0 && !j.doneAt.IsZero() && time.Since(j.doneAt) >= e.cfg.SeedTime {
+		return true
+	}
+	if e.cfg.SeedRatio > 0 {
+		size := j.torrent.Length()
+		if size > 0 {
+			st := j.torrent.Stats()
+			uploaded := st.BytesWrittenData.Int64()
+			if float64(uploaded)/float64(size) >= e.cfg.SeedRatio {
+				return true
+			}
+		}
+	}
+	return false
+}
+
 func (e *Engine) progress(j *job) Progress {
 	done := j.torrent.BytesCompleted()
 	size := j.torrent.Length()
-	peers := j.torrent.Stats().ActivePeers
+	stats := j.torrent.Stats()
+	peers := stats.ActivePeers
+	written := stats.BytesWrittenData
+	uploaded := written.Int64()
 
 	e.mu.Lock()
 	now := time.Now()
@@ -265,13 +319,16 @@ func (e *Engine) progress(j *job) Progress {
 
 	p := Progress{
 		Name: j.name, Done: done, Size: size, Speed: speed, Peers: peers,
-		Files: len(j.torrent.Files()),
+		Files: len(j.torrent.Files()), Uploaded: uploaded,
 	}
 	if size > 0 {
 		p.Percent = float64(done) / float64(size)
 		if p.Percent > 1 {
 			p.Percent = 1
 		}
+	}
+	if size > 0 {
+		p.Ratio = float64(uploaded) / float64(size)
 	}
 	p.Complete = size > 0 && done >= size
 	return p
@@ -281,6 +338,7 @@ func (e *Engine) progress(j *job) Progress {
 func (e *Engine) Pause(id string) {
 	if j := e.get(id); j != nil {
 		j.torrent.DisallowDataDownload()
+		j.torrent.DisallowDataUpload()
 		e.mu.Lock()
 		j.paused = true
 		j.speed = 0
@@ -292,6 +350,9 @@ func (e *Engine) Pause(id string) {
 func (e *Engine) Resume(id string) {
 	if j := e.get(id); j != nil {
 		j.torrent.AllowDataDownload()
+		if e.cfg.Seed {
+			j.torrent.AllowDataUpload()
+		}
 		e.mu.Lock()
 		j.paused = false
 		j.lastAt = time.Now()

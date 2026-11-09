@@ -1,13 +1,11 @@
-// Package extract unpacks an archive a download finished with: zip, tar,
-// tar.gz, tar.bz2 and tar.xz, into a folder beside it. It refuses entries
-// that would leave that folder, so an archive cannot write where it likes.
+// Package extract unpacks an archive a download finished with: zip, 7z,
+// rar, tar, tar.gz, tar.bz2 and tar.xz, into a folder beside it. It
+// refuses entries that would leave that folder, so an archive cannot
+// write where it likes.
 package extract
 
 import (
-	"archive/tar"
 	"archive/zip"
-	"compress/bzip2"
-	"compress/gzip"
 	"errors"
 	"fmt"
 	"io"
@@ -21,23 +19,6 @@ import (
 func Supported(name string) bool {
 	_, ok := kindOf(name)
 	return ok
-}
-
-func kindOf(name string) (string, bool) {
-	n := strings.ToLower(name)
-	switch {
-	case strings.HasSuffix(n, ".zip"):
-		return "zip", true
-	case strings.HasSuffix(n, ".tar.gz"), strings.HasSuffix(n, ".tgz"):
-		return "targz", true
-	case strings.HasSuffix(n, ".tar.bz2"), strings.HasSuffix(n, ".tbz2"):
-		return "tarbz2", true
-	case strings.HasSuffix(n, ".tar.xz"), strings.HasSuffix(n, ".txz"):
-		return "tarxz", true
-	case strings.HasSuffix(n, ".tar"):
-		return "tar", true
-	}
-	return "", false
 }
 
 // Options say where to unpack and what to leave out.
@@ -54,31 +35,6 @@ type Result struct {
 	Dir   string
 	Files int
 	Bytes int64
-}
-
-// Extract unpacks archive into opts.Dir.
-func Extract(archive string, opts Options) (Result, error) {
-	kind, ok := kindOf(archive)
-	if !ok {
-		return Result{}, fmt.Errorf("%s is not an archive this app opens", filepath.Base(archive))
-	}
-	dir := opts.Dir
-	if dir == "" {
-		dir = filepath.Join(filepath.Dir(archive), strings.TrimSuffix(filepath.Base(archive), filepath.Ext(archive)))
-		dir = strings.TrimSuffix(dir, ".tar")
-	}
-	if err := os.MkdirAll(dir, 0o755); err != nil {
-		return Result{}, err
-	}
-	res := Result{Dir: dir}
-	var err error
-	switch kind {
-	case "zip":
-		err = extractZip(archive, dir, opts, &res)
-	default:
-		err = extractTar(archive, kind, dir, opts, &res)
-	}
-	return res, err
 }
 
 // safePath joins dir and name, refusing anything that would leave dir.
@@ -141,66 +97,6 @@ func extractZip(archive, dir string, opts Options, res *Result) error {
 		res.Bytes += n
 	}
 	return nil
-}
-
-func extractTar(archive, kind, dir string, opts Options, res *Result) error {
-	f, err := os.Open(archive)
-	if err != nil {
-		return err
-	}
-	defer f.Close()
-	var r io.Reader = f
-	switch kind {
-	case "targz":
-		gz, err := gzip.NewReader(f)
-		if err != nil {
-			return err
-		}
-		defer gz.Close()
-		r = gz
-	case "tarbz2":
-		r = bzip2.NewReader(f)
-	case "tarxz":
-		return fmt.Errorf("xz archives need an external tool; unxz it first")
-	}
-	tr := tar.NewReader(r)
-	for {
-		h, err := tr.Next()
-		if errors.Is(err, io.EOF) {
-			return nil
-		}
-		if err != nil {
-			return err
-		}
-		target, err := safePath(dir, h.Name)
-		if err != nil {
-			return err
-		}
-		switch h.Typeflag {
-		case tar.TypeDir:
-			if err := os.MkdirAll(target, 0o755); err != nil {
-				return err
-			}
-		case tar.TypeReg:
-			if err := os.MkdirAll(filepath.Dir(target), 0o755); err != nil {
-				return err
-			}
-			if !opts.Overwrite {
-				if _, err := os.Stat(target); err == nil {
-					continue
-				}
-			}
-			n, err := writeFile(target, tr)
-			if err != nil {
-				return err
-			}
-			res.Files++
-			res.Bytes += n
-		case tar.TypeSymlink, tar.TypeLink:
-			// Links are how an archive escapes its folder; leave them out.
-			continue
-		}
-	}
 }
 
 func writeFile(target string, r io.Reader) (int64, error) {

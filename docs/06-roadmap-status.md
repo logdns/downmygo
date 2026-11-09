@@ -38,9 +38,11 @@
 | RSS / Atom 订阅 | ✅ | `internal/rss`、订阅对话框 | 定时检查、按扩展名或 enclosure 取件、记住已取过的条目 |
 | yt-dlp 视频 | ✅ | `internal/tools` | 未安装时自动从 GitHub 下载（macOS/Linux/Windows 各自的原生二进制），进度显示在列表里 |
 | gallery-dl 图库 | ✅ | `internal/tools` | 未安装时自动安装：Windows 用官方 exe，其他平台从 PyPI 取 wheel 解包，用系统 python3 运行 |
-| 解压 | ✅ | `internal/extract` | zip / tar / tar.gz / tar.bz2；拒绝路径穿越与符号链接；xz 需外部工具 |
+| 解压 | ✅ | `internal/extract` | zip / 7z / rar / tar / tar.gz / tar.bz2 / tar.xz；拒绝路径穿越与符号链接 |
 | 链接抓取 | ✅ | `internal/grab`、抓取对话框 | 解析页面 href/src，按扩展名过滤，勾选后加入 |
-| 种子 / magnet | ✅ | `internal/torrent` | 内置 BitTorrent 客户端（anacrolix/torrent）：DHT、tracker、peer、暂停/继续、删除文件；`magnet:`、`.torrent` 文件与 `.torrent` 链接都能直接下载 |
+| 种子 / magnet | ✅ | `internal/torrent` | 内置 BitTorrent 客户端（anacrolix/torrent）：DHT、tracker、peer、暂停/继续、删除文件；`magnet:`、`.torrent` 文件与链接都能直接下载 |
+| 做种 | ✅ | `internal/torrent` | 完成后继续做种，按分享率或时长停止；界面上有「做种中」状态、已上传与分享率 |
+| 上传限速 | ✅ | `internal/torrent` | 令牌桶限制上传速率（KB/s） |
 | 视频站内嵌字幕/播放列表 | ○ | — | 交给 yt-dlp 的参数，未做界面 |
 
 ## 4. 网络、工具与生态
@@ -53,7 +55,7 @@
 | MCP | ✅ | `internal/mcp`、`downmygo mcp` | stdio JSON-RPC，7 个工具：列表、添加、暂停、继续、删除、队列、选项 |
 | 主题文件 | ✅ | `internal/themes` | JSON，覆盖 19 个颜色角色与圆角/间距，可从内置浅色/深色继承 |
 | 完整 i18n | ✅ | `locales/` | 界面、菜单、托盘、通知、远程页、API 状态、日期数字复数；CLI 与技术错误保留英文 |
-| 自动更新 | ✅ | `internal/update` | 查 GitHub 最新 Release，比较版本，打开发布页；不做静默替换 |
+| 自动更新 | ✅ | `internal/update` | 查 GitHub 最新 Release、校验 SHA-256、下载并**替换自身**（macOS 用 dmg 换 .app，Windows 跑静默安装包，Linux 解包覆盖），可设为静默安装 |
 
 ---
 
@@ -61,9 +63,9 @@
 
 | 项 | 原因 |
 |---|---|
-| 做种与限速 | 客户端默认不做种；上传限速与做种比例还没接到界面 |
-| 解压 RAR / 7z / xz | 需要外部程序或非标准库依赖；zip/tar/gz/bz2 已覆盖大多数下载 |
-| 静默自动更新（下载并替换自身） | 需要签名与回滚；现在只提示并打开发布页 |
+| — | 做种、分享率、做种时长与上传限速都已接上 |
+| — | rar / 7z / xz 已用纯 Go 库实现 |
+| 回滚 | 更新失败时没有自动回滚；安装包由系统负责，失败可以手动重装 |
 | 扩展商店上架 | 需要开发者账号与审核；现在加载已解压的扩展 |
 
 ## 6. 怎么验证

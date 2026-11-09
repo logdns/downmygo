@@ -17,9 +17,10 @@ import (
 
 // Asset is a file of a release.
 type Asset struct {
-	Name string `json:"name"`
-	URL  string `json:"browser_download_url"`
-	Size int64  `json:"size"`
+	Name   string `json:"name"`
+	URL    string `json:"browser_download_url"`
+	Size   int64  `json:"size"`
+	Digest string `json:"digest"` // "sha256:<hex>", when GitHub gives one
 }
 
 // Release is a GitHub release.

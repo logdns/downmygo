@@ -8,6 +8,8 @@ import (
 	"os"
 	"path/filepath"
 	"testing"
+
+	"github.com/ulikunitz/xz"
 )
 
 func TestZipRoundTrip(t *testing.T) {
@@ -93,8 +95,15 @@ func TestTarGz(t *testing.T) {
 }
 
 func TestOverwriteAndSupported(t *testing.T) {
-	if !Supported("a.zip") || !Supported("A.TAR.GZ") || Supported("a.rar") || Supported("a.txt") {
-		t.Fatal("Supported is wrong")
+	for _, name := range []string{"a.zip", "A.TAR.GZ", "a.7z", "a.rar", "a.tar.xz", "a.tbz2"} {
+		if !Supported(name) {
+			t.Errorf("%s is not supported", name)
+		}
+	}
+	for _, name := range []string{"a.txt", "a.mp4", "a.tar.zst"} {
+		if Supported(name) {
+			t.Errorf("%s is supported", name)
+		}
 	}
 	dir := t.TempDir()
 	archive := filepath.Join(dir, "x.zip")
@@ -119,5 +128,69 @@ func TestOverwriteAndSupported(t *testing.T) {
 	}
 	if b, _ := os.ReadFile(filepath.Join(out, "x.txt")); string(b) != "new" {
 		t.Fatalf("did not overwrite: %q", b)
+	}
+}
+
+func TestSevenZip(t *testing.T) {
+	res, err := Extract(filepath.Join("testdata", "file_and_empty.7z"), Options{Dir: t.TempDir()})
+	if err != nil {
+		t.Fatal(err)
+	}
+	if res.Files != 2 {
+		t.Fatalf("files = %d", res.Files)
+	}
+	body, err := os.ReadFile(filepath.Join(res.Dir, "large"))
+	if err != nil || string(body) != "Huuuuge file contents" {
+		t.Fatalf("%q %v", body, err)
+	}
+	if info, err := os.Stat(filepath.Join(res.Dir, "empty")); err != nil || info.Size() != 0 {
+		t.Fatalf("%v %v", info, err)
+	}
+}
+
+func TestTarXz(t *testing.T) {
+	dir := t.TempDir()
+	archive := filepath.Join(dir, "notes.tar.xz")
+	var tarBuf bytes.Buffer
+	tw := tar.NewWriter(&tarBuf)
+	body := []byte("packed twice")
+	_ = tw.WriteHeader(&tar.Header{Name: "notes/two.md", Mode: 0o644, Size: int64(len(body))})
+	_, _ = tw.Write(body)
+	_ = tw.Close()
+	var out bytes.Buffer
+	xw, err := xz.NewWriter(&out)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if _, err := xw.Write(tarBuf.Bytes()); err != nil {
+		t.Fatal(err)
+	}
+	if err := xw.Close(); err != nil {
+		t.Fatal(err)
+	}
+	if err := os.WriteFile(archive, out.Bytes(), 0o644); err != nil {
+		t.Fatal(err)
+	}
+
+	res, err := Extract(archive, Options{})
+	if err != nil {
+		t.Fatal(err)
+	}
+	if res.Files != 1 {
+		t.Fatalf("files = %d", res.Files)
+	}
+	if b, err := os.ReadFile(filepath.Join(res.Dir, "notes", "two.md")); err != nil || string(b) != "packed twice" {
+		t.Fatalf("%q %v", b, err)
+	}
+}
+
+func TestRarSaysWhenTheFileIsNotOne(t *testing.T) {
+	dir := t.TempDir()
+	archive := filepath.Join(dir, "broken.rar")
+	if err := os.WriteFile(archive, []byte("this is not a rar"), 0o644); err != nil {
+		t.Fatal(err)
+	}
+	if _, err := Extract(archive, Options{}); err == nil {
+		t.Fatal("a text file was taken as a rar")
 	}
 }

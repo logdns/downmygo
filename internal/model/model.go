@@ -25,6 +25,7 @@ const (
 	StatusComplete
 	StatusError
 	StatusWaiting // waiting for a queue slot, the schedule or a limit
+	StatusSeeding // the download is done and the torrent is still sharing
 )
 
 func (s Status) String() string {
@@ -43,6 +44,8 @@ func (s Status) String() string {
 		return "Error"
 	case StatusWaiting:
 		return "Waiting"
+	case StatusSeeding:
+		return "Seeding"
 	}
 	return "Unknown"
 }
@@ -129,8 +132,11 @@ type Download struct {
 	Checksum    string `json:"checksum,omitempty"` // "sha256:<hex>"
 	Connections int    `json:"connections,omitempty"`
 
-	// Peers is how many peers a torrent has.
-	Peers int `json:"peers,omitempty"`
+	// Peers is how many peers a torrent has, and Uploaded how much it has
+	// shared.
+	Peers    int     `json:"peers,omitempty"`
+	Uploaded int64   `json:"uploaded,omitempty"`
+	Ratio    float64 `json:"ratio,omitempty"`
 
 	// Runtime, not saved as truth.
 	Speed    float64   `json:"-"`
@@ -274,6 +280,15 @@ type Settings struct {
 
 	// Updates.
 	CheckUpdates bool `json:"checkUpdates"`
+	// SilentUpdates installs a new version when it is there.
+	SilentUpdates bool `json:"silentUpdates"`
+
+	// Seeding: share a torrent after it is done, up to a ratio or a time,
+	// and cap the upload.
+	SeedAfterDone bool    `json:"seedAfterDone"`
+	SeedRatio     float64 `json:"seedRatio,omitempty"`
+	SeedMinutes   int     `json:"seedMinutes,omitempty"`
+	UploadLimit   int64   `json:"uploadLimit,omitempty"` // bytes/sec, 0 is none
 
 	// ThemeFile is the theme file to use, or "" for the built-in themes.
 	ThemeFile string `json:"themeFile,omitempty"`
@@ -313,6 +328,9 @@ func Defaults(downloadDir string) Settings {
 		LimitBytes:       200 << 20,
 		RemotePort:       8463,
 		CheckUpdates:     true,
+		SeedAfterDone:    true,
+		SeedRatio:        2,
+		SeedMinutes:      0,
 		UseYtDlp:         true,
 		UseGalleryDL:     true,
 		SidebarWidth:     236,

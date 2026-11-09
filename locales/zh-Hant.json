@@ -280,5 +280,17 @@
   "toastTorrentFailed": "無法啟動種子：{error}",
   "detailPeers": "節點",
   "toolInstalling": "正在準備 {tool}…",
-  "toolDownloading": "正在下載 {tool}：{done}"
+  "toolDownloading": "正在下載 {tool}：{done}",
+  "statusSeeding": "做種中",
+  "detailUploaded": "已上傳",
+  "detailRatio": "分享率",
+  "optionsSeed": "種子下載完成後繼續做種",
+  "optionsSeedRatio": "分享率到此為止（0 為不限）",
+  "optionsSeedMinutes": "做種多少分鐘後停止（0 為不限）",
+  "optionsUploadLimit": "限制上傳（KB/s，0 為不限）",
+  "toastNoUpdateFile": "這個版本沒有適合目前平台的檔案。",
+  "toastUpdating": "正在安裝新版本，downmygo 會自動重新開啟。",
+  "updateInstall": "下載並安裝",
+  "updateDownloading": "正在下載更新…",
+  "updateSilent": "有新版本時自動安裝，不詢問"
 }

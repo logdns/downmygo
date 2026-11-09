@@ -55,12 +55,12 @@ The full feature list, the program's logic and what makes it different: **[docs/
 - **Browser** — an extension that sends links with their cookies, a native messaging host, site logins, capture rules and an importer.
 - **Feeds and grabbing** — RSS/Atom subscriptions, link grabbing from a page, and a list importer.
 - **External downloaders** — yt-dlp for videos and gallery-dl for galleries, installed by the app itself when they are missing, shown in the list with their progress.
-- **Torrents** — a built-in BitTorrent client for magnets and `.torrent` files, with DHT and trackers, pause and resume.
-- **Unpacking** — zip, tar, tar.gz and tar.bz2 after a download, refusing entries that leave the folder.
+- **Torrents** — a built-in BitTorrent client for magnets and `.torrent` files, with DHT and trackers, pause and resume, seeding to a ratio or a time, and an upload limit.
+- **Unpacking** — zip, 7z, rar, tar, tar.gz, tar.bz2 and tar.xz after a download, refusing entries that leave the folder.
 - **Network** — encrypted DNS (DoH and DoT), a bind address for a VPN kill switch, and debrid (Real-Debrid, AllDebrid).
 - **Agents** — an MCP server on stdio with seven tools over the app's own API.
 - **Themes** — JSON theme files over the built-in light and dark, with 19 color roles.
-- **Updates** — a check of the latest GitHub release, with a link to it.
+- **Updates** — a check of the latest GitHub release, its SHA-256, and an install that replaces the app and reopens it, silently when asked.
 - **Look** — light, dark or follow the system, the brand's gradient, an empty state, a detail card and a status bar.
 
 <p align="center">
@@ -195,7 +195,7 @@ go run ./tools/makeicon
 | 1.0 | Core downloads, queues, scheduling, limits, CLI, API, remote page, three languages |
 | 1.1 | Browser extension, site logins, capture rules, import, feeds, yt-dlp, gallery-dl, extraction, link grabbing, encrypted DNS, VPN binding, debrid, MCP, theme files, update check |
 | 1.2 | Built-in BitTorrent, self-installing tools |
-| 1.3 | rar and 7z, seeding and upload limits, silent updates |
+| 1.3 | Seeding and upload limits, rar/7z/xz, silent updates |
 
 ## An independent implementation
 

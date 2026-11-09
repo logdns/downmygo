@@ -6,6 +6,7 @@ import (
 	"net/url"
 	"os"
 	"path/filepath"
+	"runtime"
 	"strings"
 	"time"
 
@@ -476,10 +477,94 @@ func (a *App) CheckForUpdates() {
 				a.toast = locales.ToastUpToDate()
 			default:
 				a.updateRel = rel
+				// A silent update needs no window: download, install, quit.
+				if a.st.Settings.SilentUpdates && update.AssetFor(rel, runtime.GOOS, runtime.GOARCH).Name != "" {
+					a.InstallUpdate()
+					return
+				}
 				a.updateOpen = true
 			}
 		})
 	}()
+}
+
+// InstallUpdate downloads the release and replaces the app with it, then
+// quits: a helper finishes the swap and opens the new version.
+func (a *App) InstallUpdate() {
+	if a.updateRel == nil || a.installing {
+		return
+	}
+	asset := update.AssetFor(a.updateRel, runtime.GOOS, runtime.GOARCH)
+	if asset.Name == "" {
+		a.toast = locales.ToastNoUpdateFile()
+		return
+	}
+	a.installing = true
+	a.updateErr = ""
+	a.updateDone = 0
+	a.updateTotal = asset.Size
+	go func() {
+		ctx, cancel := context.WithTimeout(context.Background(), 30*time.Minute)
+		defer cancel()
+		dir := filepath.Join(a.dataDir(), "updates")
+		path, err := update.Download(ctx, nil, asset, dir, func(done, total int64) {
+			win := a.win
+			if win == nil {
+				return
+			}
+			win.Update(func() {
+				a.updateDone = float64(done)
+				if total > 0 {
+					a.updateTotal = total
+				}
+			})
+		})
+		win := a.win
+		if win == nil {
+			return
+		}
+		if err != nil {
+			win.Update(func() {
+				a.installing = false
+				a.updateErr = err.Error()
+			})
+			return
+		}
+		installer := update.Installer{
+			AssetPath: path, Asset: asset, Bundle: bundlePath(), PID: os.Getpid(),
+		}
+		if err := installer.Run(); err != nil {
+			win.Update(func() {
+				a.installing = false
+				a.updateErr = err.Error()
+			})
+			return
+		}
+		win.Update(func() {
+			a.toast = locales.ToastUpdating()
+			a.Quit()
+		})
+	}()
+}
+
+// bundlePath is what the update replaces: the .app on macOS, the
+// executable elsewhere.
+func bundlePath() string {
+	exe, err := os.Executable()
+	if err != nil {
+		return ""
+	}
+	if resolved, err := filepath.EvalSymlinks(exe); err == nil {
+		exe = resolved
+	}
+	if runtime.GOOS == "darwin" {
+		// …/downmygo.app/Contents/MacOS/downmygo
+		app := filepath.Dir(filepath.Dir(filepath.Dir(exe)))
+		if strings.HasSuffix(app, ".app") {
+			return app
+		}
+	}
+	return exe
 }
 
 // OpenUpdate opens the release page of a newer version.

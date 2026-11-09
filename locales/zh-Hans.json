@@ -280,5 +280,17 @@
   "toastTorrentFailed": "无法启动种子：{error}",
   "detailPeers": "节点",
   "toolInstalling": "正在准备 {tool}…",
-  "toolDownloading": "正在下载 {tool}：{done}"
+  "toolDownloading": "正在下载 {tool}：{done}",
+  "statusSeeding": "做种中",
+  "detailUploaded": "已上传",
+  "detailRatio": "分享率",
+  "optionsSeed": "种子下载完成后继续做种",
+  "optionsSeedRatio": "分享率到此为止（0 为不限）",
+  "optionsSeedMinutes": "做种多少分钟后停止（0 为不限）",
+  "optionsUploadLimit": "限制上传（KB/s，0 为不限）",
+  "toastNoUpdateFile": "这个版本没有适合当前平台的文件。",
+  "toastUpdating": "正在安装新版本，downmygo 会自动重新打开。",
+  "updateInstall": "下载并安装",
+  "updateDownloading": "正在下载更新…",
+  "updateSilent": "有新版本时自动安装，不询问"
 }

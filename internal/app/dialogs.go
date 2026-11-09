@@ -180,12 +180,28 @@ func (a *App) updateDialog(c *ui.Context, t *ui.Theme, w int) {
 			if rel.Notes != "" {
 				ui.Text(c, firstLines(rel.Notes, 6)).FontSize(11).TextColor(t.TextMuted)
 			}
-			ui.Row(c).Gap(8).Justify(ui.End).Children(func() {
+			if a.installing {
+				ui.Column(c).Gap(6).Children(func() {
+					ui.Text(c, locales.UpdateDownloading()).FontSize(11).TextColor(t.TextMuted)
+					p := float64(0)
+					if a.updateTotal > 0 {
+						p = a.updateDone / float64(a.updateTotal)
+					}
+					ui.Progress(c, p).Height(8)
+				})
+			}
+			if a.updateErr != "" {
+				ui.Text(c, a.updateErr).FontSize(11).TextColor(t.Danger)
+			}
+			ui.Row(c).Gap(8).Justify(ui.End).Wrap().Children(func() {
 				if ui.Button(c, locales.UpdateLater()).Clicked() {
 					a.updateOpen = false
 				}
-				if ui.PrimaryButton(c, locales.UpdateOpen()).Clicked() {
+				if ui.Button(c, locales.UpdateOpen()).Clicked() {
 					a.OpenUpdate()
+				}
+				if ui.PrimaryButton(c, locales.UpdateInstall()).Clicked() {
+					a.InstallUpdate()
 				}
 			})
 		})

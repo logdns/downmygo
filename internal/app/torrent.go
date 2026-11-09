@@ -18,10 +18,14 @@ func (a *App) torrentEngine() (*torrent.Engine, error) {
 	if a.torrents != nil {
 		return a.torrents, nil
 	}
+	s := &a.st.Settings
 	eng, err := torrent.New(torrent.Config{
 		DownloadDir: a.st.Settings.DownloadDir,
 		DataDir:     filepath.Join(a.dataDir(), "torrents"),
-		Seed:        false,
+		Seed:        s.SeedAfterDone,
+		SeedRatio:   s.SeedRatio,
+		SeedTime:    time.Duration(s.SeedMinutes) * time.Minute,
+		UploadLimit: s.UploadLimit,
 	})
 	if err != nil {
 		return nil, err
@@ -38,12 +42,11 @@ func (a *App) addTorrent(raw string) *model.Download {
 		return nil
 	}
 	name := torrentName(raw)
-	dir := a.st.Settings.DownloadDir
-	if cat := a.category("torrents"); cat != nil && cat.Folder != "" {
-		dir = cat.Folder
-	}
+	// The client writes into one folder, so a torrent stays in the
+	// download folder even though its category is Torrents.
 	d := &model.Download{
-		ID: model.NewID(), URL: raw, FileName: name, Dir: dir,
+		ID: model.NewID(), URL: raw, FileName: name,
+		Dir:    a.st.Settings.DownloadDir,
 		Status: model.StatusConnecting, Kind: model.KindTorrent,
 		Category: "torrents", Added: time.Now(), Connections: 1,
 	}
@@ -75,6 +78,17 @@ func (a *App) addTorrent(raw string) *model.Download {
 				d.Done = p.Done
 				d.Speed = p.Speed
 				d.Peers = p.Peers
+				d.Uploaded = p.Uploaded
+				d.Ratio = p.Ratio
+				if p.Seeding {
+					if d.Status != model.StatusSeeding {
+						d.Status = model.StatusSeeding
+						a.notifyComplete(d)
+						a.markDirty()
+						a.Save()
+					}
+					return
+				}
 				if p.Complete {
 					d.Status = model.StatusComplete
 					d.Completed = time.Now()
@@ -140,7 +154,11 @@ func (a *App) resumeTorrent(d *model.Download) {
 	if a.torrents != nil {
 		a.torrents.Resume(d.ID)
 	}
-	d.Status = model.StatusDownloading
+	if d.Size > 0 && d.Done >= d.Size {
+		d.Status = model.StatusSeeding
+	} else {
+		d.Status = model.StatusDownloading
+	}
 	a.markDirty()
 }
 

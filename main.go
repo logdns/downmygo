@@ -125,6 +125,10 @@ func main() {
 		go a.WatchClipboard()
 
 		a.AddFromArgs(os.Args[1:])
+
+		if a.Settings().CheckUpdates {
+			go a.CheckForUpdates()
+		}
 	})
 
 	mygo.App.OnBeforeQuit(func(e *mygo.QuitEvent) {

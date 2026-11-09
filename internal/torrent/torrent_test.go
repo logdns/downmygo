@@ -4,6 +4,7 @@ import (
 	"context"
 	"os"
 	"path/filepath"
+	"sync/atomic"
 	"testing"
 	"time"
 
@@ -75,7 +76,12 @@ func TestLoopbackDownload(t *testing.T) {
 		t.Fatal(err)
 	}
 	defer seeder.Close()
-	if err := seeder.Add(context.Background(), "seed", torrentPath, nil); err != nil {
+	var seeded atomic.Int64
+	if err := seeder.Add(context.Background(), "seed", torrentPath, func(p Progress) {
+		if p.Uploaded > seeded.Load() {
+			seeded.Store(p.Uploaded)
+		}
+	}); err != nil {
 		t.Fatal(err)
 	}
 	deadline := time.Now().Add(20 * time.Second)
@@ -86,8 +92,8 @@ func TestLoopbackDownload(t *testing.T) {
 	// The leecher gets the magnet and the seeder's address.
 	dst := t.TempDir()
 	leecher, err := New(Config{
-		DownloadDir: dst, DataDir: t.TempDir(),
-		DisableDHT: true, DisableTrackers: true,
+		DownloadDir: dst, DataDir: t.TempDir(), Seed: true,
+		SeedTime: time.Minute, DisableDHT: true, DisableTrackers: true,
 	})
 	if err != nil {
 		t.Fatal(err)
@@ -119,6 +125,17 @@ func TestLoopbackDownload(t *testing.T) {
 	}
 	if last.Name != "hello.txt" || last.Size != int64(len(body)) {
 		t.Fatalf("progress = %+v", last)
+	}
+	if !last.Seeding {
+		t.Fatalf("a finished torrent with Seed on is not seeding: %+v", last)
+	}
+	// The seeder shared the file, which is what seeding means.
+	deadline = time.Now().Add(10 * time.Second)
+	for seeded.Load() == 0 && time.Now().Before(deadline) {
+		time.Sleep(50 * time.Millisecond)
+	}
+	if seeded.Load() == 0 {
+		t.Fatal("the seeder uploaded nothing")
 	}
 	got, err := os.ReadFile(filepath.Join(dst, "hello.txt"))
 	if err != nil {

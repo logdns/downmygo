@@ -3953,3 +3953,171 @@ func ToolDownloading(tool string, done string) string {
 func (msgs Messages) ToolDownloading(tool string, done string) string {
 	return Catalog.Format(msgs.locale, "toolDownloading", map[string]any{"tool": tool, "done": done})
 }
+
+// StatusSeeding says "Seeding"
+// in the language the app shows.
+//
+// A torrent that is still sharing.
+func StatusSeeding() string { return In(i18n.Locale()).StatusSeeding() }
+
+// StatusSeeding says "Seeding"
+// in the language of msgs.
+//
+// A torrent that is still sharing.
+func (msgs Messages) StatusSeeding() string {
+	return Catalog.Format(msgs.locale, "statusSeeding", nil)
+}
+
+// DetailUploaded says "Uploaded"
+// in the language the app shows.
+//
+// The card's label of the bytes shared.
+func DetailUploaded() string { return In(i18n.Locale()).DetailUploaded() }
+
+// DetailUploaded says "Uploaded"
+// in the language of msgs.
+//
+// The card's label of the bytes shared.
+func (msgs Messages) DetailUploaded() string {
+	return Catalog.Format(msgs.locale, "detailUploaded", nil)
+}
+
+// DetailRatio says "Ratio"
+// in the language the app shows.
+//
+// The card's label of uploaded over downloaded.
+func DetailRatio() string { return In(i18n.Locale()).DetailRatio() }
+
+// DetailRatio says "Ratio"
+// in the language of msgs.
+//
+// The card's label of uploaded over downloaded.
+func (msgs Messages) DetailRatio() string {
+	return Catalog.Format(msgs.locale, "detailRatio", nil)
+}
+
+// OptionsSeed says "Keep sharing a torrent after it is done"
+// in the language the app shows.
+//
+// A setting.
+func OptionsSeed() string { return In(i18n.Locale()).OptionsSeed() }
+
+// OptionsSeed says "Keep sharing a torrent after it is done"
+// in the language of msgs.
+//
+// A setting.
+func (msgs Messages) OptionsSeed() string {
+	return Catalog.Format(msgs.locale, "optionsSeed", nil)
+}
+
+// OptionsSeedRatio says "Stop at this ratio (0 is no limit)"
+// in the language the app shows.
+//
+// A setting.
+func OptionsSeedRatio() string { return In(i18n.Locale()).OptionsSeedRatio() }
+
+// OptionsSeedRatio says "Stop at this ratio (0 is no limit)"
+// in the language of msgs.
+//
+// A setting.
+func (msgs Messages) OptionsSeedRatio() string {
+	return Catalog.Format(msgs.locale, "optionsSeedRatio", nil)
+}
+
+// OptionsSeedMinutes says "Stop after this many minutes (0 is no limit)"
+// in the language the app shows.
+//
+// A setting.
+func OptionsSeedMinutes() string { return In(i18n.Locale()).OptionsSeedMinutes() }
+
+// OptionsSeedMinutes says "Stop after this many minutes (0 is no limit)"
+// in the language of msgs.
+//
+// A setting.
+func (msgs Messages) OptionsSeedMinutes() string {
+	return Catalog.Format(msgs.locale, "optionsSeedMinutes", nil)
+}
+
+// OptionsUploadLimit says "Limit the upload (KB/s, 0 is none)"
+// in the language the app shows.
+//
+// A setting.
+func OptionsUploadLimit() string { return In(i18n.Locale()).OptionsUploadLimit() }
+
+// OptionsUploadLimit says "Limit the upload (KB/s, 0 is none)"
+// in the language of msgs.
+//
+// A setting.
+func (msgs Messages) OptionsUploadLimit() string {
+	return Catalog.Format(msgs.locale, "optionsUploadLimit", nil)
+}
+
+// ToastNoUpdateFile says "This release has no file for this platform."
+// in the language the app shows.
+//
+// A release without a file for this platform.
+func ToastNoUpdateFile() string { return In(i18n.Locale()).ToastNoUpdateFile() }
+
+// ToastNoUpdateFile says "This release has no file for this platform."
+// in the language of msgs.
+//
+// A release without a file for this platform.
+func (msgs Messages) ToastNoUpdateFile() string {
+	return Catalog.Format(msgs.locale, "toastNoUpdateFile", nil)
+}
+
+// ToastUpdating says "Installing the new version; downmygo will open again."
+// in the language the app shows.
+//
+// The app is being replaced.
+func ToastUpdating() string { return In(i18n.Locale()).ToastUpdating() }
+
+// ToastUpdating says "Installing the new version; downmygo will open again."
+// in the language of msgs.
+//
+// The app is being replaced.
+func (msgs Messages) ToastUpdating() string {
+	return Catalog.Format(msgs.locale, "toastUpdating", nil)
+}
+
+// UpdateInstall says "Download and install"
+// in the language the app shows.
+//
+// The update dialog's main button.
+func UpdateInstall() string { return In(i18n.Locale()).UpdateInstall() }
+
+// UpdateInstall says "Download and install"
+// in the language of msgs.
+//
+// The update dialog's main button.
+func (msgs Messages) UpdateInstall() string {
+	return Catalog.Format(msgs.locale, "updateInstall", nil)
+}
+
+// UpdateDownloading says "Downloading the update…"
+// in the language the app shows.
+//
+// The update dialog's line while it downloads.
+func UpdateDownloading() string { return In(i18n.Locale()).UpdateDownloading() }
+
+// UpdateDownloading says "Downloading the update…"
+// in the language of msgs.
+//
+// The update dialog's line while it downloads.
+func (msgs Messages) UpdateDownloading() string {
+	return Catalog.Format(msgs.locale, "updateDownloading", nil)
+}
+
+// UpdateSilent says "Install new versions without asking"
+// in the language the app shows.
+//
+// A setting.
+func UpdateSilent() string { return In(i18n.Locale()).UpdateSilent() }
+
+// UpdateSilent says "Install new versions without asking"
+// in the language of msgs.
+//
+// A setting.
+func (msgs Messages) UpdateSilent() string {
+	return Catalog.Format(msgs.locale, "updateSilent", nil)
+}

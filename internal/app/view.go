@@ -570,7 +570,7 @@ func (a *App) progressCell(c *ui.Context, t *ui.Theme, d *model.Download, select
 	if selected {
 		text = t.AccentText.Alpha(0.85)
 	}
-	if d.Status == model.StatusComplete {
+	if d.Status == model.StatusComplete || d.Status == model.StatusSeeding {
 		col := t.Success
 		if selected {
 			col = t.AccentText
@@ -638,6 +638,10 @@ func (a *App) detail(c *ui.Context, t *ui.Theme, d *model.Download) {
 				a.stat(c, t, locales.DetailTimeLeft(), etaText(d.ETA()))
 				if d.Kind == model.KindTorrent {
 					a.stat(c, t, locales.DetailPeers(), fmt.Sprint(d.Peers))
+					if d.Uploaded > 0 {
+						a.stat(c, t, locales.DetailUploaded(), engine.FormatBytes(d.Uploaded))
+						a.stat(c, t, locales.DetailRatio(), fmt.Sprintf("%.2f", d.Ratio))
+					}
 				} else {
 					a.stat(c, t, locales.DetailConnections(), fmt.Sprint(max(d.Connections, 1)))
 				}
@@ -1033,6 +1037,25 @@ func (a *App) optionsConnection(c *ui.Context, t *ui.Theme) {
 		ui.Text(c, locales.OptionsBind()).FontSize(11).TextColor(t.TextMuted)
 		ui.TextInput(c, &s.BindAdapter).Placeholder(locales.OptionsBindHint())
 	})
+	ui.Checkbox(c, &s.SeedAfterDone, locales.OptionsSeed())
+	if s.SeedAfterDone {
+		ratio := s.SeedRatio
+		minutes := float64(s.SeedMinutes)
+		ui.Row(c).Gap(10).AlignItems(ui.Center).Wrap().Children(func() {
+			ui.Text(c, locales.OptionsSeedRatio()).FontSize(11).TextColor(t.TextMuted)
+			ui.NumberInput(c, &ratio, 0, 100, 0.5).Width(100)
+			ui.Text(c, locales.OptionsSeedMinutes()).FontSize(11).TextColor(t.TextMuted)
+			ui.NumberInput(c, &minutes, 0, 100000, 10).Width(110)
+		})
+		s.SeedRatio = ratio
+		s.SeedMinutes = int(minutes)
+	}
+	upload := float64(s.UploadLimit / 1024)
+	ui.Row(c).Gap(10).AlignItems(ui.Center).Children(func() {
+		ui.Text(c, locales.OptionsUploadLimit()).Grow(1)
+		ui.NumberInput(c, &upload, 0, 1024*1024, 64).Width(120)
+		s.UploadLimit = int64(upload) * 1024
+	})
 	ui.Checkbox(c, &s.LimitEnabled, locales.OptionsLimitEnabled())
 	if s.LimitEnabled {
 		mb := float64(s.LimitBytes / (1 << 20))
@@ -1203,6 +1226,9 @@ func (a *App) optionsAdvanced(c *ui.Context, t *ui.Theme) {
 	ui.Checkbox(c, &s.UseYtDlp, locales.OptionsYtDlp())
 	ui.Checkbox(c, &s.UseGalleryDL, locales.OptionsGalleryDL())
 	ui.Checkbox(c, &s.CheckUpdates, locales.OptionsCheckUpdates())
+	if s.CheckUpdates {
+		ui.Checkbox(c, &s.SilentUpdates, locales.UpdateSilent())
+	}
 	ui.Divider(c)
 	ui.Column(c).Gap(3).Children(func() {
 		ui.Text(c, locales.OptionsDataFolder()).FontSize(11).TextColor(t.TextMuted)
@@ -1385,7 +1411,7 @@ func (a *App) filterTitle() string {
 
 func (a *App) statusColor(t *ui.Theme, d *model.Download) ui.Color {
 	switch d.Status {
-	case model.StatusComplete:
+	case model.StatusComplete, model.StatusSeeding:
 		return t.Success
 	case model.StatusError:
 		return t.Danger
@@ -1415,6 +1441,8 @@ func statusText(d *model.Download) string {
 		return locales.StatusError()
 	case model.StatusWaiting:
 		return locales.StatusWaiting()
+	case model.StatusSeeding:
+		return locales.StatusSeeding()
 	}
 	return ""
 }

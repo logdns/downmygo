@@ -1305,5 +1305,53 @@
         "example": "3.4 MB"
       }
     }
+  },
+  "statusSeeding": "Seeding",
+  "@statusSeeding": {
+    "description": "A torrent that is still sharing."
+  },
+  "detailUploaded": "Uploaded",
+  "@detailUploaded": {
+    "description": "The card's label of the bytes shared."
+  },
+  "detailRatio": "Ratio",
+  "@detailRatio": {
+    "description": "The card's label of uploaded over downloaded."
+  },
+  "optionsSeed": "Keep sharing a torrent after it is done",
+  "@optionsSeed": {
+    "description": "A setting."
+  },
+  "optionsSeedRatio": "Stop at this ratio (0 is no limit)",
+  "@optionsSeedRatio": {
+    "description": "A setting."
+  },
+  "optionsSeedMinutes": "Stop after this many minutes (0 is no limit)",
+  "@optionsSeedMinutes": {
+    "description": "A setting."
+  },
+  "optionsUploadLimit": "Limit the upload (KB/s, 0 is none)",
+  "@optionsUploadLimit": {
+    "description": "A setting."
+  },
+  "toastNoUpdateFile": "This release has no file for this platform.",
+  "@toastNoUpdateFile": {
+    "description": "A release without a file for this platform."
+  },
+  "toastUpdating": "Installing the new version; downmygo will open again.",
+  "@toastUpdating": {
+    "description": "The app is being replaced."
+  },
+  "updateInstall": "Download and install",
+  "@updateInstall": {
+    "description": "The update dialog's main button."
+  },
+  "updateDownloading": "Downloading the update…",
+  "@updateDownloading": {
+    "description": "The update dialog's line while it downloads."
+  },
+  "updateSilent": "Install new versions without asking",
+  "@updateSilent": {
+    "description": "A setting."
   }
 }

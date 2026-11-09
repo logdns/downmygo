@@ -55,12 +55,12 @@ downmygo 是一个用 **Go + [MyGo](https://github.com/egoist/mygo)** 写的跨�
 - **浏览器**：扩展（右键交给 downmygo、可接管浏览器下载）、Native Messaging、站点登录、捕获规则、导入。
 - **订阅与抓取**：RSS / Atom 订阅、页面链接抓取、链接列表导入。
 - **外部下载器**：视频交给 yt-dlp、图库交给 gallery-dl；没安装时应用自己下载安装，进度显示在列表里。
-- **种子**：内置 BitTorrent 客户端，`magnet:` 与 `.torrent` 直接下载，支持 DHT、tracker、暂停与继续。
-- **解压**：zip / tar / tar.gz / tar.bz2，完成后自动解压，拒绝路径穿越。
+- **种子**：内置 BitTorrent 客户端，`magnet:` 与 `.torrent` 直接下载，支持 DHT、tracker、暂停与继续、做种（按分享率或时长停止）与上传限速。
+- **解压**：zip / 7z / rar / tar / tar.gz / tar.bz2 / tar.xz，完成后自动解压，拒绝路径穿越。
 - **网络**：加密 DNS（DoH / DoT）、VPN 网卡绑定、debrid（Real-Debrid / AllDebrid）。
 - **Agent**：`downmygo mcp`，stdio 上的 MCP 服务，7 个工具。
 - **主题文件**：JSON 覆盖 19 个颜色角色与圆角/间距。
-- **更新**：检查 GitHub 最新 Release，并打开发布页。
+- **更新**：检查 GitHub 最新 Release、校验 SHA-256、下载并替换自身（macOS 换 .app、Windows 跑静默安装包、Linux 解包覆盖），可设为静默安装。
 - **外观**：浅色/深色/跟随系统、品牌渐变、空状态、详情卡、状态栏。
 
 <p align="center">
@@ -192,7 +192,7 @@ go run ./tools/makeicon
 | 1.0 | 核心下载、队列、调度、限速、CLI、API、远程页面、三种语言 |
 | 1.1 | 浏览器扩展、站点登录、捕获规则、导入、订阅、yt-dlp、gallery-dl、解压、链接抓取、加密 DNS、VPN 绑定、debrid、MCP、主题文件、更新检查 |
 | 1.2 | 内置 BitTorrent、工具自动安装 |
-| 1.3 | rar 与 7z、做种与上传限速、静默更新 |
+| 1.3 | 做种与上传限速、rar/7z/xz、静默更新 |
 
 ## 独立实现声明
 

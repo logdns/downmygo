@@ -75,6 +75,10 @@ type App struct {
 	updateOpen  bool
 	updateBusy  bool
 	updateRel   *update.Release
+	updateDone  float64
+	updateTotal int64
+	updateErr   string
+	installing  bool
 	showDetail  bool
 	searchFocus bool
 	sidebarW    float32
