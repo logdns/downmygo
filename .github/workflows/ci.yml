@@ -12,7 +12,7 @@ permissions:
 jobs:
   test:
     name: Test and vet
-    runs-on: macos-14
+    runs-on: macos-latest
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-go@v5
@@ -47,7 +47,7 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - { name: macOS, os: macos-14, platform: "darwin/universal" }
+          - { name: macOS, os: macos-latest, platform: "darwin/universal" }
           - { name: Windows, os: ubuntu-latest, platform: "windows/amd64,windows/arm64" }
           - { name: Linux, os: ubuntu-latest, platform: "linux/amd64,linux/arm64" }
     steps:

@@ -23,7 +23,7 @@ jobs:
           # signature and the disk image need it. Set macos.signingIdentity
           # and macos.notarize in mygo.json to ship it outside the Mac App
           # Store.
-          - { name: macOS, os: macos-14, platform: "darwin/universal" }
+          - { name: macOS, os: macos-latest, platform: "darwin/universal" }
           # MyGo needs no cgo, so Ubuntu builds the Windows and the Linux
           # apps as well as their own runners would.
           - { name: Windows, os: ubuntu-latest, platform: "windows/amd64,windows/arm64" }
