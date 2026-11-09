@@ -973,5 +973,299 @@
         "example": "4.0 MB"
       }
     }
+  },
+  "toastNoTorrentClient": "No torrent client is installed.",
+  "@toastNoTorrentClient": {
+    "description": "A magnet or torrent link with no program to open it."
+  },
+  "toastHandedOff": "Handed to the torrent client.",
+  "@toastHandedOff": {
+    "description": "A magnet or torrent link given to the system's client."
+  },
+  "toastDebridFailed": "The debrid service said: {error}. The link is downloading as it is.",
+  "@toastDebridFailed": {
+    "description": "The debrid service refused a link.",
+    "placeholders": {
+      "error": {
+        "type": "String",
+        "example": "not a premium link"
+      }
+    }
+  },
+  "toastDebridResolved": "The debrid service gave a direct link.",
+  "@toastDebridResolved": {
+    "description": "A debrid service turned a link into a direct one."
+  },
+  "toastExtractFailed": "Could not unpack the archive: {error}",
+  "@toastExtractFailed": {
+    "description": "Unpacking an archive failed.",
+    "placeholders": {
+      "error": {
+        "type": "String",
+        "example": "not an archive"
+      }
+    }
+  },
+  "toastExtracted": "{count, plural, =0 {Unpacked into {dir}} one {Unpacked # file into {dir}} other {Unpacked # files into {dir}}}",
+  "@toastExtracted": {
+    "description": "An archive was unpacked.",
+    "placeholders": {
+      "count": {
+        "type": "int",
+        "example": "12"
+      },
+      "dir": {
+        "type": "String",
+        "example": "/Downloads/pack"
+      }
+    }
+  },
+  "toastFeedAdded": "{count, plural, one {# new item from {feed}} other {# new items from {feed}}}",
+  "@toastFeedAdded": {
+    "description": "A feed brought new downloads.",
+    "placeholders": {
+      "count": {
+        "type": "int",
+        "example": "3"
+      },
+      "feed": {
+        "type": "String",
+        "example": "Example feed"
+      }
+    }
+  },
+  "toastImportFailed": "Could not read the list: {error}",
+  "@toastImportFailed": {
+    "description": "A list of links could not be read.",
+    "placeholders": {
+      "error": {
+        "type": "String",
+        "example": "no such file"
+      }
+    }
+  },
+  "toastImported": "{count, plural, =0 {No links were added} one {Added # link} other {Added # links}}",
+  "@toastImported": {
+    "description": "Links were imported.",
+    "placeholders": {
+      "count": {
+        "type": "int",
+        "example": "4"
+      }
+    }
+  },
+  "toastUpdateFailed": "Could not check for updates: {error}",
+  "@toastUpdateFailed": {
+    "description": "The update check failed.",
+    "placeholders": {
+      "error": {
+        "type": "String",
+        "example": "no network"
+      }
+    }
+  },
+  "toastUpToDate": "downmygo is up to date.",
+  "@toastUpToDate": {
+    "description": "There is no newer version."
+  },
+  "menuGrab": "Grab links from a page…",
+  "@menuGrab": {
+    "description": "The File menu's item."
+  },
+  "menuImport": "Import links…",
+  "@menuImport": {
+    "description": "The File menu's item."
+  },
+  "menuFeeds": "Subscriptions…",
+  "@menuFeeds": {
+    "description": "The File menu's item."
+  },
+  "menuCheckUpdates": "Check for updates…",
+  "@menuCheckUpdates": {
+    "description": "The app menu's item."
+  },
+  "grabTitle": "Links on the page",
+  "@grabTitle": {
+    "description": "The grab dialog's title."
+  },
+  "grabPlaceholder": "https://example.com/page",
+  "@grabPlaceholder": {
+    "description": "The grab dialog's field."
+  },
+  "grabLook": "Look",
+  "@grabLook": {
+    "description": "A button that reads the page."
+  },
+  "grabBusy": "Reading the page…",
+  "@grabBusy": {
+    "description": "The grab dialog's line while it reads."
+  },
+  "grabEmpty": "No links match. Try another page, or widen the file types in Options.",
+  "@grabEmpty": {
+    "description": "The grab dialog's line when nothing matched."
+  },
+  "grabAdd": "Add selected",
+  "@grabAdd": {
+    "description": "A button that adds the chosen links."
+  },
+  "grabAll": "Select all",
+  "@grabAll": {
+    "description": "A button that chooses every link."
+  },
+  "grabNone": "Select none",
+  "@grabNone": {
+    "description": "A button that chooses none."
+  },
+  "grabCount": "{count, plural, =0 {No links} one {# link} other {# links}}",
+  "@grabCount": {
+    "description": "How many links were found.",
+    "placeholders": {
+      "count": {
+        "type": "int",
+        "example": "12"
+      }
+    }
+  },
+  "importTitle": "Import links",
+  "@importTitle": {
+    "description": "The import dialog's title."
+  },
+  "importHint": "A text file of links, one per line, or a JSON list.",
+  "@importHint": {
+    "description": "The import dialog's line."
+  },
+  "importChoose": "Choose a file…",
+  "@importChoose": {
+    "description": "A button that opens the file picker."
+  },
+  "feedsTitle": "Subscriptions",
+  "@feedsTitle": {
+    "description": "The subscriptions dialog's title."
+  },
+  "feedsHint": "downmygo checks each feed and adds what is new.",
+  "@feedsHint": {
+    "description": "The subscriptions dialog's line."
+  },
+  "feedsNew": "New subscription",
+  "@feedsNew": {
+    "description": "The label of a new subscription."
+  },
+  "feedsURL": "Feed address",
+  "@feedsURL": {
+    "description": "The label of a feed's address."
+  },
+  "feedsTypes": "File types",
+  "@feedsTypes": {
+    "description": "The label of a feed's file types."
+  },
+  "feedsEvery": "Every",
+  "@feedsEvery": {
+    "description": "The start of a feed's interval."
+  },
+  "feedsMinutes": "minutes",
+  "@feedsMinutes": {
+    "description": "The end of a feed's interval."
+  },
+  "feedsAdd": "Add",
+  "@feedsAdd": {
+    "description": "A button that adds a feed."
+  },
+  "feedsDelete": "Delete",
+  "@feedsDelete": {
+    "description": "A button that removes a feed."
+  },
+  "feedsEmpty": "No feeds yet.",
+  "@feedsEmpty": {
+    "description": "The subscriptions dialog's empty list."
+  },
+  "feedsEnabled": "On",
+  "@feedsEnabled": {
+    "description": "A feed that is watched."
+  },
+  "updateTitle": "A newer version is here",
+  "@updateTitle": {
+    "description": "The update dialog's title."
+  },
+  "updateBody": "{version} is out; you have {current}.",
+  "@updateBody": {
+    "description": "The update dialog's line.",
+    "placeholders": {
+      "version": {
+        "type": "String",
+        "example": "1.1.0"
+      },
+      "current": {
+        "type": "String",
+        "example": "1.0.0"
+      }
+    }
+  },
+  "updateOpen": "Open the release page",
+  "@updateOpen": {
+    "description": "A button that opens the release page."
+  },
+  "updateLater": "Later",
+  "@updateLater": {
+    "description": "A button that closes the update dialog."
+  },
+  "optionsDNS": "DNS",
+  "@optionsDNS": {
+    "description": "The label of the DNS setting."
+  },
+  "optionsDNSHint": "system, doh, dot, or an endpoint",
+  "@optionsDNSHint": {
+    "description": "The placeholder of the DNS setting."
+  },
+  "optionsDebrid": "Debrid",
+  "@optionsDebrid": {
+    "description": "The label of the debrid settings."
+  },
+  "optionsDebridProvider": "Service",
+  "@optionsDebridProvider": {
+    "description": "The label of the debrid service."
+  },
+  "optionsDebridToken": "API token",
+  "@optionsDebridToken": {
+    "description": "The label of the debrid token."
+  },
+  "optionsYtDlp": "Use yt-dlp for videos (it must be installed)",
+  "@optionsYtDlp": {
+    "description": "A setting."
+  },
+  "optionsGalleryDL": "Use gallery-dl for galleries (it must be installed)",
+  "@optionsGalleryDL": {
+    "description": "A setting."
+  },
+  "optionsCheckUpdates": "Check for updates",
+  "@optionsCheckUpdates": {
+    "description": "A setting."
+  },
+  "optionsThemeFile": "Theme file",
+  "@optionsThemeFile": {
+    "description": "The label of the theme file."
+  },
+  "optionsGrabTypes": "File types the link grabber keeps",
+  "@optionsGrabTypes": {
+    "description": "The label of the grabber's file types."
+  },
+  "optionsExtract": "Unpack archives when they finish",
+  "@optionsExtract": {
+    "description": "A setting."
+  },
+  "optionsDeleteArchive": "Delete the archive after unpacking",
+  "@optionsDeleteArchive": {
+    "description": "A setting."
+  },
+  "themeBuiltin": "Built in",
+  "@themeBuiltin": {
+    "description": "The built-in themes in the theme menu."
+  },
+  "kindGallery": "Gallery",
+  "@kindGallery": {
+    "description": "The kind of a download a gallery tool fetches."
+  },
+  "optionsDebridNone": "None",
+  "@optionsDebridNone": {
+    "description": "No debrid service."
   }
 }

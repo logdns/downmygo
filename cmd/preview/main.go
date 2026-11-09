@@ -59,6 +59,16 @@ func main() {
 			opts.ShowOptions()
 			render("options-light.png", opts)
 
+			conn := demo(false)
+			conn.ShowOptions()
+			conn.ShowOptionsTab(1)
+			render("options-connection.png", conn)
+
+			adv := demo(false)
+			adv.ShowOptions()
+			adv.ShowOptionsTab(4)
+			render("options-advanced.png", adv)
+
 			add := demo(false)
 			add.OpenAdd("")
 			render("add-light.png", add)

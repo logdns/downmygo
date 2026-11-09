@@ -12,6 +12,7 @@ import (
 	"github.com/egoist/mygo/ui"
 
 	"github.com/downmygo/downmygo/internal/engine"
+	"github.com/downmygo/downmygo/internal/grab"
 	"github.com/downmygo/downmygo/internal/model"
 	brand "github.com/downmygo/downmygo/internal/ui"
 	"github.com/downmygo/downmygo/locales"
@@ -44,6 +45,16 @@ func (a *App) View(c *ui.Context) {
 		dark = true
 	}
 	t := brand.Theme(dark, a.st.Settings.Accent)
+	if tf, ok := a.themeFile(); ok {
+		if tf.Base == "dark" {
+			dark = true
+			t = brand.Theme(true, a.st.Settings.Accent)
+		} else if tf.Base == "light" {
+			dark = false
+			t = brand.Theme(false, a.st.Settings.Accent)
+		}
+		brand.Apply(t, tf.Name, tf.Base, tf.Colors, tf.Radius, tf.Spacing)
+	}
 	c.SetTheme(t)
 
 	a.viewList = a.visible()
@@ -192,8 +203,9 @@ func (a *App) toolbar(c *ui.Context, t *ui.Theme, w int) {
 		ui.MenuButton(c, locales.Tasks(), func(m *ui.Menu) {
 			if m.Item(locales.TasksPaste()).Chosen() {
 				for _, line := range strings.Split(mygo.Clipboard.ReadText(), "\n") {
-					if looksLikeURL(strings.TrimSpace(line)) {
-						a.AddURL(strings.TrimSpace(line))
+					line = strings.TrimSpace(line)
+					if looksLikeURL(line) || strings.HasPrefix(strings.ToLower(line), "magnet:") {
+						a.addLink(line)
 					}
 				}
 			}
@@ -708,6 +720,7 @@ func (a *App) dialogs(c *ui.Context, t *ui.Theme, w, h int) {
 	a.optionsDialog(c, t, w, h)
 	a.confirmDialog(c, t, w)
 	a.aboutDialog(c, t, w)
+	a.extraDialogs(c, t, w)
 }
 
 // dialogWidth keeps a dialog inside the window.
@@ -918,6 +931,30 @@ func (a *App) optionsGeneral(c *ui.Context, t *ui.Theme) {
 			ui.TextInput(c, &s.Accent).Placeholder("#3B6EF6")
 		})
 	})
+	ui.Column(c).Gap(6).Children(func() {
+		ui.Text(c, locales.OptionsThemeFile()).FontSize(11).TextColor(t.TextMuted)
+		names := []string{locales.ThemeBuiltin()}
+		files := a.Themes()
+		for _, tf := range files {
+			names = append(names, tf.Name)
+		}
+		current := names[0]
+		for i, tf := range files {
+			if tf.Name == s.ThemeFile || tf.File == s.ThemeFile {
+				current = names[i+1]
+			}
+		}
+		ui.Select(c, &current, names).Changed()
+		if current == names[0] {
+			s.ThemeFile = ""
+		} else {
+			for i, tf := range files {
+				if names[i+1] == current {
+					s.ThemeFile = tf.Name
+				}
+			}
+		}
+	})
 	ui.Checkbox(c, &s.StartDownloads, locales.OptionsStartDownloads())
 	ui.Checkbox(c, &s.ShowAddDialog, locales.OptionsShowAddDialog())
 	ui.Checkbox(c, &s.ClipboardWatch, locales.OptionsClipboardWatch())
@@ -927,6 +964,17 @@ func (a *App) optionsGeneral(c *ui.Context, t *ui.Theme) {
 	ui.Checkbox(c, &s.NotifyOnComplete, locales.OptionsNotifyComplete())
 	ui.Checkbox(c, &s.NotifyOnError, locales.OptionsNotifyError())
 	ui.Checkbox(c, &s.FileDateFromServer, locales.OptionsFileDate())
+	ui.Checkbox(c, &s.AutoExtract, locales.OptionsExtract())
+	if s.AutoExtract {
+		ui.Checkbox(c, &s.DeleteArchive, locales.OptionsDeleteArchive())
+	}
+	ui.Column(c).Gap(6).Children(func() {
+		ui.Text(c, locales.OptionsGrabTypes()).FontSize(11).TextColor(t.TextMuted)
+		types := strings.Join(s.GrabExtensions, " ")
+		if ui.TextInput(c, &types).Placeholder("zip mp4 mkv").Changed() {
+			s.GrabExtensions = grab.ParseExtensions(types)
+		}
+	})
 }
 
 // languageLabels names the languages the app shows, each in itself.
@@ -972,6 +1020,10 @@ func (a *App) optionsConnection(c *ui.Context, t *ui.Theme) {
 	ui.Column(c).Gap(6).Children(func() {
 		ui.Text(c, locales.OptionsProxy()).FontSize(11).TextColor(t.TextMuted)
 		ui.TextInput(c, &s.Proxy).Placeholder(locales.OptionsProxyHint())
+	})
+	ui.Column(c).Gap(6).Children(func() {
+		ui.Text(c, locales.OptionsDNS()).FontSize(11).TextColor(t.TextMuted)
+		ui.TextInput(c, &s.DNS).Placeholder(locales.OptionsDNSHint())
 	})
 	ui.Column(c).Gap(6).Children(func() {
 		ui.Text(c, locales.OptionsBind()).FontSize(11).TextColor(t.TextMuted)
@@ -1123,6 +1175,30 @@ func (a *App) optionsAdvanced(c *ui.Context, t *ui.Theme) {
 			}
 		})
 	})
+	ui.Divider(c)
+	ui.Column(c).Gap(6).Children(func() {
+		ui.Text(c, locales.OptionsDebrid()).FontSize(11).TextColor(t.TextMuted)
+		ui.Row(c).Gap(8).Children(func() {
+			providers := []string{"", "real-debrid", "alldebrid"}
+			labels := []string{locales.OptionsDebridNone(), "Real-Debrid", "AllDebrid"}
+			current := labels[0]
+			for i, p := range providers {
+				if p == s.DebridProvider {
+					current = labels[i]
+				}
+			}
+			ui.Select(c, &current, labels).Width(150).Changed()
+			for i, l := range labels {
+				if l == current {
+					s.DebridProvider = providers[i]
+				}
+			}
+			ui.TextInput(c, &s.DebridToken).Placeholder(locales.OptionsDebridToken()).Grow(1)
+		})
+	})
+	ui.Checkbox(c, &s.UseYtDlp, locales.OptionsYtDlp())
+	ui.Checkbox(c, &s.UseGalleryDL, locales.OptionsGalleryDL())
+	ui.Checkbox(c, &s.CheckUpdates, locales.OptionsCheckUpdates())
 	ui.Divider(c)
 	ui.Column(c).Gap(3).Children(func() {
 		ui.Text(c, locales.OptionsDataFolder()).FontSize(11).TextColor(t.TextMuted)

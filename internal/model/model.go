@@ -64,6 +64,7 @@ const (
 	KindHTTP Kind = iota
 	KindTorrent
 	KindVideo
+	KindGallery
 )
 
 func (k Kind) String() string {
@@ -72,6 +73,8 @@ func (k Kind) String() string {
 		return "Torrent"
 	case KindVideo:
 		return "Video"
+	case KindGallery:
+		return "Gallery"
 	}
 	return "HTTP"
 }
@@ -231,6 +234,7 @@ type Settings struct {
 	UserAgent        string `json:"userAgent"`
 	Proxy            string `json:"proxy,omitempty"` // "", "system", or a URL
 	BindAdapter      string `json:"bindAdapter,omitempty"`
+	DNS              string `json:"dns,omitempty"` // "", "system", "doh", "dot", or an endpoint
 
 	StartWithSystem    bool   `json:"startWithSystem"`
 	MinimizeToTray     bool   `json:"minimizeToTray"`
@@ -256,6 +260,24 @@ type Settings struct {
 	RemoteEnabled bool   `json:"remoteEnabled"`
 	RemotePort    int    `json:"remotePort"`
 	APIToken      string `json:"apiToken"`
+
+	// Debrid: a premium service that turns a hosted link into a direct one.
+	DebridProvider string `json:"debridProvider,omitempty"` // "", "real-debrid", "alldebrid"
+	DebridToken    string `json:"debridToken,omitempty"`
+
+	// External downloaders: yt-dlp for videos, gallery-dl for galleries.
+	UseYtDlp     bool `json:"useYtDlp"`
+	UseGalleryDL bool `json:"useGalleryDL"`
+
+	// Updates.
+	CheckUpdates bool `json:"checkUpdates"`
+
+	// ThemeFile is the theme file to use, or "" for the built-in themes.
+	ThemeFile string `json:"themeFile,omitempty"`
+
+	// GrabExtensions are the file types the link grabber keeps; empty
+	// keeps every link.
+	GrabExtensions []string `json:"grabExtensions,omitempty"`
 
 	// Window layout.
 	SidebarWidth float32 `json:"sidebarWidth"`
@@ -287,6 +309,7 @@ func Defaults(downloadDir string) Settings {
 		LimitHours:       5,
 		LimitBytes:       200 << 20,
 		RemotePort:       8463,
+		CheckUpdates:     true,
 		SidebarWidth:     236,
 		DetailHeight:     208,
 	}

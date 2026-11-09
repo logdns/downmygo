@@ -17,9 +17,11 @@ import (
 	"github.com/egoist/mygo/ui"
 
 	"github.com/downmygo/downmygo/internal/engine"
+	"github.com/downmygo/downmygo/internal/grab"
 	"github.com/downmygo/downmygo/internal/limiter"
 	"github.com/downmygo/downmygo/internal/model"
 	"github.com/downmygo/downmygo/internal/store"
+	"github.com/downmygo/downmygo/internal/update"
 	"github.com/downmygo/downmygo/locales"
 )
 
@@ -56,6 +58,20 @@ type App struct {
 	toast       string
 	lastClip    string
 	clipWatch   atomic.Bool
+	toolCancels map[string]context.CancelFunc
+
+	// The link grabber, the subscriptions and the update check.
+	grabOpen    bool
+	grabBusy    bool
+	grabPage    string
+	grabErr     string
+	grabLinks   []grab.Link
+	grabPicked  map[string]bool
+	feedsOpen   bool
+	importOpen  bool
+	updateOpen  bool
+	updateBusy  bool
+	updateRel   *update.Release
 	showDetail  bool
 	searchFocus bool
 	sidebarW    float32
@@ -73,6 +89,9 @@ type App struct {
 	newCatTypes  string
 	newCatFolder string
 	newQueueName string
+	newFeedURL   string
+	newFeedTypes string
+	newFeedEvery int
 
 	// Runtime bookkeeping.
 	queueRunning map[string]bool
@@ -252,6 +271,7 @@ func (a *App) applyEvent(ev engine.Event) {
 			d.Done = d.Size
 		}
 		a.notifyComplete(d)
+		a.extractDone(d)
 		a.pump()
 	case model.StatusError:
 		d.Speed = 0
@@ -335,6 +355,7 @@ func (a *App) probeAdd() {
 		Cookies:   form.Cookies,
 		Proxy:     a.st.Settings.Proxy,
 		BindIP:    a.st.Settings.BindAdapter,
+		DNS:       a.st.Settings.DNS,
 		MaxConns:  a.st.Settings.Connections,
 	}
 	go func() {
@@ -537,6 +558,7 @@ func (a *App) start(d *model.Download) {
 		UserAgent:        a.st.Settings.UserAgent,
 		Proxy:            a.st.Settings.Proxy,
 		BindIP:           a.st.Settings.BindAdapter,
+		DNS:              a.st.Settings.DNS,
 		MaxRetries:       a.st.Settings.MaxRetries,
 		FileDate:         a.st.Settings.FileDateFromServer,
 	}
@@ -877,6 +899,7 @@ func (a *App) tickLoop() {
 
 func (a *App) tick() {
 	now := time.Now()
+	a.checkFeeds()
 
 	// The data limit's window.
 	if a.st.Settings.LimitEnabled {
@@ -1061,7 +1084,7 @@ func (a *App) watchClipboard() {
 			if a.st.Settings.ShowAddDialog {
 				a.OpenAdd(raw)
 			} else {
-				a.AddURL(raw)
+				a.addLink(raw)
 			}
 		})
 	}
@@ -1116,7 +1139,16 @@ func (a *App) Quitting() bool { return a.quitting }
 func (a *App) ShowAbout() { a.aboutOpen = true }
 
 // ShowOptions opens the Options window.
+// ShowFeeds opens the subscriptions dialog.
+func (a *App) ShowFeeds() { a.feedsOpen = true }
+
 func (a *App) ShowOptions() { a.optionsOpen = true }
+
+// ShowOptionsTab opens the Options dialog on one of its tabs.
+func (a *App) ShowOptionsTab(tab int) {
+	a.optionsOpen = true
+	a.optionsTab = tab
+}
 
 // SetTheme changes the appearance setting.
 func (a *App) SetTheme(v string) {
@@ -1129,11 +1161,15 @@ func (a *App) SetTheme(v string) {
 func (a *App) WatchClipboard() { a.watchClipboard() }
 
 // PasteLinks adds every link on the clipboard.
+// AddLink adds a link the way the settings ask: debrid, an external
+// downloader, or the engine.
+func (a *App) AddLink(raw string) *model.Download { return a.addLink(raw) }
+
 func (a *App) PasteLinks() {
 	for _, line := range strings.Split(mygo.Clipboard.ReadText(), "\n") {
 		line = strings.TrimSpace(line)
-		if looksLikeURL(line) {
-			a.AddURL(line)
+		if looksLikeURL(line) || strings.HasPrefix(strings.ToLower(line), "magnet:") {
+			a.addLink(line)
 		}
 	}
 }

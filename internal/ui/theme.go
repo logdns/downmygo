@@ -76,6 +76,48 @@ func Theme(dark bool, accent string) *ui.Theme {
 	return t
 }
 
+// Apply paints a theme file over a theme: the colors it names, then its
+// metrics. A color that does not parse is left as it was.
+func Apply(t *ui.Theme, name string, base string, colors map[string]string, radius, spacing float32) {
+	if base == "light" || base == "dark" {
+		// The caller already made the base; a file that names another one
+		// is honoured by the caller.
+		_ = base
+	}
+	set := func(dst *ui.Color, key string) {
+		if v, ok := colors[key]; ok {
+			if c, err := parseHex(v); err == nil {
+				*dst = c
+			}
+		}
+	}
+	set(&t.Background, "background")
+	set(&t.Surface, "surface")
+	set(&t.SurfaceHover, "surfaceHover")
+	set(&t.SurfacePressed, "surfacePressed")
+	set(&t.Border, "border")
+	set(&t.Text, "text")
+	set(&t.TextMuted, "textMuted")
+	set(&t.Accent, "accent")
+	set(&t.AccentHover, "accentHover")
+	set(&t.AccentPressed, "accentPressed")
+	set(&t.AccentText, "accentText")
+	set(&t.Selection, "selection")
+	set(&t.Focus, "focus")
+	set(&t.Scrollbar, "scrollbar")
+	set(&t.Danger, "danger")
+	set(&t.Warning, "warning")
+	set(&t.Success, "success")
+	set(&t.Inverse, "inverse")
+	set(&t.InverseText, "inverseText")
+	if radius > 0 {
+		t.Radius = radius
+	}
+	if spacing > 0 {
+		t.Spacing = spacing
+	}
+}
+
 // parseHex reads #rrggbb or #rrggbbaa.
 func parseHex(s string) (ui.Color, error) {
 	s = strings.TrimPrefix(strings.TrimSpace(s), "#")

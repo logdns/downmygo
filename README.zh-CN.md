@@ -52,6 +52,14 @@ downmygo 是一个用 **Go + [MyGo](https://github.com/egoist/mygo)** 写的跨�
 - **本地 API**：`127.0.0.1:8463`，token 保护，列表/添加/暂停/继续/删除/队列。
 - **远程页面**：手机浏览器打开即可添加、查看、暂停、继续、删除。
 - **自适应布局**：窄窗口收起侧边栏、按宽度取舍列、按钮收成图标。
+- **浏览器**：扩展（右键交给 downmygo、可接管浏览器下载）、Native Messaging、站点登录、捕获规则、导入。
+- **订阅与抓取**：RSS / Atom 订阅、页面链接抓取、链接列表导入。
+- **外部下载器**：视频交给 yt-dlp、图库交给 gallery-dl，进度显示在列表里。
+- **解压**：zip / tar / tar.gz / tar.bz2，完成后自动解压，拒绝路径穿越。
+- **网络**：加密 DNS（DoH / DoT）、VPN 网卡绑定、debrid（Real-Debrid / AllDebrid）。
+- **Agent**：`downmygo mcp`，stdio 上的 MCP 服务，7 个工具。
+- **主题文件**：JSON 覆盖 19 个颜色角色与圆角/间距。
+- **更新**：检查 GitHub 最新 Release，并打开发布页。
 - **外观**：浅色/深色/跟随系统、品牌渐变、空状态、详情卡、状态栏。
 
 <p align="center">
@@ -134,7 +142,18 @@ internal/engine         预检、分段、worker、续传、完成
 internal/limiter        令牌桶
 internal/app            状态机、视图、队列、调度、API
 internal/ui             品牌主题与图标
-internal/cli            downmygo get
+internal/cli            downmygo get、import、grab、mcp、native-host
+internal/netset         加密 DNS 与绑定地址
+internal/nativehost     浏览器桥：协议、规则、登录
+internal/rss            RSS 与 Atom
+internal/tools          yt-dlp 与 gallery-dl
+internal/extract        zip、tar、gzip
+internal/grab           页面与列表里的链接
+internal/debrid         Real-Debrid 与 AllDebrid
+internal/themes         主题文件
+internal/mcp            MCP 服务
+internal/update         版本检查
+browser                 浏览器扩展
 locales                 三种语言的文案与生成的访问器
 resources               图标（Icon Composer 文档与 PNG）
 cmd/preview             无窗口渲染截图
@@ -149,6 +168,7 @@ tools/makeicon          画图标并导出
 - [产品定义与设计系统](docs/02-downmygo-product.md)
 - [技术架构](docs/03-architecture.md)
 - [功能对照](docs/04-feature-parity.md)
+- [路线图状态](docs/06-roadmap-status.md)
 
 ## 开发
 

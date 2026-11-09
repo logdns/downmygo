@@ -7,6 +7,7 @@
 | [03 · 技术架构](03-architecture.md) | Go/MyGo 架构、引擎算法、线程模型、持久化、UI、API、CLI、构建、扩展点 |
 | [04 · 功能对照](04-feature-parity.md) | MDM 功能 → downmygo 状态（已实现/部分/计划/不做） |
 | [05 · 功能、逻辑与特点](05-features.md) | 启动与下载流程、状态机、队列调度、限速、API、多语言、打包发布 |
+| [06 · 路线图状态](06-roadmap-status.md) | 浏览器、订阅、外部下载器、DNS、debrid、MCP、主题、更新的逐项状态 |
 
 ## 截图
 

@@ -13,6 +13,7 @@ import (
 	"time"
 
 	"github.com/downmygo/downmygo/internal/model"
+	"github.com/downmygo/downmygo/internal/nativehost"
 )
 
 // State is the whole of what the app remembers between runs.
@@ -27,6 +28,26 @@ type State struct {
 	// window, and when the window started.
 	LimitUsed  int64     `json:"limitUsed,omitempty"`
 	LimitSince time.Time `json:"limitSince,omitempty"`
+
+	// Feeds the app watches, and the logins and capture rules the browser
+	// bridge uses.
+	Subscriptions []Subscription    `json:"subscriptions,omitempty"`
+	Sites         []nativehost.Site `json:"sites,omitempty"`
+	Rules         []nativehost.Rule `json:"rules,omitempty"`
+}
+
+// Subscription is an RSS or Atom feed the app watches.
+type Subscription struct {
+	ID         string    `json:"id"`
+	URL        string    `json:"url"`
+	Name       string    `json:"name,omitempty"`
+	Folder     string    `json:"folder,omitempty"`
+	Extensions []string  `json:"extensions,omitempty"`
+	EveryMin   int       `json:"everyMin,omitempty"` // 0 is an hour
+	Enabled    bool      `json:"enabled"`
+	LastCheck  time.Time `json:"lastCheck,omitempty"`
+	Seen       []string  `json:"seen,omitempty"` // the last ids taken
+	Error      string    `json:"error,omitempty"`
 }
 
 // Store reads and writes the state file.

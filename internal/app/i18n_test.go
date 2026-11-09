@@ -115,3 +115,38 @@ func TestCompactLayoutLeavesOutColumns(t *testing.T) {
 		}
 	}
 }
+
+func TestSubscriptions(t *testing.T) {
+	a := demoApp(t)
+	a.AddSubscription("https://example.com/feed.xml", "mp4, mp3", 30)
+	if len(a.State().Subscriptions) != 1 {
+		t.Fatalf("subscriptions = %v", a.State().Subscriptions)
+	}
+	sub := a.State().Subscriptions[0]
+	if !sub.Enabled || sub.EveryMin != 30 || len(sub.Extensions) != 2 {
+		t.Fatalf("sub = %+v", sub)
+	}
+	if sub.Extensions[0] != "mp4" || sub.Extensions[1] != "mp3" {
+		t.Fatalf("extensions = %v", sub.Extensions)
+	}
+	a.RemoveSubscription(sub.ID)
+	if len(a.State().Subscriptions) != 0 {
+		t.Fatalf("subscriptions = %v", a.State().Subscriptions)
+	}
+	// A link that is not a feed address is refused.
+	a.AddSubscription("not a feed", "", 30)
+	if len(a.State().Subscriptions) != 0 {
+		t.Fatal("a bad feed was added")
+	}
+}
+
+func TestBuiltinThemeAndThemeFiles(t *testing.T) {
+	a := demoApp(t)
+	if _, ok := a.themeFile(); ok {
+		t.Fatal("a theme file was found with none set")
+	}
+	a.State().Settings.ThemeFile = "Nord"
+	if _, ok := a.themeFile(); ok {
+		t.Fatal("a theme file that does not exist was found")
+	}
+}

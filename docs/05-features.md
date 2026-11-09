@@ -152,6 +152,35 @@ downmygo https://example.com/file.zip
 
 见 [3.6](#36-本地-api-与远程页)。手机浏览器打开 `http://<电脑IP>:8463` 即可添加、暂停、继续、删除。
 
+### 浏览器
+
+- 扩展（`browser/`）：右键链接/视频/图片 → 交给 downmygo；弹窗发送当前页；可接管浏览器下载
+- Native Messaging：`downmygo native-host`，4 字节长度 + JSON；`downmygo install-host <ID>` 写各浏览器清单
+- 站点登录：按域名后缀匹配的 Cookie 与 Referer，扩展也会传浏览器的 Cookie
+- 捕获规则：按域名、扩展名、大小、排除词过滤
+
+### 订阅与抓取
+
+- RSS / Atom 订阅：定时检查，按扩展名或 enclosure 取件，记住已取条目
+- 链接抓取：读页面、按类型过滤、勾选加入
+- 导入：文本每行一个链接，或 JSON 列表
+
+### 外部下载器与解压
+
+- yt-dlp：视频站点交给它，进度显示在列表里
+- gallery-dl：图库站点交给它，按目录差集认领文件
+- 解压：zip / tar / tar.gz / tar.bz2，完成后自动解压（可选删除压缩包），拒绝路径穿越
+- 种子 / magnet：交给系统种子客户端（不含内置引擎）
+
+### 网络与生态
+
+- 加密 DNS：DoH（RFC 8484）与 DoT，任意端点
+- VPN 网卡绑定：本地地址绑定，断隧道即断流量
+- debrid：Real-Debrid / AllDebrid 换直链，失败回退原链接
+- MCP：`downmygo mcp`，7 个工具
+- 主题文件：JSON 覆盖 19 个颜色角色与圆角/间距
+- 自动更新：查 GitHub 最新 Release，比较版本，打开发布页
+
 ### 外观
 
 - 浅色 / 深色 / 跟随系统

@@ -32,6 +32,18 @@ func Main(args []string) int {
 	case "version", "--version":
 		fmt.Println("downmygo " + version.Version)
 		return 0
+	case "info":
+		return runInfo()
+	case "mcp":
+		return runMCP()
+	case "native-host", "native-messaging":
+		return runNativeHost()
+	case "install-host":
+		return runInstallHost(args[1:])
+	case "grab":
+		return runGrab(args[1:])
+	case "import":
+		return runImport(args[1:])
 	default:
 		// A bare URL is the common case.
 		if strings.HasPrefix(args[0], "http://") || strings.HasPrefix(args[0], "https://") {
@@ -47,6 +59,12 @@ func usage() {
 
   downmygo get URL [flags]     download a file
   downmygo URL                 the same
+  downmygo import FILE         add every link of a file
+  downmygo grab PAGE           print the links of a page
+  downmygo info                the version, the API port and the counts
+  downmygo mcp                 serve the Model Context Protocol on stdio
+  downmygo native-host         serve the browser's native messaging on stdio
+  downmygo install-host [ID]   write the browser's host manifest
 
 Flags:
   -o, --out DIR       folder to save in (default: your Downloads/downmygo)

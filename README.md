@@ -52,6 +52,14 @@ The full feature list, the program's logic and what makes it different: **[docs/
 - **Local API** — `127.0.0.1:8463` behind a token: list, add, pause, resume, remove, queues.
 - **Remote page** — open it from a phone on the same network and control the downloads.
 - **Adaptive layout** — the sidebar folds into a filter menu, columns drop out and buttons become icons as the window narrows.
+- **Browser** — an extension that sends links with their cookies, a native messaging host, site logins, capture rules and an importer.
+- **Feeds and grabbing** — RSS/Atom subscriptions, link grabbing from a page, and a list importer.
+- **External downloaders** — yt-dlp for videos and gallery-dl for galleries, shown in the list with their progress.
+- **Unpacking** — zip, tar, tar.gz and tar.bz2 after a download, refusing entries that leave the folder.
+- **Network** — encrypted DNS (DoH and DoT), a bind address for a VPN kill switch, and debrid (Real-Debrid, AllDebrid).
+- **Agents** — an MCP server on stdio with seven tools over the app's own API.
+- **Themes** — JSON theme files over the built-in light and dark, with 19 color roles.
+- **Updates** — a check of the latest GitHub release, with a link to it.
 - **Look** — light, dark or follow the system, the brand's gradient, an empty state, a detail card and a status bar.
 
 <p align="center">
@@ -138,7 +146,18 @@ internal/engine         probe, segments, workers, resume, checksums
 internal/limiter        token buckets
 internal/app            state machine, view, queues, scheduler, API
 internal/ui             brand theme and icons
-internal/cli            downmygo get
+internal/cli            downmygo get, import, grab, mcp, native-host
+internal/netset         encrypted DNS and the bind address
+internal/nativehost     the browser bridge: framing, rules, logins
+internal/rss            RSS and Atom
+internal/tools          yt-dlp and gallery-dl
+internal/extract        zip, tar and gzip
+internal/grab           links from a page or a list
+internal/debrid         Real-Debrid and AllDebrid
+internal/themes         theme files
+internal/mcp            the Model Context Protocol server
+internal/update         the release check
+browser                 the extension
 locales                 the three catalogs and their generated accessors
 resources               the icon (Icon Composer document and PNG)
 cmd/preview             windowless screenshots

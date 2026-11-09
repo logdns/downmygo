@@ -51,6 +51,7 @@ type Config struct {
 	UserAgent        string
 	Proxy            string
 	BindIP           string
+	DNS              string
 	MaxRetries       int
 	FileDate         bool
 }
@@ -269,7 +270,7 @@ func (j *job) run() {
 	if j.d.Size <= 0 || j.d.FileName == "" || j.d.FinalURL == "" {
 		info, err := Probe(j.ctx, j.client, j.d.URL, RequestOptions{
 			UserAgent: j.cfg.UserAgent, Referer: j.d.Referer,
-			Cookies: j.d.Cookies, Proxy: j.cfg.Proxy, BindIP: j.cfg.BindIP,
+			Cookies: j.d.Cookies, Proxy: j.cfg.Proxy, BindIP: j.cfg.BindIP, DNS: j.cfg.DNS,
 			MaxConns: j.maxConn,
 		})
 		if err != nil {

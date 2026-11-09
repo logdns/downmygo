@@ -22,7 +22,9 @@ func main() {
 	// `downmygo get URL` is the terminal tool, and the same binary.
 	if len(os.Args) > 1 {
 		switch os.Args[1] {
-		case "get", "download", "help", "--help", "-h", "version", "--version":
+		case "get", "download", "help", "--help", "-h", "version", "--version",
+			"info", "mcp", "native-host", "native-messaging", "install-host",
+			"grab", "import":
 			os.Exit(cli.Main(os.Args[1:]))
 		}
 		if strings.HasPrefix(os.Args[1], "http://") || strings.HasPrefix(os.Args[1], "https://") {
@@ -148,6 +150,7 @@ func buildMenu(a *app.App) *mygo.Menu {
 				{Label: locales.MenuAbout(), Click: func(*mygo.MenuItem, *mygo.Window) { a.ShowAbout() }},
 				mygo.Separator(),
 				{Label: locales.MenuOptions(), Accelerator: "CmdOrCtrl+,", Click: func(*mygo.MenuItem, *mygo.Window) { a.ShowOptions() }},
+				{Label: locales.MenuCheckUpdates(), Click: func(*mygo.MenuItem, *mygo.Window) { a.CheckForUpdates() }},
 				mygo.Separator(),
 				{Role: mygo.RoleHide},
 				{Role: mygo.RoleHideOthers},
@@ -165,6 +168,10 @@ func buildMenu(a *app.App) *mygo.Menu {
 				{Label: locales.MenuPasteLinks(), Accelerator: "CmdOrCtrl+Shift+V", Click: func(*mygo.MenuItem, *mygo.Window) {
 					a.PasteLinks()
 				}},
+				mygo.Separator(),
+				{Label: locales.MenuGrab(), Click: func(*mygo.MenuItem, *mygo.Window) { a.GrabDialog() }},
+				{Label: locales.MenuImport(), Click: func(*mygo.MenuItem, *mygo.Window) { a.ImportDialog() }},
+				{Label: locales.MenuFeeds(), Click: func(*mygo.MenuItem, *mygo.Window) { a.ShowFeeds() }},
 				mygo.Separator(),
 				{Label: locales.MenuCloseWindow(), Role: mygo.RoleClose, Click: func(_ *mygo.MenuItem, w *mygo.Window) {
 					if w != nil {

@@ -12,6 +12,8 @@ import (
 	"strconv"
 	"strings"
 	"time"
+
+	"github.com/downmygo/downmygo/internal/netset"
 )
 
 // RequestOptions are the per-download request settings.
@@ -21,6 +23,7 @@ type RequestOptions struct {
 	Cookies   string
 	Proxy     string // "", "system", or a proxy URL
 	BindIP    string // local address to bind, for a VPN kill switch
+	DNS       string // "", "system", "doh", "dot", or an endpoint
 	MaxConns  int
 }
 
@@ -28,15 +31,16 @@ type RequestOptions struct {
 // that the bytes on the wire are the bytes of the file, which is what a
 // range request counts.
 func NewClient(o RequestOptions) *http.Client {
-	dialer := &net.Dialer{Timeout: 20 * time.Second, KeepAlive: 30 * time.Second}
-	if o.BindIP != "" {
-		if ip := net.ParseIP(o.BindIP); ip != nil {
-			dialer.LocalAddr = &net.TCPAddr{IP: ip}
-		}
+	dialer := netset.Dialer(o.BindIP, nil)
+	// A resolver that is not the system's resolves every connection, so
+	// the names a download uses never go out in clear text.
+	resolver, err := netset.NewResolver(o.DNS)
+	if err != nil {
+		resolver = nil
 	}
 	tr := &http.Transport{
 		Proxy:                 proxyFunc(o.Proxy),
-		DialContext:           dialer.DialContext,
+		DialContext:           netset.DialContext(dialer, resolver),
 		ForceAttemptHTTP2:     false,
 		MaxIdleConns:          64,
 		MaxIdleConnsPerHost:   max(8, o.MaxConns),

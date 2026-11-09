@@ -3091,3 +3091,807 @@ func RemoteOf(done string, size string) string { return In(i18n.Locale()).Remote
 func (msgs Messages) RemoteOf(done string, size string) string {
 	return Catalog.Format(msgs.locale, "remoteOf", map[string]any{"done": done, "size": size})
 }
+
+// ToastNoTorrentClient says "No torrent client is installed."
+// in the language the app shows.
+//
+// A magnet or torrent link with no program to open it.
+func ToastNoTorrentClient() string { return In(i18n.Locale()).ToastNoTorrentClient() }
+
+// ToastNoTorrentClient says "No torrent client is installed."
+// in the language of msgs.
+//
+// A magnet or torrent link with no program to open it.
+func (msgs Messages) ToastNoTorrentClient() string {
+	return Catalog.Format(msgs.locale, "toastNoTorrentClient", nil)
+}
+
+// ToastHandedOff says "Handed to the torrent client."
+// in the language the app shows.
+//
+// A magnet or torrent link given to the system's client.
+func ToastHandedOff() string { return In(i18n.Locale()).ToastHandedOff() }
+
+// ToastHandedOff says "Handed to the torrent client."
+// in the language of msgs.
+//
+// A magnet or torrent link given to the system's client.
+func (msgs Messages) ToastHandedOff() string {
+	return Catalog.Format(msgs.locale, "toastHandedOff", nil)
+}
+
+// ToastDebridFailed says "The debrid service said: {error}. The link is downloading as it is."
+// in the language the app shows.
+//
+// The debrid service refused a link.
+func ToastDebridFailed(error string) string { return In(i18n.Locale()).ToastDebridFailed(error) }
+
+// ToastDebridFailed says "The debrid service said: {error}. The link is downloading as it is."
+// in the language of msgs.
+//
+// The debrid service refused a link.
+func (msgs Messages) ToastDebridFailed(error string) string {
+	return Catalog.Format(msgs.locale, "toastDebridFailed", map[string]any{"error": error})
+}
+
+// ToastDebridResolved says "The debrid service gave a direct link."
+// in the language the app shows.
+//
+// A debrid service turned a link into a direct one.
+func ToastDebridResolved() string { return In(i18n.Locale()).ToastDebridResolved() }
+
+// ToastDebridResolved says "The debrid service gave a direct link."
+// in the language of msgs.
+//
+// A debrid service turned a link into a direct one.
+func (msgs Messages) ToastDebridResolved() string {
+	return Catalog.Format(msgs.locale, "toastDebridResolved", nil)
+}
+
+// ToastExtractFailed says "Could not unpack the archive: {error}"
+// in the language the app shows.
+//
+// Unpacking an archive failed.
+func ToastExtractFailed(error string) string { return In(i18n.Locale()).ToastExtractFailed(error) }
+
+// ToastExtractFailed says "Could not unpack the archive: {error}"
+// in the language of msgs.
+//
+// Unpacking an archive failed.
+func (msgs Messages) ToastExtractFailed(error string) string {
+	return Catalog.Format(msgs.locale, "toastExtractFailed", map[string]any{"error": error})
+}
+
+// ToastExtracted says "{count, plural, =0 {Unpacked into {dir}} one {Unpacked # file into {dir}} other {Unpacked # files into {dir}}}"
+// in the language the app shows.
+//
+// An archive was unpacked.
+func ToastExtracted(count int, dir string) string {
+	return In(i18n.Locale()).ToastExtracted(count, dir)
+}
+
+// ToastExtracted says "{count, plural, =0 {Unpacked into {dir}} one {Unpacked # file into {dir}} other {Unpacked # files into {dir}}}"
+// in the language of msgs.
+//
+// An archive was unpacked.
+func (msgs Messages) ToastExtracted(count int, dir string) string {
+	return Catalog.Format(msgs.locale, "toastExtracted", map[string]any{"count": count, "dir": dir})
+}
+
+// ToastFeedAdded says "{count, plural, one {# new item from {feed}} other {# new items from {feed}}}"
+// in the language the app shows.
+//
+// A feed brought new downloads.
+func ToastFeedAdded(count int, feed string) string {
+	return In(i18n.Locale()).ToastFeedAdded(count, feed)
+}
+
+// ToastFeedAdded says "{count, plural, one {# new item from {feed}} other {# new items from {feed}}}"
+// in the language of msgs.
+//
+// A feed brought new downloads.
+func (msgs Messages) ToastFeedAdded(count int, feed string) string {
+	return Catalog.Format(msgs.locale, "toastFeedAdded", map[string]any{"count": count, "feed": feed})
+}
+
+// ToastImportFailed says "Could not read the list: {error}"
+// in the language the app shows.
+//
+// A list of links could not be read.
+func ToastImportFailed(error string) string { return In(i18n.Locale()).ToastImportFailed(error) }
+
+// ToastImportFailed says "Could not read the list: {error}"
+// in the language of msgs.
+//
+// A list of links could not be read.
+func (msgs Messages) ToastImportFailed(error string) string {
+	return Catalog.Format(msgs.locale, "toastImportFailed", map[string]any{"error": error})
+}
+
+// ToastImported says "{count, plural, =0 {No links were added} one {Added # link} other {Added # links}}"
+// in the language the app shows.
+//
+// Links were imported.
+func ToastImported(count int) string { return In(i18n.Locale()).ToastImported(count) }
+
+// ToastImported says "{count, plural, =0 {No links were added} one {Added # link} other {Added # links}}"
+// in the language of msgs.
+//
+// Links were imported.
+func (msgs Messages) ToastImported(count int) string {
+	return Catalog.Format(msgs.locale, "toastImported", map[string]any{"count": count})
+}
+
+// ToastUpdateFailed says "Could not check for updates: {error}"
+// in the language the app shows.
+//
+// The update check failed.
+func ToastUpdateFailed(error string) string { return In(i18n.Locale()).ToastUpdateFailed(error) }
+
+// ToastUpdateFailed says "Could not check for updates: {error}"
+// in the language of msgs.
+//
+// The update check failed.
+func (msgs Messages) ToastUpdateFailed(error string) string {
+	return Catalog.Format(msgs.locale, "toastUpdateFailed", map[string]any{"error": error})
+}
+
+// ToastUpToDate says "downmygo is up to date."
+// in the language the app shows.
+//
+// There is no newer version.
+func ToastUpToDate() string { return In(i18n.Locale()).ToastUpToDate() }
+
+// ToastUpToDate says "downmygo is up to date."
+// in the language of msgs.
+//
+// There is no newer version.
+func (msgs Messages) ToastUpToDate() string {
+	return Catalog.Format(msgs.locale, "toastUpToDate", nil)
+}
+
+// MenuGrab says "Grab links from a page…"
+// in the language the app shows.
+//
+// The File menu's item.
+func MenuGrab() string { return In(i18n.Locale()).MenuGrab() }
+
+// MenuGrab says "Grab links from a page…"
+// in the language of msgs.
+//
+// The File menu's item.
+func (msgs Messages) MenuGrab() string {
+	return Catalog.Format(msgs.locale, "menuGrab", nil)
+}
+
+// MenuImport says "Import links…"
+// in the language the app shows.
+//
+// The File menu's item.
+func MenuImport() string { return In(i18n.Locale()).MenuImport() }
+
+// MenuImport says "Import links…"
+// in the language of msgs.
+//
+// The File menu's item.
+func (msgs Messages) MenuImport() string {
+	return Catalog.Format(msgs.locale, "menuImport", nil)
+}
+
+// MenuFeeds says "Subscriptions…"
+// in the language the app shows.
+//
+// The File menu's item.
+func MenuFeeds() string { return In(i18n.Locale()).MenuFeeds() }
+
+// MenuFeeds says "Subscriptions…"
+// in the language of msgs.
+//
+// The File menu's item.
+func (msgs Messages) MenuFeeds() string {
+	return Catalog.Format(msgs.locale, "menuFeeds", nil)
+}
+
+// MenuCheckUpdates says "Check for updates…"
+// in the language the app shows.
+//
+// The app menu's item.
+func MenuCheckUpdates() string { return In(i18n.Locale()).MenuCheckUpdates() }
+
+// MenuCheckUpdates says "Check for updates…"
+// in the language of msgs.
+//
+// The app menu's item.
+func (msgs Messages) MenuCheckUpdates() string {
+	return Catalog.Format(msgs.locale, "menuCheckUpdates", nil)
+}
+
+// GrabTitle says "Links on the page"
+// in the language the app shows.
+//
+// The grab dialog's title.
+func GrabTitle() string { return In(i18n.Locale()).GrabTitle() }
+
+// GrabTitle says "Links on the page"
+// in the language of msgs.
+//
+// The grab dialog's title.
+func (msgs Messages) GrabTitle() string {
+	return Catalog.Format(msgs.locale, "grabTitle", nil)
+}
+
+// GrabPlaceholder says "https://example.com/page"
+// in the language the app shows.
+//
+// The grab dialog's field.
+func GrabPlaceholder() string { return In(i18n.Locale()).GrabPlaceholder() }
+
+// GrabPlaceholder says "https://example.com/page"
+// in the language of msgs.
+//
+// The grab dialog's field.
+func (msgs Messages) GrabPlaceholder() string {
+	return Catalog.Format(msgs.locale, "grabPlaceholder", nil)
+}
+
+// GrabLook says "Look"
+// in the language the app shows.
+//
+// A button that reads the page.
+func GrabLook() string { return In(i18n.Locale()).GrabLook() }
+
+// GrabLook says "Look"
+// in the language of msgs.
+//
+// A button that reads the page.
+func (msgs Messages) GrabLook() string {
+	return Catalog.Format(msgs.locale, "grabLook", nil)
+}
+
+// GrabBusy says "Reading the page…"
+// in the language the app shows.
+//
+// The grab dialog's line while it reads.
+func GrabBusy() string { return In(i18n.Locale()).GrabBusy() }
+
+// GrabBusy says "Reading the page…"
+// in the language of msgs.
+//
+// The grab dialog's line while it reads.
+func (msgs Messages) GrabBusy() string {
+	return Catalog.Format(msgs.locale, "grabBusy", nil)
+}
+
+// GrabEmpty says "No links match. Try another page, or widen the file types in Options."
+// in the language the app shows.
+//
+// The grab dialog's line when nothing matched.
+func GrabEmpty() string { return In(i18n.Locale()).GrabEmpty() }
+
+// GrabEmpty says "No links match. Try another page, or widen the file types in Options."
+// in the language of msgs.
+//
+// The grab dialog's line when nothing matched.
+func (msgs Messages) GrabEmpty() string {
+	return Catalog.Format(msgs.locale, "grabEmpty", nil)
+}
+
+// GrabAdd says "Add selected"
+// in the language the app shows.
+//
+// A button that adds the chosen links.
+func GrabAdd() string { return In(i18n.Locale()).GrabAdd() }
+
+// GrabAdd says "Add selected"
+// in the language of msgs.
+//
+// A button that adds the chosen links.
+func (msgs Messages) GrabAdd() string {
+	return Catalog.Format(msgs.locale, "grabAdd", nil)
+}
+
+// GrabAll says "Select all"
+// in the language the app shows.
+//
+// A button that chooses every link.
+func GrabAll() string { return In(i18n.Locale()).GrabAll() }
+
+// GrabAll says "Select all"
+// in the language of msgs.
+//
+// A button that chooses every link.
+func (msgs Messages) GrabAll() string {
+	return Catalog.Format(msgs.locale, "grabAll", nil)
+}
+
+// GrabNone says "Select none"
+// in the language the app shows.
+//
+// A button that chooses none.
+func GrabNone() string { return In(i18n.Locale()).GrabNone() }
+
+// GrabNone says "Select none"
+// in the language of msgs.
+//
+// A button that chooses none.
+func (msgs Messages) GrabNone() string {
+	return Catalog.Format(msgs.locale, "grabNone", nil)
+}
+
+// GrabCount says "{count, plural, =0 {No links} one {# link} other {# links}}"
+// in the language the app shows.
+//
+// How many links were found.
+func GrabCount(count int) string { return In(i18n.Locale()).GrabCount(count) }
+
+// GrabCount says "{count, plural, =0 {No links} one {# link} other {# links}}"
+// in the language of msgs.
+//
+// How many links were found.
+func (msgs Messages) GrabCount(count int) string {
+	return Catalog.Format(msgs.locale, "grabCount", map[string]any{"count": count})
+}
+
+// ImportTitle says "Import links"
+// in the language the app shows.
+//
+// The import dialog's title.
+func ImportTitle() string { return In(i18n.Locale()).ImportTitle() }
+
+// ImportTitle says "Import links"
+// in the language of msgs.
+//
+// The import dialog's title.
+func (msgs Messages) ImportTitle() string {
+	return Catalog.Format(msgs.locale, "importTitle", nil)
+}
+
+// ImportHint says "A text file of links, one per line, or a JSON list."
+// in the language the app shows.
+//
+// The import dialog's line.
+func ImportHint() string { return In(i18n.Locale()).ImportHint() }
+
+// ImportHint says "A text file of links, one per line, or a JSON list."
+// in the language of msgs.
+//
+// The import dialog's line.
+func (msgs Messages) ImportHint() string {
+	return Catalog.Format(msgs.locale, "importHint", nil)
+}
+
+// ImportChoose says "Choose a file…"
+// in the language the app shows.
+//
+// A button that opens the file picker.
+func ImportChoose() string { return In(i18n.Locale()).ImportChoose() }
+
+// ImportChoose says "Choose a file…"
+// in the language of msgs.
+//
+// A button that opens the file picker.
+func (msgs Messages) ImportChoose() string {
+	return Catalog.Format(msgs.locale, "importChoose", nil)
+}
+
+// FeedsTitle says "Subscriptions"
+// in the language the app shows.
+//
+// The subscriptions dialog's title.
+func FeedsTitle() string { return In(i18n.Locale()).FeedsTitle() }
+
+// FeedsTitle says "Subscriptions"
+// in the language of msgs.
+//
+// The subscriptions dialog's title.
+func (msgs Messages) FeedsTitle() string {
+	return Catalog.Format(msgs.locale, "feedsTitle", nil)
+}
+
+// FeedsHint says "downmygo checks each feed and adds what is new."
+// in the language the app shows.
+//
+// The subscriptions dialog's line.
+func FeedsHint() string { return In(i18n.Locale()).FeedsHint() }
+
+// FeedsHint says "downmygo checks each feed and adds what is new."
+// in the language of msgs.
+//
+// The subscriptions dialog's line.
+func (msgs Messages) FeedsHint() string {
+	return Catalog.Format(msgs.locale, "feedsHint", nil)
+}
+
+// FeedsNew says "New subscription"
+// in the language the app shows.
+//
+// The label of a new subscription.
+func FeedsNew() string { return In(i18n.Locale()).FeedsNew() }
+
+// FeedsNew says "New subscription"
+// in the language of msgs.
+//
+// The label of a new subscription.
+func (msgs Messages) FeedsNew() string {
+	return Catalog.Format(msgs.locale, "feedsNew", nil)
+}
+
+// FeedsURL says "Feed address"
+// in the language the app shows.
+//
+// The label of a feed's address.
+func FeedsURL() string { return In(i18n.Locale()).FeedsURL() }
+
+// FeedsURL says "Feed address"
+// in the language of msgs.
+//
+// The label of a feed's address.
+func (msgs Messages) FeedsURL() string {
+	return Catalog.Format(msgs.locale, "feedsURL", nil)
+}
+
+// FeedsTypes says "File types"
+// in the language the app shows.
+//
+// The label of a feed's file types.
+func FeedsTypes() string { return In(i18n.Locale()).FeedsTypes() }
+
+// FeedsTypes says "File types"
+// in the language of msgs.
+//
+// The label of a feed's file types.
+func (msgs Messages) FeedsTypes() string {
+	return Catalog.Format(msgs.locale, "feedsTypes", nil)
+}
+
+// FeedsEvery says "Every"
+// in the language the app shows.
+//
+// The start of a feed's interval.
+func FeedsEvery() string { return In(i18n.Locale()).FeedsEvery() }
+
+// FeedsEvery says "Every"
+// in the language of msgs.
+//
+// The start of a feed's interval.
+func (msgs Messages) FeedsEvery() string {
+	return Catalog.Format(msgs.locale, "feedsEvery", nil)
+}
+
+// FeedsMinutes says "minutes"
+// in the language the app shows.
+//
+// The end of a feed's interval.
+func FeedsMinutes() string { return In(i18n.Locale()).FeedsMinutes() }
+
+// FeedsMinutes says "minutes"
+// in the language of msgs.
+//
+// The end of a feed's interval.
+func (msgs Messages) FeedsMinutes() string {
+	return Catalog.Format(msgs.locale, "feedsMinutes", nil)
+}
+
+// FeedsAdd says "Add"
+// in the language the app shows.
+//
+// A button that adds a feed.
+func FeedsAdd() string { return In(i18n.Locale()).FeedsAdd() }
+
+// FeedsAdd says "Add"
+// in the language of msgs.
+//
+// A button that adds a feed.
+func (msgs Messages) FeedsAdd() string {
+	return Catalog.Format(msgs.locale, "feedsAdd", nil)
+}
+
+// FeedsDelete says "Delete"
+// in the language the app shows.
+//
+// A button that removes a feed.
+func FeedsDelete() string { return In(i18n.Locale()).FeedsDelete() }
+
+// FeedsDelete says "Delete"
+// in the language of msgs.
+//
+// A button that removes a feed.
+func (msgs Messages) FeedsDelete() string {
+	return Catalog.Format(msgs.locale, "feedsDelete", nil)
+}
+
+// FeedsEmpty says "No feeds yet."
+// in the language the app shows.
+//
+// The subscriptions dialog's empty list.
+func FeedsEmpty() string { return In(i18n.Locale()).FeedsEmpty() }
+
+// FeedsEmpty says "No feeds yet."
+// in the language of msgs.
+//
+// The subscriptions dialog's empty list.
+func (msgs Messages) FeedsEmpty() string {
+	return Catalog.Format(msgs.locale, "feedsEmpty", nil)
+}
+
+// FeedsEnabled says "On"
+// in the language the app shows.
+//
+// A feed that is watched.
+func FeedsEnabled() string { return In(i18n.Locale()).FeedsEnabled() }
+
+// FeedsEnabled says "On"
+// in the language of msgs.
+//
+// A feed that is watched.
+func (msgs Messages) FeedsEnabled() string {
+	return Catalog.Format(msgs.locale, "feedsEnabled", nil)
+}
+
+// UpdateTitle says "A newer version is here"
+// in the language the app shows.
+//
+// The update dialog's title.
+func UpdateTitle() string { return In(i18n.Locale()).UpdateTitle() }
+
+// UpdateTitle says "A newer version is here"
+// in the language of msgs.
+//
+// The update dialog's title.
+func (msgs Messages) UpdateTitle() string {
+	return Catalog.Format(msgs.locale, "updateTitle", nil)
+}
+
+// UpdateBody says "{version} is out; you have {current}."
+// in the language the app shows.
+//
+// The update dialog's line.
+func UpdateBody(version string, current string) string {
+	return In(i18n.Locale()).UpdateBody(version, current)
+}
+
+// UpdateBody says "{version} is out; you have {current}."
+// in the language of msgs.
+//
+// The update dialog's line.
+func (msgs Messages) UpdateBody(version string, current string) string {
+	return Catalog.Format(msgs.locale, "updateBody", map[string]any{"version": version, "current": current})
+}
+
+// UpdateOpen says "Open the release page"
+// in the language the app shows.
+//
+// A button that opens the release page.
+func UpdateOpen() string { return In(i18n.Locale()).UpdateOpen() }
+
+// UpdateOpen says "Open the release page"
+// in the language of msgs.
+//
+// A button that opens the release page.
+func (msgs Messages) UpdateOpen() string {
+	return Catalog.Format(msgs.locale, "updateOpen", nil)
+}
+
+// UpdateLater says "Later"
+// in the language the app shows.
+//
+// A button that closes the update dialog.
+func UpdateLater() string { return In(i18n.Locale()).UpdateLater() }
+
+// UpdateLater says "Later"
+// in the language of msgs.
+//
+// A button that closes the update dialog.
+func (msgs Messages) UpdateLater() string {
+	return Catalog.Format(msgs.locale, "updateLater", nil)
+}
+
+// OptionsDNS says "DNS"
+// in the language the app shows.
+//
+// The label of the DNS setting.
+func OptionsDNS() string { return In(i18n.Locale()).OptionsDNS() }
+
+// OptionsDNS says "DNS"
+// in the language of msgs.
+//
+// The label of the DNS setting.
+func (msgs Messages) OptionsDNS() string {
+	return Catalog.Format(msgs.locale, "optionsDNS", nil)
+}
+
+// OptionsDNSHint says "system, doh, dot, or an endpoint"
+// in the language the app shows.
+//
+// The placeholder of the DNS setting.
+func OptionsDNSHint() string { return In(i18n.Locale()).OptionsDNSHint() }
+
+// OptionsDNSHint says "system, doh, dot, or an endpoint"
+// in the language of msgs.
+//
+// The placeholder of the DNS setting.
+func (msgs Messages) OptionsDNSHint() string {
+	return Catalog.Format(msgs.locale, "optionsDNSHint", nil)
+}
+
+// OptionsDebrid says "Debrid"
+// in the language the app shows.
+//
+// The label of the debrid settings.
+func OptionsDebrid() string { return In(i18n.Locale()).OptionsDebrid() }
+
+// OptionsDebrid says "Debrid"
+// in the language of msgs.
+//
+// The label of the debrid settings.
+func (msgs Messages) OptionsDebrid() string {
+	return Catalog.Format(msgs.locale, "optionsDebrid", nil)
+}
+
+// OptionsDebridProvider says "Service"
+// in the language the app shows.
+//
+// The label of the debrid service.
+func OptionsDebridProvider() string { return In(i18n.Locale()).OptionsDebridProvider() }
+
+// OptionsDebridProvider says "Service"
+// in the language of msgs.
+//
+// The label of the debrid service.
+func (msgs Messages) OptionsDebridProvider() string {
+	return Catalog.Format(msgs.locale, "optionsDebridProvider", nil)
+}
+
+// OptionsDebridToken says "API token"
+// in the language the app shows.
+//
+// The label of the debrid token.
+func OptionsDebridToken() string { return In(i18n.Locale()).OptionsDebridToken() }
+
+// OptionsDebridToken says "API token"
+// in the language of msgs.
+//
+// The label of the debrid token.
+func (msgs Messages) OptionsDebridToken() string {
+	return Catalog.Format(msgs.locale, "optionsDebridToken", nil)
+}
+
+// OptionsYtDlp says "Use yt-dlp for videos (it must be installed)"
+// in the language the app shows.
+//
+// A setting.
+func OptionsYtDlp() string { return In(i18n.Locale()).OptionsYtDlp() }
+
+// OptionsYtDlp says "Use yt-dlp for videos (it must be installed)"
+// in the language of msgs.
+//
+// A setting.
+func (msgs Messages) OptionsYtDlp() string {
+	return Catalog.Format(msgs.locale, "optionsYtDlp", nil)
+}
+
+// OptionsGalleryDL says "Use gallery-dl for galleries (it must be installed)"
+// in the language the app shows.
+//
+// A setting.
+func OptionsGalleryDL() string { return In(i18n.Locale()).OptionsGalleryDL() }
+
+// OptionsGalleryDL says "Use gallery-dl for galleries (it must be installed)"
+// in the language of msgs.
+//
+// A setting.
+func (msgs Messages) OptionsGalleryDL() string {
+	return Catalog.Format(msgs.locale, "optionsGalleryDL", nil)
+}
+
+// OptionsCheckUpdates says "Check for updates"
+// in the language the app shows.
+//
+// A setting.
+func OptionsCheckUpdates() string { return In(i18n.Locale()).OptionsCheckUpdates() }
+
+// OptionsCheckUpdates says "Check for updates"
+// in the language of msgs.
+//
+// A setting.
+func (msgs Messages) OptionsCheckUpdates() string {
+	return Catalog.Format(msgs.locale, "optionsCheckUpdates", nil)
+}
+
+// OptionsThemeFile says "Theme file"
+// in the language the app shows.
+//
+// The label of the theme file.
+func OptionsThemeFile() string { return In(i18n.Locale()).OptionsThemeFile() }
+
+// OptionsThemeFile says "Theme file"
+// in the language of msgs.
+//
+// The label of the theme file.
+func (msgs Messages) OptionsThemeFile() string {
+	return Catalog.Format(msgs.locale, "optionsThemeFile", nil)
+}
+
+// OptionsGrabTypes says "File types the link grabber keeps"
+// in the language the app shows.
+//
+// The label of the grabber's file types.
+func OptionsGrabTypes() string { return In(i18n.Locale()).OptionsGrabTypes() }
+
+// OptionsGrabTypes says "File types the link grabber keeps"
+// in the language of msgs.
+//
+// The label of the grabber's file types.
+func (msgs Messages) OptionsGrabTypes() string {
+	return Catalog.Format(msgs.locale, "optionsGrabTypes", nil)
+}
+
+// OptionsExtract says "Unpack archives when they finish"
+// in the language the app shows.
+//
+// A setting.
+func OptionsExtract() string { return In(i18n.Locale()).OptionsExtract() }
+
+// OptionsExtract says "Unpack archives when they finish"
+// in the language of msgs.
+//
+// A setting.
+func (msgs Messages) OptionsExtract() string {
+	return Catalog.Format(msgs.locale, "optionsExtract", nil)
+}
+
+// OptionsDeleteArchive says "Delete the archive after unpacking"
+// in the language the app shows.
+//
+// A setting.
+func OptionsDeleteArchive() string { return In(i18n.Locale()).OptionsDeleteArchive() }
+
+// OptionsDeleteArchive says "Delete the archive after unpacking"
+// in the language of msgs.
+//
+// A setting.
+func (msgs Messages) OptionsDeleteArchive() string {
+	return Catalog.Format(msgs.locale, "optionsDeleteArchive", nil)
+}
+
+// ThemeBuiltin says "Built in"
+// in the language the app shows.
+//
+// The built-in themes in the theme menu.
+func ThemeBuiltin() string { return In(i18n.Locale()).ThemeBuiltin() }
+
+// ThemeBuiltin says "Built in"
+// in the language of msgs.
+//
+// The built-in themes in the theme menu.
+func (msgs Messages) ThemeBuiltin() string {
+	return Catalog.Format(msgs.locale, "themeBuiltin", nil)
+}
+
+// KindGallery says "Gallery"
+// in the language the app shows.
+//
+// The kind of a download a gallery tool fetches.
+func KindGallery() string { return In(i18n.Locale()).KindGallery() }
+
+// KindGallery says "Gallery"
+// in the language of msgs.
+//
+// The kind of a download a gallery tool fetches.
+func (msgs Messages) KindGallery() string {
+	return Catalog.Format(msgs.locale, "kindGallery", nil)
+}
+
+// OptionsDebridNone says "None"
+// in the language the app shows.
+//
+// No debrid service.
+func OptionsDebridNone() string { return In(i18n.Locale()).OptionsDebridNone() }
+
+// OptionsDebridNone says "None"
+// in the language of msgs.
+//
+// No debrid service.
+func (msgs Messages) OptionsDebridNone() string {
+	return Catalog.Format(msgs.locale, "optionsDebridNone", nil)
+}
