@@ -192,9 +192,8 @@ go run ./tools/makeicon
 | Version | Theme |
 |---|---|
 | 1.0 | Core downloads, queues, scheduling, limits, CLI, API, remote page, three languages |
-| 1.1 | Browser extension, site logins, capture rules, import |
-| 1.2 | Torrents, video, galleries, extraction, link grabbing |
-| 1.3 | Encrypted DNS, VPN binding, debrid, MCP, theme files, updates |
+| 1.1 | Browser extension, site logins, capture rules, import, feeds, yt-dlp, gallery-dl, extraction, link grabbing, encrypted DNS, VPN binding, debrid, MCP, theme files, update check |
+| 1.2 | An embedded BitTorrent engine, rar and 7z, silent updates |
 
 ## An independent implementation
 
