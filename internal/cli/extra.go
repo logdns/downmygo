@@ -7,6 +7,7 @@ import (
 	"net/http"
 	"net/url"
 	"os"
+	"path/filepath"
 	"strconv"
 	"strings"
 	"time"
@@ -15,6 +16,7 @@ import (
 	"github.com/downmygo/downmygo/internal/mcp"
 	"github.com/downmygo/downmygo/internal/nativehost"
 	"github.com/downmygo/downmygo/internal/store"
+	"github.com/downmygo/downmygo/internal/tools"
 	"github.com/downmygo/downmygo/internal/version"
 )
 
@@ -274,5 +276,16 @@ func runInfo() int {
 	fmt.Printf("api http://127.0.0.1:%s\n", strconv.Itoa(port))
 	fmt.Printf("downloads %d\n", len(st.Downloads))
 	fmt.Printf("feeds %d\n", len(st.Subscriptions))
+	dir, err := store.DataDir()
+	if err == nil {
+		m := &tools.Manager{Dir: filepath.Join(dir, "tools")}
+		for _, kind := range []tools.Kind{tools.YtDlp, tools.GalleryDL} {
+			state := "not installed"
+			if p, ok := m.Path(kind); ok {
+				state = p
+			}
+			fmt.Printf("%s %s\n", kind, state)
+		}
+	}
 	return 0
 }
