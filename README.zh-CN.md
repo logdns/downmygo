@@ -10,6 +10,12 @@
 </p>
 
 <p align="center">
+  <a href="https://github.com/logdns/downmygo/actions/workflows/ci.yml"><img src="https://github.com/logdns/downmygo/actions/workflows/ci.yml/badge.svg" alt="CI"></a>
+  <a href="https://github.com/logdns/downmygo/releases"><img src="https://img.shields.io/github/v/release/logdns/downmygo" alt="release"></a>
+  <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-blue" alt="MIT"></a>
+</p>
+
+<p align="center">
   简体中文 · <a href="README.md">English</a>
 </p>
 
@@ -54,7 +60,11 @@ downmygo 是一个用 **Go + [MyGo](https://github.com/egoist/mygo)** 写的跨�
 
 ## 快速开始
 
-需要 Go 1.27+。
+直接下载：[Releases](https://github.com/logdns/downmygo/releases) 里有
+macOS 的 `downmygo-<版本>.dmg`（universal）、Windows 的
+`downmygo-setup-<版本>-<架构>.exe`，以及 Linux 的 `.deb` 与 `.tar.gz`。
+
+或者自己构建，需要 Go 1.27+。
 
 ```sh
 git clone https://github.com/downmygo/downmygo

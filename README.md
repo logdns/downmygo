@@ -10,6 +10,12 @@
 </p>
 
 <p align="center">
+  <a href="https://github.com/logdns/downmygo/actions/workflows/ci.yml"><img src="https://github.com/logdns/downmygo/actions/workflows/ci.yml/badge.svg" alt="CI"></a>
+  <a href="https://github.com/logdns/downmygo/releases"><img src="https://img.shields.io/github/v/release/logdns/downmygo" alt="release"></a>
+  <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-blue" alt="MIT"></a>
+</p>
+
+<p align="center">
   <a href="README.zh-CN.md">简体中文</a> · English
 </p>
 
@@ -58,7 +64,11 @@ The full feature list, the program's logic and what makes it different: **[docs/
 
 ## Getting started
 
-Go 1.27 or newer.
+Download the app for your platform from [Releases](https://github.com/logdns/downmygo/releases):
+`downmygo-<version>.dmg` for macOS (universal), `downmygo-setup-<version>-<arch>.exe`
+for Windows, and a `.deb` or `.tar.gz` for Linux.
+
+Or build it. Go 1.27 or newer.
 
 ```sh
 git clone https://github.com/downmygo/downmygo
