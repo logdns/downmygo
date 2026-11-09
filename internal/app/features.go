@@ -460,6 +460,7 @@ func (a *App) CheckForUpdates() {
 		return
 	}
 	a.updateBusy = true
+	update.CleanUpdates(filepath.Join(a.dataDir(), "updates"))
 	go func() {
 		ctx, cancel := context.WithTimeout(context.Background(), 30*time.Second)
 		defer cancel()

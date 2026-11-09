@@ -87,6 +87,25 @@ func Download(ctx context.Context, client *http.Client, asset Asset, dir string,
 	return path, nil
 }
 
+// CleanUpdates removes what earlier updates left in dir, once it is old
+// enough not to be in use.
+func CleanUpdates(dir string) {
+	entries, err := os.ReadDir(dir)
+	if err != nil {
+		return
+	}
+	cutoff := time.Now().Add(-7 * 24 * time.Hour)
+	for _, e := range entries {
+		info, err := e.Info()
+		if err != nil || e.IsDir() {
+			continue
+		}
+		if info.ModTime().Before(cutoff) {
+			_ = os.Remove(filepath.Join(dir, e.Name()))
+		}
+	}
+}
+
 // Installer replaces the running app with a downloaded release, after the
 // app has quit, and starts it again.
 type Installer struct {
@@ -172,7 +191,8 @@ func (i Installer) runMac() error {
 		"rm -rf " + sh(i.Bundle) + "\n" +
 		"cp -R " + sh(newApp) + " " + sh(i.Bundle) + "\n" +
 		"open " + sh(i.Bundle) + "\n" +
-		"rm -rf " + sh(dir) + "\n"
+		"rm -rf " + sh(dir) + "\n" +
+		"rm -f " + sh(i.AssetPath) + "\n"
 	if err := os.WriteFile(script, []byte(body), 0o755); err != nil {
 		return err
 	}
@@ -194,7 +214,8 @@ func (i Installer) runLinux() error {
 		"cp \"$new\" " + sh(i.Bundle) + "\n" +
 		"chmod +x " + sh(i.Bundle) + "\n" +
 		"nohup " + sh(i.Bundle) + " >/dev/null 2>&1 &\n" +
-		"rm -rf " + sh(dir) + "\n"
+		"rm -rf " + sh(dir) + "\n" +
+		"rm -f " + sh(i.AssetPath) + "\n"
 	if err := os.WriteFile(script, []byte(body), 0o755); err != nil {
 		return err
 	}
