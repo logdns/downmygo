@@ -37,8 +37,9 @@
 | yt-dlp 视频 | ✅ | 视频站自动走它；**没装就自己下载**官方二进制 |
 | gallery-dl 图库 | ✅ | 图库站自动走它；没装就装（Windows exe，其他平台 PyPI wheel + python3） |
 | 工具进度 | ✅ | 解析程序输出，作为一条下载显示进度与速度 |
-| 浏览器扩展 | ✅ | `browser/`，MV3：右键交给 downmygo、弹窗、可接管浏览器下载 |
-| Native Messaging | ✅ | `downmygo native-host`，4 字节长度 + JSON；`install-host` 写四家清单 |
+| 浏览器扩展 | ✅ | `extensions/chrome`、`extensions/firefox`：右键交给 downmygo、弹窗、抓取本页链接、可接管浏览器下载 |
+| 油猴脚本 | ✅ | `extensions/userscript/downmygo.user.js`：菜单与快捷键，直连本地 API，不需要注册本机程序 |
+| Native Messaging | ✅ | `downmygo native-host`，4 字节长度 + JSON；`install-host` 写 Chrome/Edge/Brave/Firefox 四份清单 |
 | 站点登录 | ✅ | `state.json` 的 `sites`，按域名后缀匹配 Cookie 与 Referer |
 | 捕获规则 | ✅ | `state.json` 的 `rules`：域名、扩展名、大小、排除词 |
 | 导入 | ✅ | 文本每行一个链接，或 JSON 列表 |

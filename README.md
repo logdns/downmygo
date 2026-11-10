@@ -37,7 +37,7 @@
 
 **种子** · 内置 BitTorrent 客户端（DHT、tracker、peer）· `magnet:` 与 `.torrent` 直接下载 · 暂停/继续 · 做种（按分享率或时长）· 上传限速
 
-**站点** · yt-dlp 视频、gallery-dl 图库（**没装就自己装**）· 浏览器扩展 + Native Messaging · 站点登录 · 捕获规则 · 链接抓取 · 链接导入
+**站点** · yt-dlp 视频、gallery-dl 图库（**没装就自己装**）· 浏览器扩展（Chrome / Firefox）+ 油猴脚本 · 站点登录 · 捕获规则 · 链接抓取 · 链接导入
 
 **订阅与解压** · RSS / Atom 订阅 · zip / 7z / rar / tar / gz / bz2 / xz 自动解压（拒绝路径穿越）
 
@@ -107,6 +107,7 @@ curl -X POST -H "Authorization: Bearer $TOKEN" -H "Content-Type: application/jso
 | [功能与状态](docs/02-features.md) | 每项功能做到什么程度、程序逻辑、已知边界 |
 | [设计](docs/03-design.md) | 品牌、颜色、布局、自适应、语言 |
 | [参考：MDM](docs/04-mdm.md) | 对 Mister Download Manager 的分析与功能对照 |
+| [插件](extensions/README.md) | Chrome / Firefox 扩展与油猴脚本：安装、商店文案、素材、打包 |
 
 ## 许可
 

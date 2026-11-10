@@ -9,6 +9,8 @@
 
 英文：根目录的 [README.en.md](../README.en.md)。
 
+插件（可单独上传到各商店）：[extensions/](../extensions/README.md) —— Chrome、Firefox、油猴脚本，各自的说明、打包脚本与商店素材。
+
 ## 截图
 
 | 浅色 | 深色 |

@@ -29,7 +29,7 @@ internal/
   cli/                  get / import / grab / info / mcp / native-host
 cmd/preview             无窗口渲染截图
 tools/makeicon          画图标并导出
-browser/                浏览器扩展（MV3）
+extensions/             浏览器扩展（Chrome / Firefox）与油猴脚本，各自可打包上传
 ```
 
 依赖方向：`main → app → {engine, torrent, tools, extract, grab, rss, debrid, nativehost, themes, mcp, update} → {model, store, netset, limiter}`；`cli` 与 `app` 复用同一批包；`ui` 只有主题和图标。

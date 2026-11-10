@@ -38,6 +38,13 @@ jobs:
             echo "locales/catalog_gen.go is out of date: run go tool mygo generate"
             exit 1
           fi
+      - name: Package the extensions
+        run: make extensions
+      - uses: actions/upload-artifact@v7
+        with:
+          name: extensions
+          path: dist/*.zip
+          if-no-files-found: error
 
   build:
     name: Build ${{ matrix.name }}

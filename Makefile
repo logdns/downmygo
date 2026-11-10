@@ -1,4 +1,4 @@
-.PHONY: run build test vet fmt generate preview screens icon package clean
+.PHONY: run build test vet fmt generate preview screens icon store extensions package clean
 
 run:
 	go run .
@@ -28,6 +28,12 @@ screens: preview
 
 icon:
 	go run ./tools/makeicon
+
+store:
+	go run ./tools/makestore
+
+extensions:
+	./extensions/build.sh
 
 clean:
 	rm -rf build dist .mygo downmygo

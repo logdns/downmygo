@@ -3,4 +3,4 @@
 package version
 
 // Version is downmygo's version. Keep it equal to "version" in mygo.json.
-const Version = "1.4.0"
+const Version = "1.5.0"

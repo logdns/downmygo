@@ -37,7 +37,7 @@ Not a clone of IDM and not a fork: it keeps what a downloader needs and does it 
 
 **Torrents** · a built-in BitTorrent client (DHT, trackers, peers) · magnets and `.torrent` files · pause and resume · seeding to a ratio or a time · upload limit
 
-**Sites** · yt-dlp for videos and gallery-dl for galleries, **installed by the app when missing** · browser extension with native messaging · site logins · capture rules · link grabbing · link import
+**Sites** · yt-dlp for videos and gallery-dl for galleries, **installed by the app when missing** · Chrome and Firefox extensions, and a userscript · site logins · capture rules · link grabbing · link import
 
 **Feeds and unpacking** · RSS and Atom subscriptions · zip, 7z, rar, tar, gz, bz2 and xz unpacked after a download, refusing entries that leave the folder
 
@@ -109,6 +109,7 @@ The documents are in Chinese:
 | [Features](docs/02-features.md) | what each feature does, the logic, the limits |
 | [Design](docs/03-design.md) | brand, colours, layout, adaptivity, languages |
 | [MDM reference](docs/04-mdm.md) | the analysis of Mister Download Manager |
+| [Extensions](extensions/README.md) | Chrome, Firefox and the userscript: install, store text, assets, packaging |
 
 ## License
 
