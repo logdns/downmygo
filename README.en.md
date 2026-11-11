@@ -16,7 +16,7 @@
 </p>
 
 <p align="center">
-  <a href="README.md">简体中文</a> · English · <a href="https://logdns.github.io/downmygo/">Website</a>
+  <a href="README.md">简体中文</a> · English · <a href="https://2sb.org/downmygo/">Website</a>
 </p>
 
 <p align="center">

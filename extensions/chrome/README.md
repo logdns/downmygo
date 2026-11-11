@@ -60,7 +60,7 @@ downmygo is a download manager for macOS, Windows and Linux. This extension hand
 • Turn on "Take over the browser's downloads" and the browser's own downloads go to downmygo instead.
 • The extension talks only to 127.0.0.1, through the browser's native messaging. Nothing is sent anywhere else.
 
-Requires the downmygo app: https://github.com/logdns/downmygo
+Requires the downmygo app: https://2sb.org/downmygo/
 ```
 
 **中文说明**
@@ -73,7 +73,7 @@ downmygo 是 macOS、Windows、Linux 上的下载管理器。这个扩展把链�
 • 打开「接管浏览器下载」后，浏览器自己的下载会转给 downmygo。
 • 扩展只通过浏览器的 native messaging 与 127.0.0.1 通信，不向任何服务器发送数据。
 
-需要先安装 downmygo 应用：https://github.com/logdns/downmygo
+需要先安装 downmygo 应用：https://2sb.org/downmygo/
 ```
 
 **类别**：Productivity

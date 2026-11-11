@@ -3,7 +3,7 @@
   "name": "downmygo",
   "version": "1.0.0",
   "description": "Send links to downmygo, with the cookies the site needs. Videos, galleries and files come down in the app.",
-  "homepage_url": "https://logdns.github.io/downmygo/",
+  "homepage_url": "https://2sb.org/downmygo/",
   "browser_specific_settings": {
     "gecko": {
       "id": "downmygo@logdns.github.io",
