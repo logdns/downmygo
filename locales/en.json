@@ -1353,5 +1353,9 @@
   "updateSilent": "Install new versions without asking",
   "@updateSilent": {
     "description": "A setting."
+  },
+  "aboutWebsite": "Website",
+  "@aboutWebsite": {
+    "description": "The About window's button that opens the project's site."
   }
 }

@@ -19,7 +19,7 @@
     }
   },
   "linux": {
-    "maintainer": "downmygo <hello@downmygo.app>",
+    "maintainer": "logdns <logdns@users.noreply.github.com>",
     "comment": "Downloads, on the go.",
     "categories": [
       "Network",

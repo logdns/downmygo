@@ -1,4 +1,4 @@
-.PHONY: run build test vet fmt generate preview screens icon store extensions package clean
+.PHONY: run build test vet fmt generate preview screens icon store site extensions package clean
 
 run:
 	go run .
@@ -31,6 +31,14 @@ icon:
 
 store:
 	go run ./tools/makestore
+
+site:
+	mkdir -p site/img
+	cp resources/icon.png site/img/icon.png
+	cp docs/screens/main-light.png site/img/main-light.png
+	cp docs/screens/main-dark.png site/img/main-dark.png
+	cp docs/screens/main-light-zh-Hans.png site/img/main-zh.png
+	cp docs/screens/main-narrow.png site/img/main-narrow.png
 
 extensions:
 	./extensions/build.sh

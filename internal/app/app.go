@@ -31,6 +31,10 @@ import (
 // language the app shows now.
 const errLimit = "limit"
 
+// SiteURL is the project's home, which GitHub Pages serves: the About
+// window and the Help menu open it.
+const SiteURL = "https://logdns.github.io/downmygo/"
+
 // App is the whole application state.
 type App struct {
 	st    *store.State

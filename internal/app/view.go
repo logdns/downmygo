@@ -1282,9 +1282,15 @@ func (a *App) aboutDialog(c *ui.Context, t *ui.Theme, w int) {
 			ui.Text(c, "downmygo").FontSize(20).Bold()
 			ui.Text(c, locales.AppTagline()).FontSize(12).TextColor(t.TextMuted)
 			ui.Text(c, locales.AboutVersion(Version)).FontSize(11).TextColor(t.TextMuted)
-			if ui.Button(c, locales.AboutClose()).Clicked() {
-				a.aboutOpen = false
-			}
+			ui.Text(c, "logdns.github.io/downmygo").FontSize(11).TextColor(t.TextMuted).Selectable()
+			ui.Row(c).Gap(8).Children(func() {
+				if ui.Button(c, locales.AboutWebsite()).Clicked() {
+					_ = mygo.Shell.OpenExternal(SiteURL)
+				}
+				if ui.PrimaryButton(c, locales.AboutClose()).Clicked() {
+					a.aboutOpen = false
+				}
+			})
 		})
 	})
 }

@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="zh-Hans">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>downmygo — 下载，即刻启程</title>
+  <meta name="description" content="用 Go 写的跨平台下载管理器：原生界面、一个二进制、内置种子、视频与图库、浏览器扩展、自动更新。">
+  <meta property="og:title" content="downmygo — 下载，即刻启程">
+  <meta property="og:description" content="跨平台下载管理器：原生界面、一个二进制、内置种子、视频与图库、浏览器扩展、自动更新。">
+  <meta property="og:image" content="img/icon.png">
+  <link rel="icon" href="img/icon.png">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="wrap">
+
+  <header class="top">
+    <img src="img/icon.png" alt="">
+    <span class="name">downmygo</span>
+    <nav>
+      <a href="https://github.com/logdns/downmygo">GitHub</a>
+      <a href="https://github.com/logdns/downmygo/tree/main/docs">文档</a>
+      <a href="en.html">English</a>
+    </nav>
+  </header>
+
+  <div class="hero">
+    <img class="mark" src="img/icon.png" alt="downmygo">
+    <h1>下载，即刻启程</h1>
+    <p class="tagline">Downloads, on the go.</p>
+    <p class="sub">用 Go 写的跨平台下载管理器。界面原生绘制，不启动 WebView；整个应用是一个二进制。</p>
+    <div class="buttons">
+      <a class="btn primary" href="https://github.com/logdns/downmygo/releases/latest">下载 <small>macOS · Windows · Linux</small></a>
+      <a class="btn" href="https://github.com/logdns/downmygo">源码</a>
+      <a class="btn" href="https://github.com/logdns/downmygo/releases">全部版本</a>
+    </div>
+  </div>
+
+  <section>
+    <img class="shot" src="img/main-zh.png" alt="downmygo 的下载列表">
+  </section>
+
+  <section>
+    <h2>它做什么</h2>
+    <div class="grid">
+      <div class="card">
+        <h3>多连接与续传</h3>
+        <p>默认 8 条连接，剩余最大的分段自动二分；崩溃、断网、重启后从原位置继续。</p>
+      </div>
+      <div class="card">
+        <h3>内置种子</h3>
+        <p>magnet 与 .torrent 直接下载，DHT、tracker、peer 都在里面；可做种、可限上传。</p>
+      </div>
+      <div class="card">
+        <h3>视频与图库</h3>
+        <p>视频交给 yt-dlp、图库交给 gallery-dl，没装就自己装，进度就在列表里。</p>
+      </div>
+      <div class="card">
+        <h3>浏览器接管</h3>
+        <p>Chrome、Firefox 扩展与油猴脚本：右键把链接交给它，站点 Cookie 一起带上。</p>
+      </div>
+      <div class="card">
+        <h3>加密 DNS 与 VPN</h3>
+        <p>DoH / DoT 解析，可把每个连接绑到指定网卡，隧道一断流量就停。</p>
+      </div>
+      <div class="card">
+        <h3>自己更新</h3>
+        <p>检查 GitHub 上的新版本，校验 SHA-256，下载并替换自身，然后重新打开。</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>三步开始</h2>
+    <div class="steps">
+      <div class="step">
+        <h3>下载</h3>
+        <p>macOS 用 <code>.dmg</code>，Windows 用 <code>setup.exe</code>，Linux 用 <code>.deb</code> 或 <code>.tar.gz</code>。</p>
+      </div>
+      <div class="step">
+        <h3>添加</h3>
+        <p>粘贴一个链接、拖进一个种子，或者装个浏览器扩展直接右键。</p>
+      </div>
+      <div class="step">
+        <h3>完成</h3>
+        <p>按分类自动归位；压缩包可以自动解开；手机在同一网络里也能控制。</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>深色也一样</h2>
+    <img class="shot" src="img/main-dark.png" alt="downmygo 的深色界面">
+  </section>
+
+  <section>
+    <h2>命令行与自动化</h2>
+    <pre><code>downmygo get https://example.com/file.zip -o ~/Downloads -c 8
+downmygo import links.txt        # 导入链接列表
+downmygo grab https://…          # 列出页面上的链接
+downmygo mcp                     # 以 MCP 服务运行
+downmygo install-host &lt;扩展ID&gt;    # 注册浏览器扩展</code></pre>
+    <p style="color: var(--muted); font-size: 14px;">
+      本地 API 在 <code>127.0.0.1:8463</code>，token 保护；打开远程控制后，手机浏览器也能添加与暂停。
+    </p>
+  </section>
+
+  <footer>
+    <div class="row">
+      <a href="https://github.com/logdns/downmygo">GitHub</a>
+      <a href="https://github.com/logdns/downmygo/releases">发布</a>
+      <a href="https://github.com/logdns/downmygo/tree/main/docs">文档</a>
+      <a href="https://github.com/logdns/downmygo/tree/main/extensions">浏览器扩展</a>
+      <a href="https://github.com/logdns/downmygo/issues">问题反馈</a>
+      <a href="https://github.com/logdns/downmygo/blob/main/LICENSE">MIT 许可</a>
+    </div>
+    <p>downmygo 是独立实现，不包含任何其他下载器的代码、图标或文案。</p>
+  </footer>
+
+</div>
+</body>
+</html>

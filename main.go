@@ -211,7 +211,7 @@ func buildMenu(a *app.App) *mygo.Menu {
 			Label: locales.MenuHelp(),
 			Submenu: []*mygo.MenuItem{
 				{Label: locales.MenuWebsite(), Click: func(*mygo.MenuItem, *mygo.Window) {
-					_ = mygo.Shell.OpenExternal("https://downmygo.app")
+					_ = mygo.Shell.OpenExternal(app.SiteURL)
 				}},
 				{Label: locales.MenuShortcuts(), Click: func(*mygo.MenuItem, *mygo.Window) { a.ShowAbout() }},
 			},

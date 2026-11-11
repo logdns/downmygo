@@ -292,5 +292,6 @@
   "toastUpdating": "正在安装新版本，downmygo 会自动重新打开。",
   "updateInstall": "下载并安装",
   "updateDownloading": "正在下载更新…",
-  "updateSilent": "有新版本时自动安装，不询问"
+  "updateSilent": "有新版本时自动安装，不询问",
+  "aboutWebsite": "官网"
 }

@@ -4121,3 +4121,17 @@ func UpdateSilent() string { return In(i18n.Locale()).UpdateSilent() }
 func (msgs Messages) UpdateSilent() string {
 	return Catalog.Format(msgs.locale, "updateSilent", nil)
 }
+
+// AboutWebsite says "Website"
+// in the language the app shows.
+//
+// The About window's button that opens the project's site.
+func AboutWebsite() string { return In(i18n.Locale()).AboutWebsite() }
+
+// AboutWebsite says "Website"
+// in the language of msgs.
+//
+// The About window's button that opens the project's site.
+func (msgs Messages) AboutWebsite() string {
+	return Catalog.Format(msgs.locale, "aboutWebsite", nil)
+}

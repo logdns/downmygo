@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>downmygo — Downloads, on the go</title>
+  <meta name="description" content="A cross-platform download manager in Go: native window, one binary, built-in torrents, video and galleries, browser extensions, self-updates.">
+  <meta property="og:title" content="downmygo — Downloads, on the go">
+  <meta property="og:description" content="A cross-platform download manager: native window, one binary, built-in torrents, video and galleries, browser extensions, self-updates.">
+  <meta property="og:image" content="img/icon.png">
+  <link rel="icon" href="img/icon.png">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="wrap">
+
+  <header class="top">
+    <img src="img/icon.png" alt="">
+    <span class="name">downmygo</span>
+    <nav>
+      <a href="https://github.com/logdns/downmygo">GitHub</a>
+      <a href="https://github.com/logdns/downmygo/tree/main/docs">Docs</a>
+      <a href="index.html">简体中文</a>
+    </nav>
+  </header>
+
+  <div class="hero">
+    <img class="mark" src="img/icon.png" alt="downmygo">
+    <h1>Downloads, on the go.</h1>
+    <p class="tagline">下载，即刻启程。</p>
+    <p class="sub">A cross-platform download manager in Go. The window is drawn natively, with no WebView, and the whole app is one binary.</p>
+    <div class="buttons">
+      <a class="btn primary" href="https://github.com/logdns/downmygo/releases/latest">Download <small>macOS · Windows · Linux</small></a>
+      <a class="btn" href="https://github.com/logdns/downmygo">Source</a>
+      <a class="btn" href="https://github.com/logdns/downmygo/releases">All releases</a>
+    </div>
+  </div>
+
+  <section>
+    <img class="shot" src="img/main-light.png" alt="downmygo's download list">
+  </section>
+
+  <section>
+    <h2>What it does</h2>
+    <div class="grid">
+      <div class="card">
+        <h3>Many connections, and resume</h3>
+        <p>Eight connections by default, the largest remaining segment split in two; a crash, a lost network or a restart continues where it stopped.</p>
+      </div>
+      <div class="card">
+        <h3>Torrents inside</h3>
+        <p>Magnets and .torrent files download here, with DHT, trackers and peers; seed to a ratio, and cap the upload.</p>
+      </div>
+      <div class="card">
+        <h3>Video and galleries</h3>
+        <p>yt-dlp for videos and gallery-dl for galleries, installed by the app when missing, with their progress in the list.</p>
+      </div>
+      <div class="card">
+        <h3>The browser hands over</h3>
+        <p>Chrome and Firefox extensions and a userscript: right-click, and the link comes here with the site's cookies.</p>
+      </div>
+      <div class="card">
+        <h3>Encrypted DNS and a VPN</h3>
+        <p>DoH and DoT, and every connection can bind to one interface, so a dropped tunnel stops the traffic.</p>
+      </div>
+      <div class="card">
+        <h3>It updates itself</h3>
+        <p>Checks GitHub for a new release, verifies its SHA-256, replaces the app and opens it again.</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Three steps</h2>
+    <div class="steps">
+      <div class="step">
+        <h3>Download</h3>
+        <p>A <code>.dmg</code> on macOS, a <code>setup.exe</code> on Windows, a <code>.deb</code> or <code>.tar.gz</code> on Linux.</p>
+      </div>
+      <div class="step">
+        <h3>Add</h3>
+        <p>Paste a link, drop a torrent, or right-click with the extension installed.</p>
+      </div>
+      <div class="step">
+        <h3>Done</h3>
+        <p>Files go to their categories, archives can unpack themselves, and a phone on the same network can drive it.</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Dark, too</h2>
+    <img class="shot" src="img/main-dark.png" alt="downmygo in the dark">
+  </section>
+
+  <section>
+    <h2>Command line and automation</h2>
+    <pre><code>downmygo get https://example.com/file.zip -o ~/Downloads -c 8
+downmygo import links.txt        # add every link of a file
+downmygo grab https://…          # print the links of a page
+downmygo mcp                     # serve MCP on stdio
+downmygo install-host &lt;id&gt;       # register the browser's host</code></pre>
+    <p style="color: var(--muted); font-size: 14px;">
+      The local API listens on <code>127.0.0.1:8463</code> behind a token; turn on remote control and a phone can add and pause downloads.
+    </p>
+  </section>
+
+  <footer>
+    <div class="row">
+      <a href="https://github.com/logdns/downmygo">GitHub</a>
+      <a href="https://github.com/logdns/downmygo/releases">Releases</a>
+      <a href="https://github.com/logdns/downmygo/tree/main/docs">Docs</a>
+      <a href="https://github.com/logdns/downmygo/tree/main/extensions">Extensions</a>
+      <a href="https://github.com/logdns/downmygo/issues">Issues</a>
+      <a href="https://github.com/logdns/downmygo/blob/main/LICENSE">MIT</a>
+    </div>
+    <p>downmygo is an independent implementation and contains no code, icon or text of another downloader.</p>
+  </footer>
+
+</div>
+</body>
+</html>

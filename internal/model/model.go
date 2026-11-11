@@ -313,7 +313,7 @@ func Defaults(downloadDir string) Settings {
 		DownloadDir:      downloadDir,
 		Connections:      8,
 		MaxConnections:   32,
-		UserAgent:        "downmygo/1.0 (+https://downmygo.app)",
+		UserAgent:        "downmygo/1.5 (+https://logdns.github.io/downmygo/)",
 		MinimizeToTray:   true,
 		CloseToTray:      true,
 		ClipboardWatch:   true,
