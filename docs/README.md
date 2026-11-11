@@ -21,8 +21,12 @@
 |---|---|
 | ![zh-Hans](screens/main-light-zh-Hans.png) | ![zh-Hant](screens/main-light-zh-Hant.png) |
 
-| 添加下载 | 设置 | 窄窗口 |
+| 添加下载 | 设置 | 关于 |
 |---|---|---|
-| ![add](screens/add-light.png) | ![options](screens/options-light.png) | ![narrow](screens/main-narrow.png) |
+| ![add](screens/add-light.png) | ![options](screens/options-light.png) | ![about](screens/about-light.png) |
+
+| 窄窗口 |
+|---|
+| ![narrow](screens/main-narrow.png) |
 
 截图由 `go run ./cmd/preview` 无窗口渲染生成，和真实窗口使用同一套视图代码。

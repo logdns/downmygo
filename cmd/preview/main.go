@@ -72,6 +72,10 @@ func main() {
 			add := demo(false)
 			add.OpenAdd("")
 			render("add-light.png", add)
+
+			about := demo(false)
+			about.ShowAbout()
+			render("about-light.png", about)
 		}
 	}
 	i18n.SetLocaleFunc(func() string { return "en" })
