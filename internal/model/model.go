@@ -11,6 +11,8 @@ import (
 	"sort"
 	"strings"
 	"time"
+
+	"github.com/downmygo/downmygo/internal/version"
 )
 
 // Status is where a download stands. The values are saved, so do not
@@ -313,7 +315,7 @@ func Defaults(downloadDir string) Settings {
 		DownloadDir:      downloadDir,
 		Connections:      8,
 		MaxConnections:   32,
-		UserAgent:        "downmygo/1.5 (+https://2sb.org/downmygo/)",
+		UserAgent:        "downmygo/" + version.Version + " (+https://2sb.org/downmygo/)",
 		MinimizeToTray:   true,
 		CloseToTray:      true,
 		ClipboardWatch:   true,

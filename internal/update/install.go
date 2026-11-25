@@ -17,8 +17,13 @@ import (
 )
 
 // Download fetches an asset into dir, reporting how far it is, and checks
-// its SHA-256 when the release gives one.
+// its SHA-256 before allowing automatic installation.
 func Download(ctx context.Context, client *http.Client, asset Asset, dir string, onProgress func(done, total int64)) (string, error) {
+	want, ok := strings.CutPrefix(asset.Digest, "sha256:")
+	expected, err := hex.DecodeString(want)
+	if !ok || err != nil || len(expected) != sha256.Size {
+		return "", errors.New("the release asset lacks a valid SHA-256 digest; install manually")
+	}
 	if client == nil {
 		client = &http.Client{Timeout: 30 * time.Minute}
 	}
@@ -73,13 +78,9 @@ func Download(ctx context.Context, client *http.Client, asset Asset, dir string,
 	if err := out.Close(); err != nil {
 		return "", err
 	}
-	if asset.Digest != "" {
-		want := strings.TrimPrefix(asset.Digest, "sha256:")
-		got := hex.EncodeToString(hash.Sum(nil))
-		if !strings.EqualFold(want, got) {
-			os.Remove(path + ".part")
-			return "", fmt.Errorf("the download is not the file the release signed: %s, not %s", got, want)
-		}
+	if got := hex.EncodeToString(hash.Sum(nil)); !strings.EqualFold(want, got) {
+		os.Remove(path + ".part")
+		return "", fmt.Errorf("release asset SHA-256 mismatch: got %s, want %s", got, want)
 	}
 	if err := os.Rename(path+".part", path); err != nil {
 		return "", err

@@ -1,42 +1,23 @@
 package tools
 
 import (
-	"archive/zip"
-	"bytes"
 	"context"
+	"fmt"
 	"net/http"
 	"net/http/httptest"
 	"os"
+	"os/exec"
 	"path/filepath"
 	"runtime"
 	"strings"
 	"testing"
 )
 
-// wheel makes a zip that looks like a wheel.
-func wheel(t *testing.T) []byte {
-	t.Helper()
-	var buf bytes.Buffer
-	zw := zip.NewWriter(&buf)
-	files := map[string]string{
-		"gallery_dl/__init__.py":            "def main():\n    return 0\n",
-		"gallery_dl-1.0.dist-info/METADATA": "Name: gallery-dl\n",
-	}
-	for name, body := range files {
-		w, err := zw.Create(name)
-		if err != nil {
-			t.Fatal(err)
-		}
-		_, _ = w.Write([]byte(body))
-	}
-	_ = zw.Close()
-	return buf.Bytes()
-}
-
 func TestManagerDownloadsYtDlp(t *testing.T) {
 	if runtime.GOOS == "windows" {
 		t.Skip("the test checks the executable bit")
 	}
+	t.Setenv("PATH", t.TempDir())
 	body := []byte("#!/bin/sh\necho 2026.01.01\n")
 	srv := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		_, _ = w.Write(body)
@@ -79,76 +60,52 @@ func TestManagerDownloadsYtDlp(t *testing.T) {
 	}
 }
 
-func TestManagerUnpacksGalleryDL(t *testing.T) {
+func TestManagerInstallsGallery(t *testing.T) {
 	if runtime.GOOS == "windows" {
-		t.Skip("gallery-dl is a wheel with a launcher elsewhere")
+		t.Skip("Unix launcher")
 	}
-	if _, err := pythonPath(); err != nil {
-		t.Skip("no python3 here")
+	dir := t.TempDir()
+	bin := t.TempDir()
+	t.Setenv("PATH", bin)
+	python := filepath.Join(bin, "python3")
+	err := os.WriteFile(python, []byte("#!/bin/sh\ncase \"$*\" in *'pip --isolated install'*'--target'*gallery-dl) exit 0;; '-m gallery_dl --version') echo 1.32.21;; *) exit 1;; esac\n"), 0755)
+	if err != nil {
+		t.Fatal(err)
 	}
-	body := wheel(t)
-	srv := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		_, _ = w.Write(body)
-	}))
+	m := Manager{Dir: dir}
+	p, err := m.Ensure(t.Context(), GalleryDL)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if out, err := exec.Command(p, "--version").Output(); err != nil || strings.TrimSpace(string(out)) != "1.32.21" {
+		t.Fatalf("%q %v", out, err)
+	}
+	// An unsuccessful refresh leaves the installed launcher and its libraries alone.
+	before, _ := os.ReadFile(p)
+	if err := os.WriteFile(python, []byte("#!/bin/sh\nexit 1\n"), 0755); err != nil {
+		t.Fatal(err)
+	}
+	if _, err := m.Update(t.Context(), GalleryDL); err == nil {
+		t.Fatal("expected install failure")
+	}
+	after, _ := os.ReadFile(p)
+	libs, _ := filepath.Glob(filepath.Join(dir, "gallery-dl-lib-*"))
+	if string(before) != string(after) || len(libs) != 1 {
+		t.Fatal("old installation changed")
+	}
+}
+
+func TestWindowsAssets(t *testing.T) {
+	if ytDlpAsset("windows", "arm64") != "yt-dlp_arm64.exe" {
+		t.Fatal("wrong architecture")
+	}
+	srv := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, _ *http.Request) { fmt.Fprint(w, `{"info":{"version":"1.32.21"}}`) }))
 	defer srv.Close()
-
-	dir := t.TempDir()
-	m := &Manager{Dir: dir, Client: srv.Client()}
-	oldPyPI, oldGH := pypiURL, galleryExeURL
-	pypiURL = srv.URL + "/json"
-	galleryExeURL = srv.URL + "/gallery-dl.exe"
-	defer func() { pypiURL, galleryExeURL = oldPyPI, oldGH }()
-
-	// The wheel URL comes from the JSON of PyPI; serve one that points at
-	// the test server.
-	srv.Config.Handler = http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		if strings.HasSuffix(r.URL.Path, "/json") {
-			_, _ = w.Write([]byte(`{"urls":[{"packagetype":"bdist_wheel","url":"` + srv.URL + `/gallery.whl"}]}`))
-			return
-		}
-		_, _ = w.Write(body)
-	})
-
-	path, err := m.Ensure(context.Background(), GalleryDL)
-	if err != nil {
-		t.Fatal(err)
-	}
-	if filepath.Dir(path) != dir {
-		t.Fatalf("path = %s", path)
-	}
-	launcher, err := os.ReadFile(path)
-	if err != nil {
-		t.Fatal(err)
-	}
-	if !strings.HasPrefix(string(launcher), "#!/bin/sh") || !strings.Contains(string(launcher), "run.py") {
-		t.Fatalf("launcher = %q", launcher)
-	}
-	if _, err := os.Stat(filepath.Join(dir, "gallery-dl-lib", "gallery_dl", "__init__.py")); err != nil {
-		t.Fatal(err)
-	}
-}
-
-func TestUnzipRefusesEscapes(t *testing.T) {
-	dir := t.TempDir()
-	zipPath := filepath.Join(dir, "evil.whl")
-	var buf bytes.Buffer
-	zw := zip.NewWriter(&buf)
-	w, _ := zw.Create("../../evil.py")
-	_, _ = w.Write([]byte("no"))
-	_ = zw.Close()
-	if err := os.WriteFile(zipPath, buf.Bytes(), 0o644); err != nil {
-		t.Fatal(err)
-	}
-	if err := unzipInto(zipPath, filepath.Join(dir, "out")); err == nil {
-		t.Fatal("a wheel reached outside its folder")
-	}
-}
-
-func TestPythonAndQuoting(t *testing.T) {
-	if got := shQuote("a'b"); got != `'a'\''b'` {
-		t.Errorf("shQuote = %q", got)
-	}
-	if got := pyQuote(`a"b\c`); got != `"a\"b\\c"` {
-		t.Errorf("pyQuote = %q", got)
+	old := pypiURL
+	pypiURL = srv.URL
+	defer func() { pypiURL = old }()
+	u, err := galleryWindowsURL(t.Context(), srv.Client())
+	if err != nil || u != "https://codeberg.org/mikf/gallery-dl/releases/download/v1.32.21/gallery-dl.exe" {
+		t.Fatalf("%s %v", u, err)
 	}
 }

@@ -41,8 +41,13 @@ func TestDownloadChecksTheDigest(t *testing.T) {
 		t.Fatalf("%q %v", got, err)
 	}
 
+	for _, digest := range []string{"", "md5:abcd", "sha256:00"} {
+		if _, err := Download(context.Background(), srv.Client(), Asset{Name: "a.dmg", URL: srv.URL, Digest: digest}, dir, nil); err == nil {
+			t.Fatalf("accepted invalid digest %q", digest)
+		}
+	}
 	// A digest that does not match leaves nothing behind.
-	if _, err := Download(context.Background(), srv.Client(), Asset{Name: "b.dmg", URL: srv.URL, Digest: "sha256:00"}, dir, nil); err == nil {
+	if _, err := Download(context.Background(), srv.Client(), Asset{Name: "b.dmg", URL: srv.URL, Digest: "sha256:" + strings.Repeat("0", 64)}, dir, nil); err == nil {
 		t.Fatal("a wrong digest was accepted")
 	}
 	if _, err := os.Stat(filepath.Join(dir, "b.dmg")); err == nil {

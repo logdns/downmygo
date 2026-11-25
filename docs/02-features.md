@@ -35,7 +35,7 @@
 | 功能 | 状态 | 说明 |
 |---|---|---|
 | yt-dlp 视频 | ✅ | 视频站自动走它；**没装就自己下载**官方二进制 |
-| gallery-dl 图库 | ✅ | 图库站自动走它；没装就装（Windows exe，其他平台 PyPI wheel + python3） |
+| gallery-dl 图库 | ✅ | 图库站自动走它；没装就装（Windows 从 Codeberg 下载 exe，其他平台需要 python3 和 pip，不修改系统 Python 环境） |
 | 工具进度 | ✅ | 解析程序输出，作为一条下载显示进度与速度 |
 | 浏览器扩展 | ✅ | `extensions/chrome`、`extensions/firefox`：右键交给 downmygo、弹窗、抓取本页链接、可接管浏览器下载 |
 | 油猴脚本 | ✅ | `extensions/userscript/downmygo.user.js`：菜单与快捷键，直连本地 API，不需要注册本机程序 |
@@ -64,7 +64,7 @@
 | MCP | ✅ | `downmygo mcp`，stdio JSON-RPC，7 个工具 |
 | 主题文件 | ✅ | JSON 覆盖 19 个颜色角色与圆角/间距 |
 | 本地 API + 远程页 | ✅ | token 保护，手机可添加/暂停/继续/删除 |
-| 自动更新 | ✅ | 校验 SHA-256、替换自身、可静默 |
+| 自动更新 | ✅ | 必须有有效的 GitHub SHA-256 摘要且文件匹配才安装；可静默 |
 | 更新回滚 | ○ | 失败需手动重装 |
 
 ## 6. 程序逻辑

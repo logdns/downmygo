@@ -168,6 +168,7 @@ func (a *App) startTool(kind tools.Kind, raw string) *model.Download {
 			opts.UserAgent = site.UserAgent
 		}
 	}
+	mgr := a.toolManager()
 	go func() {
 		// The program may not be here yet: the manager downloads it, so a
 		// video needs nothing installed by hand.
@@ -177,7 +178,7 @@ func (a *App) startTool(kind tools.Kind, raw string) *model.Download {
 				d.Error = locales.ToolInstalling(string(kind))
 			})
 		}
-		path, err := a.toolManager().Ensure(ctx, kind)
+		path, err := mgr.Ensure(ctx, kind)
 		if err != nil {
 			win = a.win
 			if win == nil {
@@ -246,7 +247,10 @@ func (a *App) startTool(kind tools.Kind, raw string) *model.Download {
 
 // toolManager keeps the external downloaders in the app's folder.
 func (a *App) toolManager() *tools.Manager {
-	return &tools.Manager{
+	if a.toolInstaller != nil {
+		return a.toolInstaller
+	}
+	a.toolInstaller = &tools.Manager{
 		Dir: filepath.Join(a.dataDir(), "tools"),
 		Progress: func(kind tools.Kind, done, total int64) {
 			win := a.win
@@ -258,6 +262,7 @@ func (a *App) toolManager() *tools.Manager {
 			})
 		},
 	}
+	return a.toolInstaller
 }
 
 // extractDone unpacks an archive a download finished with, when the

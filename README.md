@@ -65,7 +65,7 @@
 
 ## 构建
 
-需要 Go 1.27+。
+需要 Go 1.27.4 或更新版本。MyGo CLI 已锁定在 `go.mod`，不必全局安装。环境准备、依赖更新和发版步骤见[开发与发布](docs/05-development.md)。
 
 ```sh
 git clone https://github.com/logdns/downmygo

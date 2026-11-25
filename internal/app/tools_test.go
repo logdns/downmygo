@@ -112,6 +112,10 @@ func TestTorrentNames(t *testing.T) {
 func TestToolManagerLivesInTheDataFolder(t *testing.T) {
 	a := appWithStore(t)
 	m := a.toolManager()
+	if m != a.toolManager() {
+		t.Fatal("tool installs must share a manager")
+	}
+	t.Setenv("PATH", t.TempDir())
 	if m.Dir != filepath.Join(a.dataDir(), "tools") {
 		t.Fatalf("dir = %s", m.Dir)
 	}

@@ -2,7 +2,7 @@
   "name": "downmygo",
   "slug": "downmygo",
   "identifier": "app.downmygo.desktop",
-  "version": "1.5.2",
+  "version": "1.6.0",
   "copyright": "© 2026 downmygo",
   "publisher": "downmygo",
   "license": "MIT",
@@ -19,6 +19,7 @@
     }
   },
   "linux": {
+    "formats": ["deb"],
     "maintainer": "logdns <logdns@users.noreply.github.com>",
     "comment": "Downloads, on the go.",
     "categories": [

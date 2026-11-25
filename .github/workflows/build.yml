@@ -51,6 +51,9 @@ jobs:
     if: startsWith(github.ref, 'refs/tags/v')
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v7
+      - name: Package browser integrations from this tag
+        run: make extensions
       - uses: actions/download-artifact@v8
         with:
           path: artifacts
@@ -70,6 +73,7 @@ jobs:
             cp artifacts/downmygo-Linux/linux-$arch/*.deb release/
             cp artifacts/downmygo-Linux/linux-$arch/*.tar.gz release/
           done
+          cp dist/*.zip extensions/userscript/downmygo.user.js release/
           ls -l release
       - name: Upload the installers to the draft release
         env:

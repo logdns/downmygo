@@ -109,9 +109,9 @@ extensions/             浏览器扩展（Chrome / Firefox）与油猴脚本，�
 
 - `tools.Manager` 先找 PATH，再找应用目录，最后自己下载：
   - yt-dlp：官方原生二进制
-  - gallery-dl：Windows 用官方 exe；其他平台从 PyPI 取 wheel 解包，用系统 python3 运行
+  - gallery-dl：Windows 根据 PyPI 稳定版本从 Codeberg 取官方 exe；其他平台用 `python3 -m pip` 将 gallery-dl 和运行依赖安装到应用的独立目录
 - 进度从程序的输出解析（`--progress-template`），文件从 `--print after_move:filepath` 认领
-- 每个程序一个互斥量，两个视频同时开始不会写同一个 `.part`
+- 同一应用共用一个安装管理器和互斥量，两个视频同时开始不会写同一个 `.part`
 
 ## 9. 更新
 
@@ -134,4 +134,4 @@ go run ./cmd/preview               # 重画截图（三种语言 + 窄窗口）
 ```
 
 - `ci.yml`：gofmt、vet、`go test -race`、检查生成的 catalog 是否最新，然后三平台构建
-- `build.yml`：打 `v*` 标签 → macOS（universal + dmg）、Windows（amd64/arm64 + NSIS）、Linux（amd64/arm64 + deb/tar.gz）→ 草稿 Release
+- `build.yml`：打 `v*` 标签 → macOS（universal + dmg）、Windows（amd64/arm64 + NSIS）、Linux（amd64/arm64 + deb/tar.gz）→ 连同 Chrome / Firefox 扩展和油猴脚本生成草稿 Release；[发布检查单](05-development.md)

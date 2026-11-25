@@ -65,7 +65,7 @@ From [Releases](https://github.com/logdns/downmygo/releases):
 
 ## Build
 
-Go 1.27 or newer.
+Use Go 1.27.4 or newer. The MyGo CLI is pinned in `go.mod`; no global install is needed. See the [development and release checklist (Chinese)](docs/05-development.md).
 
 ```sh
 git clone https://github.com/logdns/downmygo

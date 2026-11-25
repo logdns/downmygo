@@ -27,6 +27,12 @@ jobs:
             echo "$unformatted"
             exit 1
           fi
+      - name: Verify dependencies
+        run: |
+          go mod verify
+          go mod tidy -diff
+      - name: Scan reachable Go vulnerabilities
+        run: go run golang.org/x/vuln/cmd/govulncheck@v1.10.0 ./...
       - name: Vet
         run: go vet ./...
       - name: Test

@@ -125,23 +125,19 @@ func split(v string) ([]int, string) {
 // AssetFor picks the file of a release that fits a platform, or "" when
 // the release has none.
 func AssetFor(rel *Release, goos, goarch string) Asset {
-	for _, a := range rel.Assets {
-		if !strings.HasSuffix(strings.ToLower(a.Name), ".dmg") {
-			continue
-		}
-		if goos == "darwin" {
-			return a
-		}
+	var name string
+	switch goos {
+	case "darwin":
+		name = "downmygo-" + rel.Version + ".dmg"
+	case "windows":
+		name = "downmygo-setup-" + rel.Version + "-" + goarch + ".exe"
+	case "linux":
+		name = "downmygo-" + rel.Version + "-linux-" + goarch + ".tar.gz"
+	default:
+		return Asset{}
 	}
-	lower := strings.ToLower(goos + "-" + goarch)
 	for _, a := range rel.Assets {
-		name := strings.ToLower(a.Name)
-		switch {
-		case goos == "windows" && strings.HasSuffix(name, ".exe") && strings.Contains(name, goarch):
-			return a
-		case goos == "linux" && strings.Contains(name, lower) && strings.HasSuffix(name, ".tar.gz"):
-			return a
-		case goos == "linux" && strings.Contains(name, goarch) && strings.HasSuffix(name, ".deb"):
+		if a.Name == name {
 			return a
 		}
 	}

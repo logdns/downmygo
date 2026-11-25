@@ -21,6 +21,7 @@ import (
 	"github.com/downmygo/downmygo/internal/limiter"
 	"github.com/downmygo/downmygo/internal/model"
 	"github.com/downmygo/downmygo/internal/store"
+	"github.com/downmygo/downmygo/internal/tools"
 	"github.com/downmygo/downmygo/internal/torrent"
 	"github.com/downmygo/downmygo/internal/update"
 	"github.com/downmygo/downmygo/locales"
@@ -63,6 +64,7 @@ type App struct {
 	toast          string
 	lastClip       string
 	clipWatch      atomic.Bool
+	toolInstaller  *tools.Manager
 	toolCancels    map[string]context.CancelFunc
 	torrents       *torrent.Engine
 	torrentCancels map[string]context.CancelFunc

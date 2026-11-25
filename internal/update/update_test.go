@@ -39,6 +39,8 @@ func TestCheckAndAssets(t *testing.T) {
 		_ = json.NewEncoder(w).Encode(Release{
 			Tag: "v1.2.0", URL: "https://example.com/rel", Notes: "notes",
 			Assets: []Asset{
+				{Name: "downmygo-1.2.0-windows-amd64.exe"},
+				{Name: "downmygo_1.2.0_amd64.deb"},
 				{Name: "downmygo-1.2.0.dmg", URL: "https://example.com/a.dmg"},
 				{Name: "downmygo-setup-1.2.0-amd64.exe", URL: "https://example.com/a.exe"},
 				{Name: "downmygo-1.2.0-linux-amd64.tar.gz", URL: "https://example.com/a.tgz"},

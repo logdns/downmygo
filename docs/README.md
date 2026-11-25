@@ -7,6 +7,8 @@
 | [03 · 设计](03-design.md) | 品牌与标志、颜色、字体间距、布局与自适应、组件、语言、动效 |
 | [04 · 参考：MDM](04-mdm.md) | 立项时对 Mister Download Manager 的拆解与功能对照 |
 
+[05 · 开发与发布](05-development.md)：安装构建工具、升级依赖、验证和发布。
+
 英文：根目录的 [README.en.md](../README.en.md)。
 
 插件（可单独上传到各商店）：[extensions/](../extensions/README.md) —— Chrome、Firefox、油猴脚本，各自的说明、打包脚本与商店素材。
